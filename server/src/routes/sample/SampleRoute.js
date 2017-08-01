@@ -28,6 +28,10 @@ class SampleRoute {
 				res.status(500).send(err);
 			});
 		});
+
+		this.app.get("/sample-ok", (req, res) => {
+			res.json({ UnopenedCardPacks: 1 });
+		});
 	}
 }
 
