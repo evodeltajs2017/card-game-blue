@@ -1,0 +1,22 @@
+body {
+    position: relative;
+}
+
+.content-container {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 1000px;
+}
+
+div .upperShit {
+	display: inline-block;
+	top: 0px;
+	margin:0px;  
+	padding: 0px 2px 2px 3px;    
+	border-width: 2px;
+	border-bottom-width:2px;
+	border-bottom-color:White;
+	border-bottom-style: solid;
+	width: 100%;
+}

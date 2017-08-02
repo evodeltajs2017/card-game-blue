@@ -1,14 +1,14 @@
-class UserRepository {
+class UnopenedPacksRepository {
 	constructor() {
 	}
 
 	getUnopenedCardPacks(callback) {
 		const xhr = new XMLHttpRequest();
-		xhr.open("GET", "http://localhost:3000/sample", true);
+		xhr.open("GET", "http://localhost:3000/open-packs", true);
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === XMLHttpRequest.DONE) {
-				callback(this.status, JSON.parse(this.responseText));
+				callback(this.status, eval(this.responseText));
 			}
 		};
 

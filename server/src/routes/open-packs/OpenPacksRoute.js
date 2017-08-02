@@ -1,6 +1,6 @@
 const sql = require("mssql");
 
-class SampleRoute {
+class OpenPacksRoute {
 	constructor(expressApp) {
 		this.app = expressApp;
 	}
@@ -14,16 +14,17 @@ class SampleRoute {
 			port: 1848
 		};
 
-		this.app.get("/sample", (req, res) => {
+		this.app.get("/open-packs", (req, res) => {
 			sql.connect(config, err => {
 				if (err) {
 					res.status(500).send(err);
 					sql.close();
 				}
 
-				new sql.Request().query("select * from [dbo].[User]", (err, result) => {
+				new sql.Request().query("select * from [dbo].[User] where id=1", (err, result) => {
 					console.log(result);
-					res.json(result.recordset[0]);
+					//forEach()
+					res.json(result.recordset);
 					sql.close();
 				});
 			});
@@ -36,4 +37,4 @@ class SampleRoute {
 	}
 }
 
-module.exports = SampleRoute;
+module.exports = OpenPacksRoute;

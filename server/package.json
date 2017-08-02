@@ -5,5 +5,12 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "mssql": "^4.0.4"
-  }
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
