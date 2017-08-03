@@ -16,7 +16,22 @@ div .upperShit {
 	padding: 0px 2px 2px 3px;    
 	border-width: 2px;
 	border-bottom-width:2px;
-	border-bottom-color:White;
+	border-bottom-color: White;
 	border-bottom-style: solid;
 	width: 100%;
+}
+
+div .upperShit > h1 {
+	color: White;
+	float: left;
+	padding-left: 2%;
+}
+
+div .upperShit > button {
+	float: right;
+	padding-right: 2%;
+	padding-left: 2%;
+	margin: 1.5%;
+	vertical-align: middle;
+	text-align: center;
 }

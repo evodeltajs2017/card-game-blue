@@ -21,7 +21,7 @@ class OpenPacksRoute {
 					sql.close();
 				}
 
-				new sql.Request().query("select * from [dbo].[User] where id=1", (err, result) => {
+				new sql.Request().query("select * from [dbo].[CardType]", (err, result) => {
 					console.log(result);
 					//forEach()
 					res.json(result.recordset);
