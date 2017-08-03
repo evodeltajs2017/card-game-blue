@@ -14,7 +14,7 @@ class SampleRoute {
 			port: 1848
 		};
 
-		this.app.get("/sample", (req, res) => {
+		this.app.post("/sample", (req, res) => {
 			sql.connect(config, err => {
 				if (err) {
 					res.status(500).send(err);

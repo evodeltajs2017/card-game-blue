@@ -5,16 +5,11 @@ class OpenPacks {
 
 	showElems(){
 		const repo = new OpenPacksRepository();
-		repo.getUnopenedCardPacks((status, data) => {
+		repo.getOpenedCards((status, data) => {
 			if (status !== 200) {
 				div.innerHTML = "<h1>error</h1>";
 			} else {
 				console.log(status, data);
-				
-				for (let i=0; i<5; i++){
-					let item = data[Math.floor(Math.random()*data.length)];
-					console.log(item);
-				}
 			}
 		});
 	}

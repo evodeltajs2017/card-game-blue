@@ -14,7 +14,7 @@ class OpenPacksRoute {
 			port: 1848
 		};
 
-		this.app.get("/open-packs", (req, res) => {
+		this.app.post("/open-packs", (req, res) => {
 			sql.connect(config, err => {
 				if (err) {
 					res.status(500).send(err);
@@ -23,8 +23,16 @@ class OpenPacksRoute {
 
 				new sql.Request().query("select * from [dbo].[CardType]", (err, result) => {
 					console.log(result);
-					//forEach()
-					res.json(result.recordset);
+					let array = [];
+					let vars = result.recordset;
+	
+					for (let i=0; i<5; i++){
+						let item = vars[Math.floor(Math.random()*vars.length)];
+						console.log(item);
+						array.push(item);
+					}
+
+					res.json(array);
 					sql.close();
 				});
 			});
