@@ -5,6 +5,7 @@ class OpenPacks {
 
 	showElems(){
 		const repo = new OpenPacksRepository();
+
 		repo.getOpenedCards((status, data) => {
 			if (status !== 200) {
 				div.innerHTML = "<h1>error</h1>";
@@ -18,8 +19,11 @@ class OpenPacks {
 		const div = document.createElement("div");
 		div.innerHTML = "<h1>Open card packs</h1>";
 		div.className = "upperShit";
-		const butt = document.createElement("button");
+		let butt = document.createElement("button");
 		butt.innerHTML = "Open";
+
+
+
 		butt.addEventListener("click", (e) => { this.showElems(); }, false);
 		div.appendChild(butt);
 		div.style.textAlign = "center";
@@ -33,6 +37,24 @@ class OpenPacks {
 		const openDiv = document.createElement("div");
 		openDiv.className = "openDecks";
 		this.container.appendChild(openDiv);
+
+
+		const userRepo = new UserRepository();
+
+		userRepo.getUnopenedCardPacks((status, data) => {
+			if (status !== 200) {
+
+			}
+			else{
+				console.log(status, data);
+				if (data.UnopenedCardPacks === 0) {
+					butt.setAttribute("disabled", true);
+				}
+				else{
+
+				}
+			}
+		});
 	}
 
 	
