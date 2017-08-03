@@ -1,4 +1,4 @@
-class UnopenedPacksRepository {
+class OpenPacksRepository {
 	constructor() {
 	}
 
