@@ -3,7 +3,7 @@ class OpenPacks {
 		this.container = container;
 	}
 
-	showElems(){
+	showElems(butt){
 		const repo = new OpenPacksRepository();
 
 		repo.getOpenedCards((status, data) => {
@@ -11,6 +11,22 @@ class OpenPacks {
 				div.innerHTML = "<h1>error</h1>";
 			} else {
 				console.log(status, data);
+				const userRepo = new UserRepository();
+
+				userRepo.getUnopenedCardPacks((status, data) => {
+					if (status !== 200) {
+		
+							}
+							else{
+								console.log(status, data);
+								if (data.UnopenedCardPacks === 1) {
+									butt.setAttribute("disabled", true);
+								}
+								else{
+		
+								}
+							}
+				});
 			}
 		});
 	}
@@ -24,7 +40,7 @@ class OpenPacks {
 
 
 
-		butt.addEventListener("click", (e) => { this.showElems(); }, false);
+		butt.addEventListener("click", (e) => { this.showElems(butt); }, false);
 		div.appendChild(butt);
 		div.style.textAlign = "center";
 		this.container.appendChild(div);

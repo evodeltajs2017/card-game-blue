@@ -21,7 +21,10 @@ class OpenPacksRoute {
 					sql.close();
 				}
 
-				new sql.Request().query("select * from [dbo].[CardType]", (err, result) => {
+				let request = new sql.Request();
+				//request.query("update [dbo].[User] set UnopenedCardPacks = UnopenedCardPacks - 1 where Id = 1", (err, result) => { });
+
+				request.query("select * from [dbo].[CardType]", (err, result) => {
 					console.log(result);
 					let array = [];
 					let vars = result.recordset;
