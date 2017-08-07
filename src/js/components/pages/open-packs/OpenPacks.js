@@ -19,7 +19,7 @@ class OpenPacks {
 							}
 							else{
 								console.log(status, data);
-								if (data.UnopenedCardPacks === 1) {
+								if (data.UnopenedCardPacks === 0) {
 									butt.setAttribute("disabled", true);
 								}
 								else{
