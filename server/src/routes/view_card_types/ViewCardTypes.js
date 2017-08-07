@@ -9,7 +9,7 @@ class ViewCardType {
 
         let cardResult = [];
         let maxCount;
-
+        let maxSearchCount;
 
         const config = {
             user: "test",
@@ -30,8 +30,34 @@ class ViewCardType {
                     maxCount = result.recordset[0].number;
                 });
 
-                new sql.Request().query("select * from [dbo].[CardType]", (err, result) => {
 
+
+                var search = req.query.search;
+                var pagenum = req.query.pageIndex - 1;
+                var pagesize = req.query.pageSize;
+
+                console.log(search);
+                if (search != "") {
+                    new sql.Request().query(`SELECT COUNT(*) AS number FROM [dbo].[CardType] where [Name] like '%${search}%'`, (err, result) => {
+                        maxSearchCount = result.recordset[0].number;
+                        console.log(maxSearchCount);
+                    });
+
+                }
+                // var search = "";
+                // var pagenum = 1 - 1;
+                // var pagesize = 10;
+
+                // new sql.Request().query(`SELECT COUNT(*) AS number FROM [dbo].[CardType] where [Name] like %${search}%`, (err, result) => {
+                //     maxSearchCount = result.recordset[0].number;
+                //     console.log(maxSearchCount);
+                // });
+
+                new sql.Request().query(`
+                    select * from 
+                    (select Row_Number() over 
+                    (order by [id] DESC) as RowIndex, * from [dbo].[CardType] where [Name] like '%${search}%') as Sub
+                    Where Sub.RowIndex >= ${pagenum*pagesize+1} and Sub.RowIndex <= ${pagenum*pagesize+pagesize}`, (err, result) => {
                     cardResult = result.recordset.map((x) => {
                         return {
                             cod: x.Id,
@@ -42,13 +68,10 @@ class ViewCardType {
                             imageid: x.ImageIdentifier
                         };
                     });
-
-
-                    //res.json(maxCount);
-                    res.json({ items: cardResult, count: maxCount });
-
+                    res.json({ items: cardResult, count: maxCount, searchCount: maxSearchCount });
                     sql.close();
                 });
+
             });
 
             sql.on("error", err => {
@@ -58,5 +81,6 @@ class ViewCardType {
         });
     }
 }
+
 
 module.exports = ViewCardType;

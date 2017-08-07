@@ -53,6 +53,10 @@ td {
     display: inline-block;
 }
 
+.view-type-under-buttons {
+    float: right;
+}
+
 .view-type-under-table button {
     float: right;
     margin-top: 13px;
