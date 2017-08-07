@@ -14,34 +14,16 @@ class CardTypes {
         repo.getAllData((receivedObj) => {
             this.addAll(receivedObj);
 
-            let elementList = document.querySelectorAll(".buton");
-            for (let i = 0; i < elementList.length; i++) {
-                console.log(`Am pus la butonul ${i}`);
-                elementList[i].addEventListener("click", () => {
-                    repo.getPagedData(elementList[i].value, searchText, (receivedObj) => {
-                        this.fillTable(receivedObj);
-                        this.addEventToTableButtons();
-                    });
-                });
-            };
+            this.addEventToIndexButtons(repo, searchText);
 
             document.querySelector(".view-type-search-button").addEventListener("click", () => {
                 searchText = document.querySelector(".view-type-search-text").value;
                 document.querySelector(".view-type-search-text").value = "";
                 repo.getSearchData(searchText, (receivedObj) => {
                     this.addAll(receivedObj);
-                    if (searchText !== "") this.createSearchButtons(receivedObj);
-                    let elementList = document.querySelectorAll(".buton");
-                    for (let i = 0; i < elementList.length; i++) {
-                        console.log(`Am pus la butonul ${i}`);
-                        elementList[i].addEventListener("click", () => {
-                            repo.getPagedData(elementList[i].value, searchText, (receivedObj) => {
-                                this.fillTable(receivedObj);
-                                this.addEventToTableButtons();
-                            });
-                        });
-                    };
-
+                    if (searchText !== "")
+                        this.createIndexButtons(receivedObj);
+                    this.addEventToIndexButtons(repo, searchText);
                 });
             });
 
@@ -51,18 +33,9 @@ class CardTypes {
                     document.querySelector(".view-type-search-text").value = "";
                     repo.getSearchData(searchText, (receivedObj) => {
                         this.addAll(receivedObj);
-                        if (searchText !== "") this.createSearchButtons(receivedObj);
-                        let elementList = document.querySelectorAll(".buton");
-                        for (let i = 0; i < elementList.length; i++) {
-                            console.log(`Am pus la butonul ${i}`);
-                            elementList[i].addEventListener("click", () => {
-                                repo.getPagedData(elementList[i].value, searchText, (receivedObj) => {
-                                    this.fillTable(receivedObj);
-                                    this.addEventToTableButtons();
-                                });
-                            });
-                        };
-
+                        if (searchText !== "")
+                            this.createIndexButtons(receivedObj);
+                        this.addEventToIndexButtons(repo, searchText);
                     });
                 }
             });
@@ -89,16 +62,10 @@ class CardTypes {
 
         div.innerHTML = template;
         this.container.appendChild(div);
-
-
-
     }
 
-
-
-
     addAll(receivedObj) {
-        this.createAllButtons(receivedObj);
+        this.createIndexButtons(receivedObj);
         this.fillTable(receivedObj);
         this.addEventToTableButtons();
 
@@ -106,15 +73,7 @@ class CardTypes {
 
 
     addEventToTableButtons() {
-        let elementList = document.querySelectorAll(".table-edit");
-        for (let i = 0; i < elementList.length; i++) {
-            elementList[i].addEventListener("click", () => {
-                let id = elementList[i].value;
-                console.log(id);
-            });
-        };
-
-        elementList = document.querySelectorAll(".table-delete");
+        let elementList = document.querySelectorAll(".table-edit,.table-delete");
         for (let i = 0; i < elementList.length; i++) {
             elementList[i].addEventListener("click", () => {
                 let id = elementList[i].value;
@@ -123,21 +82,30 @@ class CardTypes {
         };
     }
 
-
-    createAllButtons(receivedObj) {
-
-        document.querySelector(".view-type-under-text").innerHTML = `Showing 10 out of ${receivedObj.count}`;
-        let buttonNum = Math.ceil(receivedObj.count / 10);
-        document.querySelector(".view-type-under-buttons").innerHTML = "";
-        for (let i = buttonNum; i > 0; i--) {
-            document.querySelector(".view-type-under-buttons").innerHTML += `<button value="${i}" class="buton">${i}</button>`;
-        }
+    addEventToIndexButtons(repo, searchText) {
+        let elementList = document.querySelectorAll(".buton");
+        for (let i = 0; i < elementList.length; i++) {
+            elementList[i].addEventListener("click", () => {
+                repo.getPagedData(elementList[i].value, searchText, (receivedObj) => {
+                    this.fillTable(receivedObj);
+                    this.addEventToTableButtons();
+                    this.createShowingText(receivedObj);
+                });
+            });
+        };
     }
 
-    createSearchButtons(receivedObj) {
-        if (receivedObj.items.length < 10) document.querySelector(".view-type-under-text").innerHTML = `Showing ${receivedObj.items.length} out of ${receivedObj.searchCount}`;
+
+    createShowingText(receivedObj) {
+        if (receivedObj.items.length < 10)
+            document.querySelector(".view-type-under-text").innerHTML = `Showing ${receivedObj.items.length} out of ${receivedObj.searchCount}`;
         else
             document.querySelector(".view-type-under-text").innerHTML = `Showing 10 out of ${receivedObj.searchCount}`;
+    }
+
+    createIndexButtons(receivedObj) {
+        this.createShowingText(receivedObj);
+
         let buttonNum = Math.ceil(receivedObj.searchCount / 10);
         document.querySelector(".view-type-under-buttons").innerHTML = "";
         for (let i = buttonNum; i > 0; i--) {
@@ -146,7 +114,6 @@ class CardTypes {
     }
 
     fillTable(receivedObj) {
-        console.log(receivedObj);
         let tableTemplate = `
                 <tr>
 					<th style="width:20px">ID</th>

@@ -11,7 +11,6 @@ class CardTypeRepository {
             if (myMainRequest.readyState === 4) {
 
                 let receivedObj = JSON.parse(myMainRequest.response);
-
                 callback(receivedObj);
             }
         }
@@ -28,8 +27,6 @@ class CardTypeRepository {
             if (myPagedRequest.readyState === 4) {
 
                 let receivedObj = JSON.parse(myPagedRequest.response);
-
-
                 callback(receivedObj);
             }
         }
@@ -46,8 +43,6 @@ class CardTypeRepository {
             if (mySearchRequest.readyState === 4) {
 
                 let receivedObj = JSON.parse(mySearchRequest.response);
-
-
                 callback(receivedObj);
             }
         }

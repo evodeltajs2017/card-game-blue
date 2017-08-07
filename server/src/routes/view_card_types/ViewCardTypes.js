@@ -21,6 +21,10 @@ class ViewCardType {
 
         this.app.get("/view-card-type", (req, res) => {
             sql.connect(config, err => {
+                var search = req.query.search;
+                var pagenum = req.query.pageIndex - 1;
+                var pagesize = req.query.pageSize;
+
                 if (err) {
                     res.status(500).send(err);
                     sql.close();
@@ -30,28 +34,14 @@ class ViewCardType {
                     maxCount = result.recordset[0].number;
                 });
 
+                maxSearchCount = maxCount;
 
-
-                var search = req.query.search;
-                var pagenum = req.query.pageIndex - 1;
-                var pagesize = req.query.pageSize;
-
-                console.log(search);
                 if (search != "") {
                     new sql.Request().query(`SELECT COUNT(*) AS number FROM [dbo].[CardType] where [Name] like '%${search}%'`, (err, result) => {
                         maxSearchCount = result.recordset[0].number;
-                        console.log(maxSearchCount);
                     });
 
                 }
-                // var search = "";
-                // var pagenum = 1 - 1;
-                // var pagesize = 10;
-
-                // new sql.Request().query(`SELECT COUNT(*) AS number FROM [dbo].[CardType] where [Name] like %${search}%`, (err, result) => {
-                //     maxSearchCount = result.recordset[0].number;
-                //     console.log(maxSearchCount);
-                // });
 
                 new sql.Request().query(`
                     select * from 
