@@ -6,21 +6,8 @@ class OpenPacksRoute {
 	}
 
 	initialize() {
-		const config = {
-			user: "a",
-			password: "a",
-			server: "localhost",
-			database: "CardGame",
-			port: 1848
-		};
-
 		this.app.post("/open-packs", (req, res) => {
-			sql.connect(config, err => {
-				if (err) {
-					res.status(500).send(err);
-					sql.close();
-				}
-
+			
 				let request = new sql.Request();
 
 				
@@ -34,11 +21,10 @@ class OpenPacksRoute {
 						console.log(item);
 						array.push(item);
 						let id = null;
-						new sql.Request().query(`insert into [dbo].[Card] values (${id}, ${item.Id}, 1)`, (err, result) => {  });
+						new sql.Request().query(`insert into [dbo].[Card]([CardTypeId], [UserId]) values (${item.Id}, 1)`, (err, result) => {  });
 					}
 
 					res.json(array);
-					sql.close();
 				});
 			});
 
@@ -46,7 +32,6 @@ class OpenPacksRoute {
 				res.status(500).send(err);
 				sql.close();
 			});
-		});
 	}
 
 
