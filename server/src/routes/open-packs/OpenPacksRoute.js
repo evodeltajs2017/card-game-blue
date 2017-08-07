@@ -15,16 +15,17 @@ class OpenPacksRoute {
 					console.log(result);
 					let array = [];
 					let vars = result.recordset;
+					let concat = "";
 	
 					for (let i=0; i<5; i++){
 						let item = vars[Math.floor(Math.random()*vars.length)];
 						console.log(item);
 						array.push(item);
-						let id = null;
-						new sql.Request().query(`insert into [dbo].[Card]([CardTypeId], [UserId]) values (${item.Id}, 1)`, (err, result) => {  });
+						concat = concat + "(" + item.Id + ", " + 1 + "), ";
 					}
-
-					res.json(array);
+					//concat = concat - ", ";
+					concat = concat.slice(0, concat.length - 2);
+					new sql.Request().query(`insert into [dbo].[Card]([CardTypeId], [UserId]) values ${concat}`, (err, result) => { res.json(array); });
 				});
 			});
 
@@ -34,11 +35,6 @@ class OpenPacksRoute {
 			});
 	}
 
-
-	//ceva() {
-	//	const cv = new DBConnection();
-	//	cv.getConnection();
-	//}
 }
 	
 module.exports = OpenPacksRoute;

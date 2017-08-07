@@ -14,7 +14,6 @@ openPacksRoute.initialize();
 
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
-//dbconnection.initialize();
 
 app.listen(3000, function() {
 	dbconnection.initialize();
