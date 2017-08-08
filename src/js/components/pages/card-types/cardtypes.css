@@ -58,8 +58,13 @@ td {
 }
 
 .view-type-under-table button {
-    float: right;
     margin-top: 13px;
     margin-left: 2px;
     margin-right: 2px;
+}
+
+#off {
+    background: silver;
+    color: white;
+    border: solid 1px black;
 }

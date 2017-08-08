@@ -11,14 +11,19 @@ class CardTypes {
         var searchText = "";
         const div = document.createElement("div");
         div.className = "view-type-container";
-        repo.getData("", (receivedObj) => {
+        repo.getData("").then((receivedObj) => {
             this.addAll(receivedObj);
             this.addEventToIndexButtons(repo, searchText);
-            document.querySelector(".view-type-search-button").addEventListener("click", () => {
+            let buton = div.querySelector(".buton");
+            buton.setAttribute("id", "off");
+            buton.setAttribute("disabled", "true");
+
+
+            div.querySelector(".view-type-search-button").addEventListener("click", () => {
                 this.addEventToSearch(repo, searchText);
             });
 
-            document.querySelector(".view-type-search-text").addEventListener("keyup", () => {
+            div.querySelector(".view-type-search-text").addEventListener("keyup", () => {
                 if (event.keyCode == 13) {
                     this.addEventToSearch(repo, searchText);
                 }
@@ -42,6 +47,7 @@ class CardTypes {
             <div class="view-type-under-buttons"></div>
 		</div>`;
         div.innerHTML = template;
+        this.domElement = div;
         this.container.appendChild(div);
     }
 
@@ -54,18 +60,19 @@ class CardTypes {
 
 
     addEventToSearch(repo, searchText) {
-        searchText = document.querySelector(".view-type-search-text").value;
-        document.querySelector(".view-type-search-text").value = "";
-        repo.getData(searchText, receivedObj => {
+        searchText = this.domElement.querySelector(".view-type-search-text").value;
+        this.domElement.querySelector(".view-type-search-text").value = "";
+        repo.getData(searchText).then(receivedObj => {
             this.addAll(receivedObj);
             if (searchText !== "")
                 this.createIndexButtons(receivedObj);
             this.addEventToIndexButtons(repo, searchText);
+            this.disableButton();
         });
     }
 
     addEventToTableButtons() {
-        let elementList = document.querySelectorAll(".table-edit,.table-delete");
+        let elementList = this.domElement.querySelectorAll(".table-edit,.table-delete");
         for (let i = 0; i < elementList.length; i++) {
             elementList[i].addEventListener("click", () => {
                 let id = elementList[i].value;
@@ -75,36 +82,44 @@ class CardTypes {
     }
 
     addEventToIndexButtons(repo, searchText) {
-        let elementList = document.querySelectorAll(".buton");
+        let elementList = this.domElement.querySelectorAll(".buton");
         for (let i = 0; i < elementList.length; i++) {
             elementList[i].addEventListener("click", () => {
-                repo.getData(searchText, receivedObj => {
+                repo.getData(searchText, elementList[i].value).then(receivedObj => {
                     this.fillTable(receivedObj);
                     this.addEventToTableButtons();
                     this.createShowingText(receivedObj);
-                }, elementList[i].value);
+                });
+                this.disableButton(event.target);
             });
         };
     }
 
 
+    disableButton(element = this.domElement.querySelector(".buton")) {
+        let buton = document.getElementById("off");
+        if (buton != undefined) {
+            buton.removeAttribute("disabled");
+            buton.removeAttribute("id");
+        }
+        element.setAttribute("id", "off");
+        element.setAttribute("disabled", "true");
+    }
+
     createShowingText(receivedObj) {
-        console.log(receivedObj.count);
-        if (receivedObj.items.length < 10)
-            document.querySelector(".view-type-under-text").innerHTML = `Showing ${receivedObj.items.length} out of ${receivedObj.count}`;
-        else
-            document.querySelector(".view-type-under-text").innerHTML = `Showing 10 out of ${receivedObj.count}`;
+        this.domElement.querySelector(".view-type-under-text").innerHTML = `Showing ${receivedObj.items.length} out of ${receivedObj.count}`;
     }
 
     createIndexButtons(receivedObj) {
         this.createShowingText(receivedObj);
 
         let buttonNum = Math.ceil(receivedObj.count / 10);
-        document.querySelector(".view-type-under-buttons").innerHTML = "";
-        for (let i = buttonNum; i > 0; i--) {
-            document.querySelector(".view-type-under-buttons").innerHTML += `<button value="${i}" class="buton">${i}</button>`;
+        this.domElement.querySelector(".view-type-under-buttons").innerHTML = "";
+        for (let i = 1; i <= buttonNum; i++) {
+            this.domElement.querySelector(".view-type-under-buttons").innerHTML += `<button value="${i}" class="buton">${i}</button>`;
         }
     }
+
 
     fillTable(receivedObj) {
         let tableTemplate = `
@@ -119,7 +134,7 @@ class CardTypes {
 
         const renderFuncs = {
             "ID": rowData => `<td>${rowData}</td>`,
-            "Name": rowData => `<td style=\"text-align:left\">${rowData}</td>`,
+            "Name": rowData => `<td style=\"text-align:left;padding-left:1%\">${rowData}</td>`,
             "Cost": rowData => `<td>${rowData}</td>`,
             "Damage": rowData => `<td>${rowData}</td>`,
             "Health": rowData => `<td>${rowData}</td>`,
@@ -142,7 +157,7 @@ class CardTypes {
 
             tableTemplate += "</tr>";
         }
-        document.querySelector(".view-type-table").innerHTML = tableTemplate;
+        this.domElement.querySelector(".view-type-table").innerHTML = tableTemplate;
     }
     destroy() {}
 }
