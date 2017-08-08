@@ -1,26 +1,15 @@
 class CardTypeRepository {
     constructor() {}
 
-    getAllData(callback) {
-        var myMainRequest = new XMLHttpRequest();
+    getData(searchText, callback, page = 1) {
+        var myPagedRequest = new XMLHttpRequest();
+        var URL = `http://localhost:3000/view-card-type?pageIndex=${page}&pageSize=10`;
 
-        myMainRequest.open('GET', `http://localhost:3000/view-card-type?pageIndex=${1}&pageSize=10&search=${""}`, true);
-
-        myMainRequest.onreadystatechange = function() {
-
-            if (myMainRequest.readyState === 4) {
-
-                let receivedObj = JSON.parse(myMainRequest.response);
-                callback(receivedObj);
-            }
+        if (searchText != "" && searchText != undefined) {
+            URL += `&search=${searchText}`;
         }
 
-        myMainRequest.send();
-    }
-
-    getPagedData(page, searchText, callback) {
-        var myPagedRequest = new XMLHttpRequest();
-        myPagedRequest.open('GET', `http://localhost:3000/view-card-type?pageIndex=${page}&pageSize=10&search=${searchText}`, true);
+        myPagedRequest.open('GET', URL, true);
 
         myPagedRequest.onreadystatechange = function() {
 
@@ -34,20 +23,6 @@ class CardTypeRepository {
         myPagedRequest.send();
     }
 
-    getSearchData(word, callback) {
-        var mySearchRequest = new XMLHttpRequest();
-        mySearchRequest.open('GET', `http://localhost:3000/view-card-type?pageIndex=${1}&pageSize=10&search=${word}`, true);
 
-        mySearchRequest.onreadystatechange = function() {
-
-            if (mySearchRequest.readyState === 4) {
-
-                let receivedObj = JSON.parse(mySearchRequest.response);
-                callback(receivedObj);
-            }
-        }
-
-        mySearchRequest.send();
-    }
 
 }
