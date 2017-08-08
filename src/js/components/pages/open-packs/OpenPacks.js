@@ -3,7 +3,13 @@ class OpenPacks {
 		this.container = container;
 	}
 
-	showElems(butt, repo){
+
+	adaugaListener(e, ceva, butt, repo) {
+		ceva.addEventListener("click", (e) => { e.stopImmediatePropagation(); this.showElems(e, butt, repo); }, false);
+	}
+
+
+	showElems(e, butt, repo){
 		repo.getOpenedCards((status, data) => {
 			if (status !== 200) {
 				div.innerHTML = "<h1>error</h1>";
@@ -27,6 +33,14 @@ class OpenPacks {
 						let listOfDOMDecks = document.getElementsByClassName("decks");
 						leftDecks.parentNode.removeChild(leftDecks);
 					}
+				}
+				const first = document.getElementsByClassName("deck");
+				if (first.length === 0) {
+					
+				}
+				else{
+					e.stopImmediatePropagation();
+					this.adaugaListener(e, first[0], butt, repo);
 				}
 
 				repo.getUnopenedCardPacks((status, data) => {
@@ -56,7 +70,7 @@ class OpenPacks {
 		let butt = document.createElement("button");
 		butt.innerHTML = "Open";
 
-		butt.addEventListener("click", (e) => { this.showElems(butt, repo); }, false);
+		butt.addEventListener("click", (e) => { this.showElems(e, butt, repo); }, false);
 		div.appendChild(butt);
 		div.style.textAlign = "center";
 		this.container.appendChild(div);
@@ -89,6 +103,9 @@ class OpenPacks {
 						const div = document.createElement("div");
 						div.className = "deck";
 						deckDiv.appendChild(div);
+						if (i === 0) {
+							div.addEventListener("click", (e) => { e.stopImmediatePropagation(); this.showElems(e, butt, repo); }, false);
+						}
 					}
 					if (nrOfLeftDecks > 0){
 						const div = document.createElement("div");
@@ -102,10 +119,8 @@ class OpenPacks {
 		});
 
 		this.container.appendChild(deckDiv);
-		this.container.appendChild(openDiv);
+		this.container.appendChild(openDiv);	
 	}
-
-	
 
 	destroy() {
 	}
