@@ -74,13 +74,21 @@ class OpenPacks {
 		div.appendChild(butt);
 		div.style.textAlign = "center";
 		this.container.appendChild(div);
-		this.container.style.backgroundImage = "url(../src/js/components/pages/open-packs/imgs/maxresdefault.jpg)";
+		const backImg = document.createElement("div");
+		backImg.className = "backImg";
+		this.container.appendChild(backImg);
 
 		const deckDiv = document.createElement("div");
 		deckDiv.className = "decks";
 
 		const openDiv = document.createElement("div");
 		openDiv.className = "openDecks";
+		const circleDiv = document.createElement("div");
+		circleDiv.className = "circle";
+		const staticDeck = document.createElement("div");
+		staticDeck.className = "deck";
+		circleDiv.appendChild(staticDeck);
+		openDiv.appendChild(circleDiv);
 		
 		repo.getUnopenedCardPacks((status, data) => {
 			if (status !== 200) {

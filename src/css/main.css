@@ -7,6 +7,23 @@ body {
     left: 0;
     bottom: 0;
     height: 1080px;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.backImg {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background: url(../js/components/pages/open-packs/imgs/maxresdefault.jpg) no-repeat;
+	width: 100%;
+	background-size: cover;
+	z-index: -1;
 }
 
 div .upperShit {
@@ -43,18 +60,20 @@ div .decks {
 	height: 90%;
 	float: left;
 	border: 2px solid grey;
+	background: url(../js/components/pages/open-packs/imgs/maxresdefault.jpg);
 }
 
 div .openDecks {
 	width: 85%;
 	height: 90%;
 	float: right;
+	background: url(../js/components/pages/open-packs/imgs/maxresdefault.jpg) center center no-repeat;
 }
 
-div .decks .deck {
+div .deck {
     background: linear-gradient(#2023C1, #109dc1);
-    width: 60%;
-    height: 20%;
+    width: 153.02px;
+    height: 204.39px;
     padding: 5px;
     margin: 5px;
     margin-left: auto;
@@ -62,7 +81,26 @@ div .decks .deck {
     margin-top: 25px;
 }
 
+.circle .deck {
+	margin-top: 350px;
+}
+
 div .decks .leftDecks {
 	text-align: center;
 	color: white;
+}
+
+div .openDecks .circle {
+	width: 900px;
+	height: 900px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: 7px solid #5b432b;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	top: 20px;
+	background: rgba(34,34,34,0.75);
+	box-shadow: 0px 0px 35px #888888;
 }
