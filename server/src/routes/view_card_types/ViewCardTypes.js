@@ -77,11 +77,9 @@ class ViewCardType {
 
 
         this.app.post("/view-card-type", (req, res) => {
-            console.log("Id este: ", req.body);
             sql.connect(config, err => {
 
                 var cardId = req.body.cardTypeId;
-
                 var returnMessage = "";
                 var cardTypeDeleted = 0;
                 if (err) {
