@@ -8,6 +8,53 @@ class OpenPacks {
 		ceva.addEventListener("click", (e) => { e.stopImmediatePropagation(); this.showElems(e, butt, repo); }, false);
 	}
 
+	createDivForCard(modal, name, cost, damage, health, left, top) {
+		const divCarte = document.createElement("div");
+		divCarte.className = "openedCard modal-content";
+		const paraph = document.createElement("p");
+		paraph.setAttribute("id", "wordWrap");
+		paraph.innerHTML = "<pre> Name: " + name + "\n Cost: " + cost + "\n Damage: " + damage + "\n Health: " + health + "</pre>";
+		divCarte.appendChild(paraph);
+		divCarte.style.marginLeft = left+"%";
+		divCarte.style.marginTop = top+"px";
+		modal.appendChild(divCarte);
+	}
+
+	openingTheDeck(data) {
+		const modal = document.createElement("div");
+		modal.className = "modal";
+		modal.style.display = "block";
+		const kitten = this;
+		let left = 54;
+		let top = 90;
+		let i = 0;
+		//data.forEach(function(i) { kitten.createDivForCard(i.Name, i.Cost, i.Damage, i.Health, left, top); left = left + 170; });
+		for (i=0; i<data.length; i++) {
+			kitten.createDivForCard(modal, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health, left, top);
+			if (i === 0) {
+				left = 7;
+				top = 360;
+			}
+			if (i === 1) {
+				left = -16;
+				top = 650;
+			}
+			if (i === 2) {
+				left = -30;
+				top = 650;
+			}
+			if (i === 3) {
+				left = -38;
+				top = 360;
+			}
+		}
+		document.body.appendChild(modal);
+		window.onclick = function(event) {
+    		if (event.target == modal) {
+        		modal.style.display = "none";
+    		}
+		}
+	}
 
 	showElems(e, butt, repo){
 		repo.getOpenedCards((status, data) => {
@@ -42,6 +89,8 @@ class OpenPacks {
 					e.stopImmediatePropagation();
 					this.adaugaListener(e, first[0], butt, repo);
 				}
+
+				this.openingTheDeck(data);
 
 				repo.getUnopenedCardPacks((status, data) => {
 					if (status !== 200) {
