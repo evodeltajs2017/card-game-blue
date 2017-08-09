@@ -96,13 +96,9 @@ class CardTypes {
                             this.disableButton();
                         });
                     });
-
                 }
-
             });
         };
-
-
     }
 
     addEventToIndexButtons(repo, searchText) {

@@ -91,29 +91,7 @@ class ViewCardType {
                     res.status(400).send("Card ID missing or not valid!");
                     sql.close();
                 } else {
-                    new sql.Request().query(`Delete from [dbo].[CardType] where Id = ${cardId}`, (err, result) => {
-
-                        if (result.rowsAffected[0] > 0)
-                            returnMessage += "Number of card types deleted: " + result.rowsAffected[0];
-                        else
-                            returnMessage += "No cards of that type!";
-
-                        if (result.rowsAffected[0] > 0) {
-
-                            new sql.Request().query(`Delete from [dbo].[Card] where CardTypeId = ${cardId}`, (err, result) => {
-
-                                returnMessage += "\nNumber of cards deleted: " + result.rowsAffected[0];
-
-                                res.json(returnMessage);
-                                sql.close();
-                            })
-                        } else {
-                            returnMessage += "\nNo cards deleted!";
-                            res.json(returnMessage);
-                            sql.close();
-                        }
-
-                    });
+                    this.deleteCardType(returnMessage, cardId, res);
                 }
 
             });
@@ -125,6 +103,36 @@ class ViewCardType {
         });
 
 
+    }
+
+    deleteCards(cardId, result, returnMessage, res) {
+        new sql.Request().query(`Delete from [dbo].[Card] where CardTypeId = ${cardId}`, (err, result) => {
+
+            returnMessage += "\nNumber of cards deleted: " + result.rowsAffected[0];
+
+            res.json(returnMessage);
+            sql.close();
+        })
+    }
+
+    deleteCardType(returnMessage, cardId, res) {
+        new sql.Request().query(`Delete from [dbo].[CardType] where Id = ${cardId}`, (err, result) => {
+
+            if (result.rowsAffected[0] > 0)
+                returnMessage += "Number of card types deleted: " + result.rowsAffected[0];
+            else
+                returnMessage += "No cards of that type!";
+
+            if (result.rowsAffected[0] > 0) {
+
+                this.deleteCards(cardId, result, returnMessage, res);
+            } else {
+                returnMessage += "\nNo cards deleted!";
+                res.json(returnMessage);
+                sql.close();
+            }
+
+        });
     }
 }
 
