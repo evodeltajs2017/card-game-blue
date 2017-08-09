@@ -15,9 +15,9 @@ class CardTypes {
             this.addAll(receivedObj);
             this.addEventToIndexButtons(repo, searchText);
             let buton = div.querySelector(".buton");
-            buton.setAttribute("id", "off");
-            buton.setAttribute("disabled", "true");
 
+            buton.className += " off";
+            buton.setAttribute("disabled", "true");
 
             div.querySelector(".view-type-search-button").addEventListener("click", () => {
                 this.addEventToSearch(repo, searchText);
@@ -97,12 +97,12 @@ class CardTypes {
 
 
     disableButton(element = this.domElement.querySelector(".buton")) {
-        let buton = document.getElementById("off");
+        let buton = this.domElement.querySelector(".off");
         if (buton != undefined) {
             buton.removeAttribute("disabled");
-            buton.removeAttribute("id");
+            buton.setAttribute("class", "buton");
         }
-        element.setAttribute("id", "off");
+        element.className += " off";
         element.setAttribute("disabled", "true");
     }
 

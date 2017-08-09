@@ -63,7 +63,7 @@ td {
     margin-right: 2px;
 }
 
-#off {
+.off {
     background: silver;
     color: white;
     border: solid 1px black;
