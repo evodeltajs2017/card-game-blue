@@ -74,8 +74,62 @@ class ViewCardType {
                 sql.close();
             });
         });
+
+
+        this.app.post("/view-card-type", (req, res) => {
+            console.log("Id este: ", req.body);
+            sql.connect(config, err => {
+
+                var cardId = req.body.cardTypeId;
+
+                var returnMessage = "";
+                var cardTypeDeleted = 0;
+                if (err) {
+                    res.status(500).send(err);
+                    sql.close();
+                }
+
+                if (cardId == undefined || cardId === "" || cardId < 0) {
+                    res.status(400).send("Card ID missing or not valid!");
+                    sql.close();
+                } else {
+                    new sql.Request().query(`Delete from [dbo].[CardType] where Id = ${cardId}`, (err, result) => {
+
+                        if (result.rowsAffected[0] > 0)
+                            returnMessage += "Number of card types deleted: " + result.rowsAffected[0];
+                        else
+                            returnMessage += "No cards of that type!";
+
+                        if (result.rowsAffected[0] > 0) {
+
+                            new sql.Request().query(`Delete from [dbo].[Card] where CardTypeId = ${cardId}`, (err, result) => {
+
+                                returnMessage += "\nNumber of cards deleted: " + result.rowsAffected[0];
+
+                                res.json(returnMessage);
+                                sql.close();
+                            })
+                        } else {
+                            returnMessage += "\nNo cards deleted!";
+                            res.json(returnMessage);
+                            sql.close();
+                        }
+
+                    });
+                }
+
+            });
+
+            sql.on("error", err => {
+                res.status(500).send(err);
+                sql.close();
+            });
+        });
+
+
     }
 }
+
 
 
 module.exports = ViewCardType;
