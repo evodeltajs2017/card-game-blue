@@ -21,9 +21,7 @@ class OpenPacksRepository {
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === XMLHttpRequest.DONE) {
-				const response = eval(this.responseText);
-				console.log("this: " + response.length);
-				callback(this.status, response);
+				callback(this.status, JSON.parse(this.responseText));
 			}
 		};
 
