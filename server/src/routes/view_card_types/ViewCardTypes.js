@@ -24,7 +24,6 @@ class ViewCardType {
 
             if (pagenum == undefined || pagesize == undefined || pagenum === "" || pagesize === "") {
                 res.status(400).send("Page number or page size missing or not valid!");
-                // sql.close();
             } else {
 
                 if (search == undefined || search == "") {
@@ -51,7 +50,6 @@ class ViewCardType {
                         };
                     });
                     res.json({ items: cardResult, count: maxCount });
-                    // sql.close();
                 });
             }
 
@@ -67,7 +65,6 @@ class ViewCardType {
 
             if (cardId == undefined || cardId === "" || cardId < 0) {
                 res.status(400).send("Card ID missing or not valid!");
-                // sql.close();
             } else {
                 this.deleteCardType(returnMessage, cardId, res);
             }
@@ -83,7 +80,6 @@ class ViewCardType {
             returnMessage += "\nNumber of cards deleted: " + result.rowsAffected[0];
 
             res.json(returnMessage);
-            // sql.close();
         })
     }
 
@@ -101,7 +97,6 @@ class ViewCardType {
             } else {
                 returnMessage += "\nNo cards deleted!";
                 res.json(returnMessage);
-                // sql.close();
             }
 
         });
