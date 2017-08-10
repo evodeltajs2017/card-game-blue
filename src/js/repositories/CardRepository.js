@@ -3,19 +3,25 @@ class CardRepository {
 		
 	}
 
-	postNewCardType(data, callback) {
-		const xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:3000/addnewcard", true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-		
+	postNewCardType(data) {
+		return new Promise((resolve, reject) =>{
+			const xhr = new XMLHttpRequest();
+			xhr.open("POST", "http://localhost:3000/addnewcard", true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && xhr.status == 200) 
-			{
-				callback(xhr.responseText, this.status);
+			if (xhr.readyState == 4 )
+				if (xhr.status == 200){ 
+					console.log(this.status);
+					resolve(xhr.responseText, this.status);
 				
-			}			
-		};
-		xhr.send(data);	
-	}
-}
+				} else {
+					reject(xhr.responseText, this.status);	
+				}			
+		}
 
+		xhr.send(data);	
+		});
+	}
+
+}

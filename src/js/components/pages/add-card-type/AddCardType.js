@@ -16,15 +16,19 @@ class AddCardType {
 	
 	sendToRepo(cardObject) {
 	    const cardRepo = new CardRepository();
-	    cardRepo.postNewCardType(cardObject, (errorArray, status) => {
-	        if (status !== 200) {
-	            console.log("not 200 here");
-	        } else if (errorArray == "Success") {
-	        	this.reroute("");
+	    cardRepo.postNewCardType(cardObject).then((errorArray, status) => {
+	       this.reroute("");
+	        // if (status == 200) {
+	        // 	console.log("status");
+	        //     console.log(errorArray);
+	        // } else if (errorArray == "Success") {
 	        	
-	        } else {
-	            this.displayErr(JSON.parse(errorArray));
-	        }
+	        	
+	        // } else {
+	        //     this.displayErr(JSON.parse(errorArray));
+	        // }
+	    }, (errorArray) => {
+	    	this.displayErr(JSON.parse(errorArray));
 	    });
 	}
 
@@ -52,47 +56,47 @@ class AddCardType {
 		<div class="view-container">
 		   <div class="display-error"></div>
 		   <div class="card-model-container">
-		      <div id="card-model-cost" class="rounded-stats"> COST </div>
-		      <div id="card-model-image">
-		         <div id="image-to-change">
+		      <div class="card-model-cost rounded-stats"> COST </div>
+		      <div class="card-model-image">
+		         <div class="image-to-change">
 		            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
 		         </div>
-		         <div id="card-model-name">Card Name</div>
+		         <div class="card-model-name">Card Name</div>
 		      </div>
-		      <div id="card-model-damage" class="rounded-stats"> DAMAGE </div>
-		      <div id="card-model-health" class="rounded-stats"> HEALTH </div>
+		      <div class="card-model-damage rounded-stats"> DAMAGE </div>
+		      <div class="card-model-health rounded-stats"> HEALTH </div>
 		   </div>
 		   <div class="card-input-container">
 		      <form class="form-horizontal">
-		         <fieldset id="fieldset">
+		         <fieldset class="fieldset">
 		            <div class="card-form-style">
 		               <label class="card-input-label" for="card-name">Name</label>  
 		               <div class="card-form-style">
-		                  <input id="card-name" name="card-name" type="text" placeholder="Name (required)" class="card-input-style" required="">
+		                  <input class="card-name card-input-style" name="card-name" type="text" placeholder="Name (required)" maxlength="30" required>
 		               </div>
 		            </div>
 		            <div class="card-form-style">
 		               <label class="card-input-label" for="card-cost">Cost</label>  
 		               <div class="card-form-style">
-		                  <input id="card-cost" name="card-cost" type="text" placeholder="Cost (required)" class="card-input-style" required="">
+		                  <input class="card-cost card-input-style" name="card-cost" type="text" placeholder="Cost (required)" min="0" max="10" required>
 		               </div>
 		            </div>
 		            <div class="card-form-style">
 		               <label class="card-input-label" for="card-damage">Damage</label>  
 		               <div class="card-form-style">
-		                  <input id="card-damage" name="card-damage" type="text" placeholder="Damage (required)" class="card-input-style" required="">
+		                  <input class="card-damage card-input-style" name="card-damage" type="text" placeholder="Damage (required)" required>
 		               </div>
 		            </div>
 		            <div class="card-form-style">
 		               <label class="card-input-label" for="card-health">Health</label>  
 		               <div class="card-form-style">
-		                  <input id="card-health" name="card-health" type="text" placeholder="Health (required)" class="card-input-style" required="">
+		                  <input class="card-health card-input-style" name="card-health" type="text" placeholder="Health (required)"  required>
 		               </div>
 		            </div>
-		            <div id="last-element" class="card-form-style">
+		            <div class="last-element card-form-style">
 		               <label class="card-input-label " for="card-image">Image</label>
 		               <div class="card-form-style">
-		                  <select id="image-select" class="card-input-style">
+		                  <select class="image-select card-input-style">
 		                     <option value="fa-trophy">Trophy</option>
 		                     <option value="fa-taxi">Car</option>
 		                     <option value="fa-snowflake-o">Snowflake</option>
@@ -111,34 +115,34 @@ class AddCardType {
 	}
 
 	addEvents() {
-	    this.theDom.querySelector("#card-name").addEventListener("keyup", () => {
-	        this.theDom.querySelector("#card-model-name").innerHTML =
-	            this.theDom.querySelector("#card-name").value;
+	    this.theDom.querySelector(".card-name").addEventListener("keyup", () => {
+	        this.theDom.querySelector(".card-model-name").innerHTML =
+	            this.theDom.querySelector(".card-name").value;
 	    });
-	    this.theDom.querySelector("#card-cost").addEventListener("keyup", () => {
-	        this.theDom.querySelector("#card-model-cost").innerHTML =
-	            this.theDom.querySelector("#card-cost").value;
+	    this.theDom.querySelector(".card-cost").addEventListener("keyup", () => {
+	        this.theDom.querySelector(".card-model-cost").innerHTML =
+	            this.theDom.querySelector(".card-cost").value;
 	    });
-	    this.theDom.querySelector("#card-damage").addEventListener("keyup", () => {
-	        this.theDom.querySelector("#card-model-damage").innerHTML =
-	            this.theDom.querySelector("#card-damage").value;
+	    this.theDom.querySelector(".card-damage").addEventListener("keyup", () => {
+	        this.theDom.querySelector(".card-model-damage").innerHTML =
+	            this.theDom.querySelector(".card-damage").value;
 	    });
-	    this.theDom.querySelector("#card-health").addEventListener("keyup", () => {
-	        this.theDom.querySelector("#card-model-health").innerHTML =
-	            this.theDom.querySelector("#card-health").value;
+	    this.theDom.querySelector(".card-health").addEventListener("keyup", () => {
+	        this.theDom.querySelector(".card-model-health").innerHTML =
+	            this.theDom.querySelector(".card-health").value;
 	    });
-	    this.theDom.querySelector("#image-select").addEventListener("change", () => {
-	        this.theDom.querySelector("#image-to-change").innerHTML =
-	            `<i class="fa ${this.theDom.querySelector("#image-select").value}" aria-hidden="true"></i>`
+	    this.theDom.querySelector(".image-select").addEventListener("change", () => {
+	        this.theDom.querySelector(".image-to-change").innerHTML =
+	            `<i class="fa ${this.theDom.querySelector(".image-select").value}" aria-hidden="true"></i>`
 	    });
 
 	    this.theDom.querySelector("#save").addEventListener("click", () => {
 	        this.cardObjectValues = {};
-	        this.cardObjectValues.name = this.theDom.querySelector("#card-name").value;
-	        this.cardObjectValues.cost = this.theDom.querySelector("#card-cost").value;
-	        this.cardObjectValues.damage = this.theDom.querySelector("#card-damage").value;
-	        this.cardObjectValues.health = this.theDom.querySelector("#card-health").value;
-	        this.cardObjectValues.image = this.theDom.querySelector("#image-select").value;
+	        this.cardObjectValues.name = this.theDom.querySelector(".card-name").value;
+	        this.cardObjectValues.cost = this.theDom.querySelector(".card-cost").value;
+	        this.cardObjectValues.damage = this.theDom.querySelector(".card-damage").value;
+	        this.cardObjectValues.health = this.theDom.querySelector(".card-health").value;
+	        this.cardObjectValues.image = this.theDom.querySelector(".image-select").value;
 
 
 	        let validateMyData = new Validator(this.cardObjectValues);

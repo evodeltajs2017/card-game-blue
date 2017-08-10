@@ -66,7 +66,7 @@
 	color: #fff;
 }
 
-#card-model-cost{
+.card-model-container .card-model-cost{
 
 	
 	top: -50px;
@@ -74,7 +74,7 @@
 	background-color: #f39c12;
 }
 
-#card-model-damage{
+.card-model-container .card-model-damage{
 
 
 	bottom: -50px;
@@ -82,7 +82,7 @@
 	background-color: #2c3e50;
 }
 
-#card-model-health{
+.card-model-container .card-model-health{
 
 	bottom: -50px;
 	right: -50px;
@@ -91,7 +91,7 @@
 
 
 
-#card-model-image{
+.card-model-container .card-model-image{
 	
 	position: relative;
     top: 70px;
@@ -99,7 +99,7 @@
     width: 250px;
 }
 
-#card-model-name{
+.card-model-container .card-model-name{
 
 	text-align: center;
     top: 70px;
@@ -117,12 +117,12 @@
 
 }
 
-.clear{
+.view-container .clear{
 
 	clear: both;
 }
 
-#image-to-change{
+.card-model-container .image-to-change{
 
 	position: relative;
 	margin: auto;
@@ -134,7 +134,7 @@
 
 /*Card input model */
 
-#fieldset{
+.fieldset{
 
 	border: 0;
 }
@@ -157,12 +157,12 @@
 
 }
 
-#last-element{
+.last-element{
 
 	margin-bottom: 20px;
 }
 
-#image-select{
+.image-select{
 	height:46px;
 }
 

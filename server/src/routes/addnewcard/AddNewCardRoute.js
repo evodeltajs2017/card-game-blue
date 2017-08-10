@@ -37,7 +37,7 @@ class AddNewCardRoute {
                     });
 
                 } else {
-                    res.send(errorArray);
+                    res.status(400).send(errorArray);
                     console.log("card Exists");
                 }
             });
