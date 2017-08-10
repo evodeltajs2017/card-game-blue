@@ -15,6 +15,10 @@ const OpenPacksRoute = require("./routes/open-packs/OpenPacksRoute");
 const openPacksRoute = new OpenPacksRoute(app);
 openPacksRoute.initialize();
 
+const SampleRoute = require("./routes/sample/SampleRoute");
+const sampleRoute = new SampleRoute(app);
+sampleRoute.initialize();
+
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
 
