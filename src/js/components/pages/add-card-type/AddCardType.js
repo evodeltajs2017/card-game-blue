@@ -18,15 +18,6 @@ class AddCardType {
 	    const cardRepo = new CardRepository();
 	    cardRepo.postNewCardType(cardObject).then((errorArray, status) => {
 	       this.reroute("");
-	        // if (status == 200) {
-	        // 	console.log("status");
-	        //     console.log(errorArray);
-	        // } else if (errorArray == "Success") {
-	        	
-	        	
-	        // } else {
-	        //     this.displayErr(JSON.parse(errorArray));
-	        // }
 	    }, (errorArray) => {
 	    	this.displayErr(JSON.parse(errorArray));
 	    });
