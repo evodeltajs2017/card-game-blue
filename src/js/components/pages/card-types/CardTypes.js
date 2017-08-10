@@ -12,7 +12,7 @@ class CardTypes {
         const div = document.createElement("div");
         div.className = "view-type-container";
         repo.getData("").then((receivedObj) => {
-            this.addAll(receivedObj);
+            this.addAll(receivedObj, repo);
             this.addEventToIndexButtons(repo, searchText);
             let buton = div.querySelector(".buton");
 
@@ -51,11 +51,11 @@ class CardTypes {
         this.container.appendChild(div);
     }
 
-    addAll(receivedObj) {
+    addAll(receivedObj, repo) {
         this.createIndexButtons(receivedObj);
         this.fillTable(receivedObj);
-        this.addEventToTableButtons();
-
+        this.addEventToEditButtons();
+        this.addEventToDeleteButtons(repo);
     }
 
 
@@ -63,7 +63,7 @@ class CardTypes {
         searchText = this.domElement.querySelector(".view-type-search-text").value;
         this.domElement.querySelector(".view-type-search-text").value = "";
         repo.getData(searchText).then(receivedObj => {
-            this.addAll(receivedObj);
+            this.addAll(receivedObj, repo);
             if (searchText !== "")
                 this.createIndexButtons(receivedObj);
             this.addEventToIndexButtons(repo, searchText);
@@ -71,12 +71,32 @@ class CardTypes {
         });
     }
 
-    addEventToTableButtons() {
-        let elementList = this.domElement.querySelectorAll(".table-edit,.table-delete");
+    addEventToEditButtons() {
+        let elementList = this.domElement.querySelectorAll(".table-edit");
         for (let i = 0; i < elementList.length; i++) {
             elementList[i].addEventListener("click", () => {
+
                 let id = elementList[i].value;
                 console.log(id);
+
+            });
+        };
+    }
+
+    addEventToDeleteButtons(repo) {
+        let elementList = this.domElement.querySelectorAll(".table-delete");
+        for (let i = 0; i < elementList.length; i++) {
+            elementList[i].addEventListener("click", () => {
+                if (confirm(`Are you sure you want to delete ${elementList[i].getAttribute("nume")}?`)) {
+                    repo.deleteCard(elementList[i].value).then((receivedObj) => {
+                        alert(receivedObj);
+                        repo.getData("").then(receivedObj => {
+                            this.addAll(receivedObj, repo);
+                            this.addEventToIndexButtons(repo, "");
+                            this.disableButton();
+                        });
+                    });
+                }
             });
         };
     }
@@ -87,7 +107,8 @@ class CardTypes {
             elementList[i].addEventListener("click", () => {
                 repo.getData(searchText, elementList[i].value).then(receivedObj => {
                     this.fillTable(receivedObj);
-                    this.addEventToTableButtons();
+                    this.addEventToEditButtons();
+                    this.addEventToDeleteButtons(repo);
                     this.createShowingText(receivedObj);
                 });
                 this.disableButton(event.target);
@@ -123,13 +144,13 @@ class CardTypes {
 
     fillTable(receivedObj) {
         let tableTemplate = `
-                <tr>
-					<th style="width:20px">ID</th>
+                <tr bgcolor=\"white\">
+					<th style="width:50px">ID</th>
 					<th>Name</th>
-					<th style="width:60px">Cost</th>
-					<th style="width:60px">Damage</th>
-					<th style="width:60px">Health</th>
-					<th style="width:118px">Actions</th>
+					<th style="width:100px">Cost</th>
+					<th style="width:100px">Damage</th>
+					<th style="width:100px">Health</th>
+					<th style="width:130px">Actions</th>
                 </tr>`;
 
         const renderFuncs = {
@@ -138,22 +159,22 @@ class CardTypes {
             "Cost": rowData => `<td>${rowData}</td>`,
             "Damage": rowData => `<td>${rowData}</td>`,
             "Health": rowData => `<td>${rowData}</td>`,
-            "Actions": rowData => `<td bgcolor=\"#fff\"><button class="table-edit" value="${rowData}">Edit</button><button class="table-delete" value="${rowData}" >Delete</button></td>`
+            "Actions": (rowData, rowName) => `<td bgcolor="white"><button class="table-edit" value="${rowData}">Edit</button><button class="table-delete" nume="${rowName}" value="${rowData}" >Delete</button></td>`
         };
 
 
         for (let i = 0; i < receivedObj.items.length; i++) {
             if (i % 2 !== 0)
-                tableTemplate += "<tr>";
+                tableTemplate += "<tr bgcolor=\"white\">";
             else
-                tableTemplate += "<tr bgcolor=\"#778e97\" style=\"color:white\">";
+                tableTemplate += "<tr bgcolor=\"#4d76ce\" style=\"color:white\">";
 
             tableTemplate += renderFuncs.ID(receivedObj.items[i].cod);
             tableTemplate += renderFuncs.Name(receivedObj.items[i].name);
             tableTemplate += renderFuncs.Cost(receivedObj.items[i].cost);
             tableTemplate += renderFuncs.Damage(receivedObj.items[i].damage);
             tableTemplate += renderFuncs.Health(receivedObj.items[i].health);
-            tableTemplate += renderFuncs.Actions(receivedObj.items[i].cod);
+            tableTemplate += renderFuncs.Actions(receivedObj.items[i].cod, receivedObj.items[i].name);
 
             tableTemplate += "</tr>";
         }

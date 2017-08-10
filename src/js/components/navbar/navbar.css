@@ -1,10 +1,18 @@
+.navbar {
+    margin: 2% 2% 0 2%;
+    box-shadow: 2px 2px 6px grey;
+    /* background: rgba(230, 126, 34, 0.7); */
+}
+
 .navbar button {
-	background: #fff;
-	border: 1px solid #aaa;
-	padding: 5px;
+    border: 1px solid transparent;
+    background: white;
+    padding: 5px 30px 5px 30px;
+    font-family: Montserrat;
+    background: transparent;
 }
 
 .navbar button:hover {
-	border: 1px solid #000;
-	cursor: pointer;
+    cursor: pointer;
+    background: rgba(52, 152, 219, 0.7);
 }

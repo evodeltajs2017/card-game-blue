@@ -25,6 +25,27 @@ class CardTypeRepository {
         });
     }
 
+    deleteCard(id) {
+        return new Promise((resolve, reject) => {
+            var deleteRequest = new XMLHttpRequest();
+
+            var body = { cardTypeId: id };
+            var URL = `http://localhost:3000/view-card-type`;
+
+            deleteRequest.open('POST', URL, true);
+            deleteRequest.setRequestHeader("Content-Type", "application/json");
+            deleteRequest.onreadystatechange = function() {
+
+                if (deleteRequest.readyState === 4) {
+
+                    let receivedObj = JSON.parse(deleteRequest.response);
+                    resolve(receivedObj);
+                }
+            }
+
+            deleteRequest.send(JSON.stringify(body));
+        });
+    }
 
 
 }
