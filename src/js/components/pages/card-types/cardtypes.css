@@ -1,5 +1,8 @@
 .view-type-container {
-    padding: 2%;
+    margin: 2%;
+    background: white;
+    /* background: rgba(230, 126, 34, 0.7); */
+    box-shadow: 2px 2px 6px grey;
 }
 
 .view-type-headder {
@@ -25,6 +28,7 @@
 th,
 td {
     border: 2px solid black;
+    padding: 5px;
 }
 
 .view-type-table {
@@ -39,6 +43,30 @@ td {
 .view-type-table button {
     margin-left: 2px;
     margin-right: 2px;
+    border: 1px solid grey;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.table-delete {
+    background: #d9534f;
+    color: white;
+}
+
+.table-delete:hover {
+    background: #f43f3a;
+}
+
+.table-edit {
+    background: #f0ad6e;
+    color: white;
+}
+
+.table-edit:hover {
+    background: #eea236;
+}
+
+.view-type-table button:hover {
+    cursor: pointer;
 }
 
 .view-type-under-table {

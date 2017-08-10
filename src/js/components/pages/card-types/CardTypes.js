@@ -144,13 +144,13 @@ class CardTypes {
 
     fillTable(receivedObj) {
         let tableTemplate = `
-                <tr>
-					<th style="width:20px">ID</th>
+                <tr bgcolor=\"white\">
+					<th style="width:50px">ID</th>
 					<th>Name</th>
-					<th style="width:60px">Cost</th>
-					<th style="width:60px">Damage</th>
-					<th style="width:60px">Health</th>
-					<th style="width:118px">Actions</th>
+					<th style="width:100px">Cost</th>
+					<th style="width:100px">Damage</th>
+					<th style="width:100px">Health</th>
+					<th style="width:130px">Actions</th>
                 </tr>`;
 
         const renderFuncs = {
@@ -159,15 +159,15 @@ class CardTypes {
             "Cost": rowData => `<td>${rowData}</td>`,
             "Damage": rowData => `<td>${rowData}</td>`,
             "Health": rowData => `<td>${rowData}</td>`,
-            "Actions": (rowData, rowName) => `<td bgcolor=\"#fff\"><button class="table-edit" value="${rowData}">Edit</button><button class="table-delete" nume="${rowName}" value="${rowData}" >Delete</button></td>`
+            "Actions": (rowData, rowName) => `<td bgcolor="white"><button class="table-edit" value="${rowData}">Edit</button><button class="table-delete" nume="${rowName}" value="${rowData}" >Delete</button></td>`
         };
 
 
         for (let i = 0; i < receivedObj.items.length; i++) {
             if (i % 2 !== 0)
-                tableTemplate += "<tr>";
+                tableTemplate += "<tr bgcolor=\"white\">";
             else
-                tableTemplate += "<tr bgcolor=\"#778e97\" style=\"color:white\">";
+                tableTemplate += "<tr bgcolor=\"#4d76ce\" style=\"color:white\">";
 
             tableTemplate += renderFuncs.ID(receivedObj.items[i].cod);
             tableTemplate += renderFuncs.Name(receivedObj.items[i].name);
