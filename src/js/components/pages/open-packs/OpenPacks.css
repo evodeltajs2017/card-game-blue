@@ -137,8 +137,6 @@ div .upperSide > button {
 
 .openedCard:hover::after {
     opacity: 1;
-.modal-content {
-    background-color: #fefefe;
 }
 
 #wordWrap {
