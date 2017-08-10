@@ -6,24 +6,12 @@ class SampleRoute {
 	}
 
 	initialize() {
-		const config = {
-			user: "test",
-			password: "test",
-			server: "localhost",
-			database: "CardGame",
-			port: 1858
-		};
 
-		this.app.get("/sample", (req, res) => {
-			sql.connect(config, err => {
-				if (err) {
-					res.status(500).send(err);
-					sql.close();
-				}
-
+		this.app.post("/sample", (req, res) => {
+			
 				new sql.Request().query("select * from [dbo].[User]", (err, result) => {
+					console.log(result);
 					res.json(result.recordset[0]);
-					sql.close();
 				});
 			});
 
@@ -31,7 +19,6 @@ class SampleRoute {
 				res.status(500).send(err);
 				sql.close();
 			});
-		});
 	}
 }
 

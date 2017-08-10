@@ -8,7 +8,7 @@ class Dashboard {
         div.innerHTML = "<h1>dashboard</h1>";
         this.container.appendChild(div);
 
-        const repo = new UserRepository();
+		const repo = new OpenPacksRepository();
         repo.getUnopenedCardPacks((status, data) => {
             if (status !== 200) {
                 div.innerHTML = "<h1>error</h1>";
