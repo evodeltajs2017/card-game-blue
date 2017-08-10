@@ -1,0 +1,202 @@
+.content-container {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 1080px;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.backImg {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background: url(../open-packs/imgs/maxresdefault.jpg) no-repeat;
+	width: 100%;
+	background-size: cover;
+	z-index: -1;
+}
+
+div .upperSide {
+	display: inline-block;
+	top: 0px;
+	margin: 0px;  
+	padding: 0px 2px 2px 3px;
+	background:linear-gradient(white,white) no-repeat;
+    background-size:98% 2px;
+    background-position: center bottom;
+	width: 100%;
+	height: 7%;
+}
+
+div .upperSide > h1 {
+	color: White;
+	float: left;
+	padding-left: 2%;
+	bottom: 0;
+}
+
+div .upperSide > button {
+	float: right;
+	padding-right: 2%;
+	padding-left: 2%;
+	margin: 1.5%;
+	vertical-align: middle;
+	text-align: center;
+	bottom: 0;
+}
+
+.decks {
+	width: 13.5%;
+	height: 90%;
+	float: left;
+	border: 2px solid grey;
+	background: url(../open-packs/imgs/maxresdefault.jpg);
+}
+
+.openDecks {
+	width: 85%;
+	height: 90%;
+	float: right;
+	background: url(../open-packs/imgs/maxresdefault.jpg) center center no-repeat;
+}
+
+.deck {
+    background: url('https://s-media-cache-ak0.pinimg.com/236x/be/c4/ba/bec4ba0cfe504c4eddae9ab58269b7bb--warcraft-art-game-icon.jpg');
+	background-size: cover;
+    width: 153.02px;
+    height: 234.39px;
+    padding: 5px;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+.circle .deck {
+	margin-top: 350px;
+	margin-bottom: 350px;
+}
+
+.decks .leftDecks {
+	text-align: center;
+	color: white;
+}
+
+.openDecks .circle {
+	width: 900px;
+	height: 900px;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: 7px solid #5b432b;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	top: 20px;
+	background: radial-gradient(rgba(255, 255, 255, 0.40) 5%, rgba(34,34,34,0.75) 40%);
+}
+
+.openedCard {
+	width: 153.02px;
+    height: 204.39px;
+    padding: 5px;
+    margin: 5px;
+    background-color: white;
+	display: inline-block;
+	float: left;
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+	-webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+	transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.openedCard::after {
+	border-radius: 5px;
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0px 0px 10px 3px rgba(30, 115, 252, 0.5);
+	opacity: 0;
+	-webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+	transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.openedCard:hover {
+	-webkit-transform: scale(1.5, 1.5);
+  	transform: scale(1.5, 1.5);
+  	box-shadow: 0px 0px 30px 10px rgba(30, 115, 252, 0.5);
+}
+
+.openedCard:hover::after {
+    opacity: 1;
+}
+
+#wordWrap {
+	width: 150px;
+	word-wrap: break-word;
+	word-break: break-all;
+	line-break: strict;
+	hyphens: none;
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+}
+
+@import "compass/css3";
+
+@import "compass/reset";
+
+@mixin animation($name, $seconds, $style, $totaltime) {
+    animation: $name $seconds $style $totaltime;
+    -ms-animation: $name $seconds $style $totaltime;
+    -webkit-animation: $name $seconds $style $totaltime;
+    -moz-animation: $name $seconds $style $totaltime;
+    -o-animation: $name $seconds $style $totaltime;
+}
+
+@-webkit-keyframes breathing {
+    0% { box-shadow: 0px 0px 0px #888888; }
+    50% { box-shadow: 0px 1px 75px #888888; }
+}
+@-moz-keyframes breathing {
+    0% { box-shadow: 0px 0px 0px #888888; }
+    50% { box-shadow: 0px 1px 75px #888888; }
+}
+@keyframes breathing {
+    0% { box-shadow: 0px 0px 0px #888888; }
+    50% { box-shadow: 0px 1px 75px #888888; }
+}
+
+.circle{
+	@include border-radius(3px, 3px);
+	animation: breathing 3s linear infinite;
+    -ms-animation: breathing 3s linear infinite;
+    -webkit-animation: breathing 3s linear infinite;
+    -moz-animation: breathing 3s linear infinite;
+    -o-animation: breathing 3s linear infinite;
+}

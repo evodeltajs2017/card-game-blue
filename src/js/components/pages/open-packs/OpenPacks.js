@@ -61,7 +61,6 @@ class OpenPacks {
 			if (status !== 200) {
 				div.innerHTML = "<h1>error</h1>";
 			} else {
-				console.log(status, data);
 				let nr = null;
 				let leftDecks = document.getElementsByClassName("leftDecks")[0];
 				if (leftDecks !== undefined){
@@ -96,7 +95,6 @@ class OpenPacks {
 		
 					}
 					else{
-						console.log(status, data);
 						if (data.UnopenedCardPacks === 0) {
 							butt.setAttribute("disabled", true);
 						}

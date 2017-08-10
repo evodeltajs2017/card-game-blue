@@ -29,14 +29,10 @@ class ViewCardType {
                     (select Row_Number() over 
                     (order by [id] DESC) as RowIndex, * from [dbo].[CardType]`;
 
-                if (err) {
-                    res.status(500).send(err);
-                    sql.close();
-                }
 
                 if (pagenum == undefined || pagesize == undefined || pagenum === "" || pagesize === "") {
                     res.status(400).send("Page number or page size missing or not valid!");
-                    sql.close();
+                    
                 } else {
 
                     if (search == undefined || search == "") {
@@ -63,15 +59,10 @@ class ViewCardType {
                             };
                         });
                         res.json({ items: cardResult, count: maxCount });
-                        sql.close();
+                        
                     });
                 }
 
-            });
-
-            sql.on("error", err => {
-                res.status(500).send(err);
-                sql.close();
             });
         });
 
@@ -82,23 +73,14 @@ class ViewCardType {
                 var cardId = req.body.cardTypeId;
                 var returnMessage = "";
                 var cardTypeDeleted = 0;
-                if (err) {
-                    res.status(500).send(err);
-                    sql.close();
-                }
 
                 if (cardId == undefined || cardId === "" || cardId < 0) {
                     res.status(400).send("Card ID missing or not valid!");
-                    sql.close();
+                    
                 } else {
                     this.deleteCardType(returnMessage, cardId, res);
                 }
 
-            });
-
-            sql.on("error", err => {
-                res.status(500).send(err);
-                sql.close();
             });
         });
 
@@ -111,7 +93,7 @@ class ViewCardType {
             returnMessage += "\nNumber of cards deleted: " + result.rowsAffected[0];
 
             res.json(returnMessage);
-            sql.close();
+            
         })
     }
 
@@ -129,7 +111,7 @@ class ViewCardType {
             } else {
                 returnMessage += "\nNo cards deleted!";
                 res.json(returnMessage);
-                sql.close();
+                
             }
 
         });
