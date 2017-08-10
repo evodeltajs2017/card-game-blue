@@ -40,6 +40,8 @@
 
 }
 
+/* http://dev.graphiste-webdesign.fr/hearthstone/media/card.png */
+
 .card-model-container{
 
 	float: left;
@@ -86,6 +88,8 @@
 	right: -50px;
 	background-color: #c0392b;
 }
+
+
 
 #card-model-image{
 	
@@ -161,3 +165,20 @@
 #image-select{
 	height:46px;
 }
+
+/*Error message */
+
+.err-message{
+	color: #D8000C;
+    background-color: #FFBABA;
+    width: 50%;
+    margin: 10px auto;
+	padding: 10px;
+	text-align: center;
+}
+
+.display-error{
+	padding-top: 10px;
+}
+
+
