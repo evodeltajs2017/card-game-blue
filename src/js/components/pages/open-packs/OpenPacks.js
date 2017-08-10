@@ -152,7 +152,7 @@ class OpenPacks {
 	buildThePage() {
 		const div = document.createElement("div");
 		div.innerHTML = "<h1>Open card packs</h1>";
-		div.className = "upperShit";
+		div.className = "upperSide";
 
 		let button = document.createElement("button");
 		button.innerHTML = "Open";
