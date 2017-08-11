@@ -17,6 +17,7 @@
     left: 0px;
     right: 0px;
     background: url(../open-packs/imgs/maxresdefault.jpg) no-repeat;
+    filter: brightness(35%);
     width: 100%;
     background-size: cover;
     z-index: -1;
@@ -27,7 +28,7 @@ div .upperSide {
     top: 0px;
     margin: 0px;
     padding: 0px 2px 2px 3px;
-    background: linear-gradient(white, white) no-repeat;
+    /*background: linear-gradient(white, white) no-repeat;*/
     background-size: 98% 2px;
     background-position: center bottom;
     width: 100%;
@@ -64,6 +65,7 @@ div .upperSide>button {
     height: 90%;
     float: right;
     background: url(../open-packs/imgs/maxresdefault.jpg) center center no-repeat;
+    border: 2px solid grey;
 }
 
 .deck {
@@ -84,9 +86,11 @@ div .upperSide>button {
     margin-bottom: 350px;
 }
 
-.decks .leftDecks {
+.leftDecks {
     text-align: center;
     color: white;
+    font-size: 50px;
+    font-family: Montserrat;
 }
 
 .openDecks .circle {
@@ -155,6 +159,7 @@ div .upperSide>button {
     -webkit-transform: scale(1.5, 1.5);
     transform: scale(1.5, 1.5);
     border-radius: 20px;
+    box-shadow: 0px 0px 30px 10px rgba(30, 115, 252, 0.5);
 }
 
 .underDiv::after {
@@ -175,8 +180,6 @@ div .upperSide>button {
     width: 128.02px;
     height: 196.39px;
     position: absolute;
-    box-shadow: 0px 0px 30px 10px rgba(30, 115, 252, 0.5);
-    /* background: transparent; */
     margin-top: -45%;
     z-index: -1;
     -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
