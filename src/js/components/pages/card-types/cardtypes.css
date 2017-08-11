@@ -45,6 +45,7 @@ td {
     margin-right: 2px;
     border: 1px solid grey;
     border-radius: 15px 15px 15px 15px;
+    padding: 10px;
 }
 
 .table-delete {
