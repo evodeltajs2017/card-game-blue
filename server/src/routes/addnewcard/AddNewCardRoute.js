@@ -17,8 +17,7 @@ class AddNewCardRoute {
 
         this.app.post("/addnewcard", (req, res) => {
             let backendValidator = new Validator(req.body, (errorArray) => {
-                if (errorArray.length == 0) {
-                  
+                if (errorArray.length == 0) {               
 
                         new sql.Request().query(`INSERT INTO [dbo].[CardType] (Name, Cost, Damage, Health, ImageIdentifier)
 					VALUES ('${req.body.name}', ${req.body.cost}, ${req.body.damage}, ${req.body.health}, '${req.body.image}')`, (err, result) => {
@@ -28,7 +27,6 @@ class AddNewCardRoute {
                             }
                             res.send("Success");
                             console.log("rerouting...");
-                        
                         });
                 } else {
                     res.status(400).send(errorArray);
@@ -36,19 +34,14 @@ class AddNewCardRoute {
                 }
             });
 
-
             backendValidator.isNameUnique = (name, callback) => {
-
-               
-
+             
                     new sql.Request().query(`SELECT COUNT(*) AS response FROM [dbo].[CardType] WHERE '${name}' = [dbo].[CardType].[Name]`, (err, result) => {
                         if (err) {
-                            console.log(err);
-                       
+                            console.log(err);                       
                             return;
                         }
-                        let isUnique = result.recordset[0].response == 0;
-                      
+                        let isUnique = result.recordset[0].response == 0;                      
                         callback(isUnique);
                     });
         

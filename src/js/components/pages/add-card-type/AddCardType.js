@@ -9,15 +9,15 @@ class AddCardType {
 		this.addEvents();
 	}
 
-	reroute(innerPath){
-		this.router.go("/");
+	reroute(x){
+		this.router.go(x);
 
 	}
 	
 	sendToRepo(cardObject) {
 	    const cardRepo = new CardRepository();
 	    cardRepo.postNewCardType(cardObject).then((errorArray, status) => {
-	       this.reroute("");
+	       this.reroute("/card-types");
 	    }, (errorArray) => {
 	    	this.displayErr(JSON.parse(errorArray));
 	    });
@@ -37,68 +37,76 @@ class AddCardType {
 	render(){
 		const htmlTemplate = document.createElement("div");
 		htmlTemplate.innerHTML =`
-		<h1>add card type</h1>
-		<div class="buttons-container">
-		   <button id="save" class="action-button">Save</button>
-		   <button id="cancel" class="action-button">Cancel</button>
+		<div class="wrapper-container">
+			<div class="wrapper-header">
+				<h1>add card type</h1>
+				<div class="buttons-container">
+				   <button class="save action-button">Save</button>
+				   <button class="cancel action-button">Cancel</button>
+				</div>
 		</div>
-		</br>
-		<hr>
-		<div class="view-container">
-		   <div class="display-error"></div>
-		   <div class="card-model-container">
-		      <div class="card-model-cost rounded-stats"> COST </div>
-		      <div class="card-model-image">
-		         <div class="image-to-change">
-		            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-		         </div>
-		         <div class="card-model-name">Card Name</div>
-		      </div>
-		      <div class="card-model-damage rounded-stats"> DAMAGE </div>
-		      <div class="card-model-health rounded-stats"> HEALTH </div>
-		   </div>
-		   <div class="card-input-container">
-		      <form class="form-horizontal">
-		         <fieldset class="fieldset">
-		            <div class="card-form-style">
-		               <label class="card-input-label" for="card-name">Name</label>  
-		               <div class="card-form-style">
-		                  <input class="card-name card-input-style" name="card-name" type="text" placeholder="Name (required)" maxlength="30" required>
-		               </div>
-		            </div>
-		            <div class="card-form-style">
-		               <label class="card-input-label" for="card-cost">Cost</label>  
-		               <div class="card-form-style">
-		                  <input class="card-cost card-input-style" name="card-cost" type="text" placeholder="Cost (required)" min="0" max="10" required>
-		               </div>
-		            </div>
-		            <div class="card-form-style">
-		               <label class="card-input-label" for="card-damage">Damage</label>  
-		               <div class="card-form-style">
-		                  <input class="card-damage card-input-style" name="card-damage" type="text" placeholder="Damage (required)" required>
-		               </div>
-		            </div>
-		            <div class="card-form-style">
-		               <label class="card-input-label" for="card-health">Health</label>  
-		               <div class="card-form-style">
-		                  <input class="card-health card-input-style" name="card-health" type="text" placeholder="Health (required)"  required>
-		               </div>
-		            </div>
-		            <div class="last-element card-form-style">
-		               <label class="card-input-label " for="card-image">Image</label>
-		               <div class="card-form-style">
-		                  <select class="image-select card-input-style">
-		                     <option value="fa-trophy">Trophy</option>
-		                     <option value="fa-taxi">Car</option>
-		                     <option value="fa-snowflake-o">Snowflake</option>
-		                     <option value="fa-rocket">Rocket</option>
-		                  </select>
-		               </div>
-		            </div>
-		         </fieldset>
-		      </form>
-		   </div>
-		   <div class="clear"></div>
+			</div>
+
+			<div class="view-container">
+			   <div class="display-error"></div>
+			 	<div class="section-model">
+				   <div class="card-model-container">
+				      <div class="card-model-cost rounded-stats"> COST </div>
+				      <div class="card-model-image">
+				         <div class="image-to-change">
+				            <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+				         </div>
+				         <div class="card-model-name">Card Name</div>
+				      </div>
+				      <div class="card-model-damage rounded-stats"> DAMAGE </div>
+				      <div class="card-model-health rounded-stats"> HEALTH </div>
+				   </div>
+				</div>
+				<div class="section-input">
+			    <div class="card-input-container">
+			      <form class="form-horizontal">
+			         <fieldset class="fieldset">
+			            <div class="card-form-style">
+			               <label class="card-input-label" for="card-name">Name</label>  
+			               <div class="card-form-style">
+			                  <input class="card-name card-input-style" name="card-name" type="text" placeholder="Name (required)" maxlength="30" required>
+			               </div>
+			            </div>
+			            <div class="card-form-style">
+			               <label class="card-input-label" for="card-cost">Cost</label>  
+			               <div class="card-form-style">
+			                  <input class="card-cost card-input-style" name="card-cost" type="text" placeholder="Cost (required)" min="0" max="10" required>
+			               </div>
+			            </div>
+			            <div class="card-form-style">
+			               <label class="card-input-label" for="card-damage">Damage</label>  
+			               <div class="card-form-style">
+			                  <input class="card-damage card-input-style" name="card-damage" type="text" placeholder="Damage (required)" required>
+			               </div>
+			            </div>
+			            <div class="card-form-style">
+			               <label class="card-input-label" for="card-health">Health</label>  
+			               <div class="card-form-style">
+			                  <input class="card-health card-input-style" name="card-health" type="text" placeholder="Health (required)"  required>
+			               </div>
+			            </div>
+			            <div class="last-element card-form-style">
+			               <label class="card-input-label " for="card-image">Image</label>
+			               <div class="card-form-style">
+			                  <select class="image-select card-input-style">
+			                     <option value="fa-trophy">Trophy</option>
+			                     <option value="fa-taxi">Car</option>
+			                     <option value="fa-snowflake-o">Snowflake</option>
+			                     <option value="fa-rocket">Rocket</option>
+			                  </select>
+			               </div>
+			            </div>
+			         </fieldset>
+			      </form>
+			   </div>
+			   </div>
+			   <div class="clear"></div>
+			</div>   
 		</div>
 			`;
 		this.container.appendChild(htmlTemplate);
@@ -127,7 +135,11 @@ class AddCardType {
 	            `<i class="fa ${this.theDom.querySelector(".image-select").value}" aria-hidden="true"></i>`
 	    });
 
-	    this.theDom.querySelector("#save").addEventListener("click", () => {
+	    this.theDom.querySelector(".cancel").addEventListener("click", () => {
+	    	this.reroute("/");
+
+	    });
+	    this.theDom.querySelector(".save").addEventListener("click", () => {
 	        this.cardObjectValues = {};
 	        this.cardObjectValues.name = this.theDom.querySelector(".card-name").value;
 	        this.cardObjectValues.cost = this.theDom.querySelector(".card-cost").value;

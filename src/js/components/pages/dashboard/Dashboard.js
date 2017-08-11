@@ -5,7 +5,7 @@ class Dashboard {
 
     initialize() {
         const div = document.createElement("div");
-        div.innerHTML = "<h1>dashboard</h1>";
+        div.innerHTML = "<h1 class='dashboard'>Dashboard</h1>";
         this.container.appendChild(div);
     }
 
