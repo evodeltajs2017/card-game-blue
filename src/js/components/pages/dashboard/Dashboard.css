@@ -1,0 +1,114 @@
+.StartDiv{
+    
+    height : 95%;
+   margin :  1% 2% 2% 2%;
+    vertical-align : middle;
+    background-Image : url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);   
+    background-Size : cover;
+    filter: brightness(20%); 
+    box-shadow: 2px 2px 6px grey;
+    z-index: -1;
+}
+
+.GameDiv{
+    
+    height : 95%;
+    margin :  1% 2% 2% 2%;
+    box-shadow: 2px 2px 6px grey;
+    font-size: 0px;
+}
+
+.startButton{
+    
+    border-radius: 20px;
+    position: absolute;
+    margin:  20% 40%;
+    width: 20%;
+    background: #6BB9F0;
+    display: block;
+    font-size: 200%;
+    padding: 15px 32px;
+    z-index: 1;
+
+}
+
+.OpponentHand{
+    width: 100%;
+    height: 15%;
+    background: black;
+    display: inline-block;
+}
+
+.Info{
+    width: 15%;
+    height: 70%;
+    float:right;
+    display: inline-block;
+}
+
+.OpponentMana{
+    width: 29%;
+    height: 40%;
+    background: yellow;
+    margin-right: 2%;
+    margin-top: 2%;
+    float: right;
+}
+
+.PlayerMana{
+    width: 29%;
+    height: 40%;
+    background: yellow;
+     margin-right: 2%;
+    margin-top: 2%; 
+    float: right;
+}
+
+
+.OpponentDeck{
+    width: 100%;
+    height: 40%;
+    background: purple;
+}
+
+.EndTurnButton{
+    width: 100%;
+    height: 20%;
+    background: red;
+}
+
+
+.PlayerDeck{
+    width: 100%;
+    height: 40%;
+    background: purple;
+}
+
+.OpponentField{
+    width: 85%;
+    height: 35%;
+    background: green;
+    display: block;
+}
+
+.PlayerField{
+    width: 85%;
+    height: 35%;
+    background: blue;
+    display: block;
+}
+
+.PlayerHand{
+    width: 100%;
+    height: 15%;
+    background: black;
+    display: inline-block;
+}
+
+.Mana{
+    width: 8%;
+    height: 66%;
+    /* border-radius: 4% 33% 33% 4%; */
+    background: green;
+    display: inline-block;
+}
