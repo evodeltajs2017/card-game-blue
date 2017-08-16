@@ -228,7 +228,7 @@ $totaltime) {
     -o-animation: $name $seconds $style $totaltime;
 }
 
-@-webkit-keyframes breathing {
+@-webkit-keyframes breathingOutside {
     0% {
         box-shadow: 0px 0px 0px #888888;
     }
@@ -237,7 +237,7 @@ $totaltime) {
     }
 }
 
-@-moz-keyframes breathing {
+@-moz-keyframes breathingOutside {
     0% {
         box-shadow: 0px 0px 0px #888888;
     }
@@ -246,7 +246,7 @@ $totaltime) {
     }
 }
 
-@keyframes breathing {
+@keyframes breathingOutside {
     0% {
         box-shadow: 0px 0px 0px #888888;
     }
@@ -258,9 +258,9 @@ $totaltime) {
 .circle {
     @include border-radius(3px,
     3px);
-    animation: breathing 3s linear infinite;
-    -ms-animation: breathing 3s linear infinite;
-    -webkit-animation: breathing 3s linear infinite;
-    -moz-animation: breathing 3s linear infinite;
-    -o-animation: breathing 3s linear infinite;
+    animation: breathingOutside 3s linear infinite;
+    -ms-animation: breathingOutside 3s linear infinite;
+    -webkit-animation: breathingOutside 3s linear infinite;
+    -moz-animation: breathingOutside 3s linear infinite;
+    -o-animation: breathingOutside 3s linear infinite;
 }

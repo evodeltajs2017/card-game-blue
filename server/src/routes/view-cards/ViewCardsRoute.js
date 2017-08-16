@@ -5,16 +5,16 @@ class ViewCardsRoute {
         this.app = expressApp;
     }
 
-    getAllCards(res) {
+    getPageOfCards(req, res) {
         let request = new sql.Request();
-        request.query("select * from [dbo].[Card]", (err, result) => {
-            res.json(result);
+        request.query(`SELECT TOP 20 * FROM (SELECT ROW_NUMBER() OVER (ORDER BY Id) AS ROWNUM, * FROM [dbo].[Card]) T2 WHERE ROWNUM >= ${req.query.number}`, (err, result) => {
+            res.json(result.recordset);
         });
     }
 
     initialize() {
-        this.app.post("/open-packs", (req, res) => {
-            const array = this.getAllCards(res);
+        this.app.get("/view-cards/", (req, res) => {
+            const array = this.getPageOfCards(req, res);
         });
 
         sql.on("error", err => {
@@ -22,7 +22,6 @@ class ViewCardsRoute {
             sql.close();
         });
     }
-
 }
 
 module.exports = ViewCardsRoute;

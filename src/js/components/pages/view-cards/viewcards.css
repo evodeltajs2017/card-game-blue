@@ -79,3 +79,40 @@ div .upperSide > h1 {
     -webkit-hyphens: none;
     -moz-hyphens: none;
 }
+
+@-webkit-keyframes breathingInside {
+    0% {
+        box-shadow: inset 0px 0px 0px #888888;
+    }
+    50% {
+        box-shadow: inset 0px 1px 40px #888888;
+    }
+}
+
+@-moz-keyframes breathingInside {
+    0% {
+        box-shadow: inset 0px 0px 0px #888888;
+    }
+    50% {
+        box-shadow: inset 0px 1px 40px #888888;
+    }
+}
+
+@keyframes breathingInside {
+    0% {
+        box-shadow: inset 0px 0px 0px #888888;
+    }
+    50% {
+        box-shadow: inset 0px 1px 40px #888888;
+    }
+}
+
+.cards {
+    @include border-radius(3px,
+    3px);
+    animation: breathingInside 3s linear infinite;
+    -ms-animation: breathingInside 3s linear infinite;
+    -webkit-animation: breathingInside 3s linear infinite;
+    -moz-animation: breathingInside 3s linear infinite;
+    -o-animation: breathingInside 3s linear infinite;
+}

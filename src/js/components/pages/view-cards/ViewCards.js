@@ -2,6 +2,7 @@ class ViewCards {
     constructor(container) {
         this.container = container;
         this.nrExtraPacks = 0;
+        this.number = 1;
     }
 
     adaugaListener(e, ceva, butt, repo) {
@@ -188,6 +189,18 @@ class ViewCards {
         });
     }
 
+    putCardsInPlace() {
+        const repo = new ViewCardsRepository();
+        const context = this;
+        repo.getPageOfCards(context.number, (status, data) => {
+            if (status !== 200) {
+
+            } else {
+                console.log(data);
+            }
+        });
+    }
+
     buildThePage() {
         const div = document.createElement("div");
         div.innerHTML = "<h1>View Cards</h1>";
@@ -214,6 +227,8 @@ class ViewCards {
         openDiv.className = "cards";
 
         this.container.appendChild(openDiv);
+
+        this.putCardsInPlace();
     }
 
     initialize() {
