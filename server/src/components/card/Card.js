@@ -1,6 +1,8 @@
 class Card {
-	constructor(container, name, cost, damage, health, imgIdentifier) {
+	constructor(container, width, height, name, cost, damage, health, imgIdentifier) {
 		this.container = container;
+		this.width = width;
+		this.height = height;
 		this.name = name;
 		this.cost = cost; 
 		this.damage = damage;
@@ -49,6 +51,8 @@ class Card {
         divCarte.appendChild(costP);
         divCarte.appendChild(damageP);
         divCarte.appendChild(healthP);
+        divCarte.style.width = this.width;
+        divCarte.style.height = this.height;
         this.container.appendChild(divCarte);
 	}
 
