@@ -9,37 +9,41 @@ class ViewCardType {
 
         let cardResult = [];
         let maxCount;
-        let maxSearchCount;
-
+     
         this.app.get("/view-card-type", (req, res) => {
 
             var search = req.query.search;
-            var pagenum = req.query.pageIndex - 1;
+            var pagenum = req.query.pageIndex;
             var pagesize = req.query.pageSize;
             var searchQuery = `SELECT COUNT(*) AS number FROM [dbo].[CardType]`;
-            var query = `select * from 
-                    (select Row_Number() over 
-                    (order by [id] DESC) as RowIndex, * from [dbo].[CardType]`;
+            var query = `select * from [dbo].[CardType]`
 
 
             if (pagenum == undefined || pagesize == undefined || pagenum === "" || pagesize === "") {
                 res.status(400).send("Page number or page size missing or not valid!");
                     
             } else {
+          
+                let x = (pagenum - 1) * 10;    
 
                 if (search == undefined || search == "") {
-                    query += `) as Sub Where Sub.RowIndex >= ${pagenum*pagesize+1} and Sub.RowIndex <= ${pagenum*pagesize+pagesize}`;
+                               
+                    query += `order by [Id] desc OFFSET ${x} ROWS FETCH NEXT 10 ROWS ONLY`;
+                                 
                 } else {
-                    searchQuery += ` where [Name] like '%${search}%'`;
-                    query += ` where [Name] like '%${search}%') as Sub Where Sub.RowIndex >= ${pagenum*pagesize+1} and Sub.RowIndex <= ${pagenum*pagesize+pagesize}`;
+
+                    query += `where [Name] like '%${search}%' order by [Id] desc OFFSET ${x} ROWS FETCH NEXT 10 ROWS ONLY`;
+                    searchQuery += `where [Name] like '%${search}%'`;
                 }
+
 
                 new sql.Request().query(searchQuery, (err, result) => {
                     maxCount = result.recordset[0].number;
-                    maxSearchCount = maxCount;
+        
                 });
-
+               
                 new sql.Request().query(query, (err, result) => {
+                        
                     cardResult = result.recordset.map((x) => {
                         return {
                             cod: x.Id,
@@ -50,8 +54,9 @@ class ViewCardType {
                             imageid: x.ImageIdentifier
                         };
                     });
+
                     res.json({ items: cardResult, count: maxCount });
-                        
+                    
                 });
             }
 
