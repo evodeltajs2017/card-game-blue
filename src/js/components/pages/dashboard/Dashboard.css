@@ -1,114 +1,181 @@
-.StartDiv{
-    
-    height : 95%;
-   margin :  1% 2% 2% 2%;
-    vertical-align : middle;
-    background-Image : url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);   
-    background-Size : cover;
-    filter: brightness(20%); 
+.StartDiv {
+    height: 95%;
+    margin: 1% 2% 2% 2%;
+    vertical-align: middle;
+    background-Image: url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);
+    background-Size: cover;
+    filter: brightness(20%);
     box-shadow: 2px 2px 6px grey;
     z-index: -1;
 }
 
-.GameDiv{
-    
-    height : 95%;
-    margin :  1% 2% 2% 2%;
+.GameDiv {
+    height: 95%;
+    margin: 1% 2% 2% 2%;
     box-shadow: 2px 2px 6px grey;
     font-size: 0px;
 }
 
-.startButton{
-    
+.startButton {
     border-radius: 20px;
     position: absolute;
-    margin:  20% 40%;
+    margin: 20% 40%;
     width: 20%;
     background: #6BB9F0;
     display: block;
     font-size: 200%;
     padding: 15px 32px;
     z-index: 1;
-
 }
 
-.OpponentHand{
+.OpponentHand {
     width: 100%;
     height: 15%;
-    background: black;
+    border: 1px solid black;
     display: inline-block;
+    overflow: hidden;
+    position: relative;
 }
 
-.Info{
+.Info {
     width: 15%;
     height: 70%;
-    float:right;
+    float: right;
     display: inline-block;
 }
 
-.OpponentMana{
+.OpponentMana {
     width: 29%;
     height: 40%;
-    background: yellow;
-    margin-right: 2%;
-    margin-top: 2%;
+    border: 1px solid yellow;
+    margin-right: 1%;
+    margin-top: 1%;
     float: right;
+    display: flex;
+    align-items: center;
 }
 
-.PlayerMana{
+.PlayerMana {
     width: 29%;
     height: 40%;
-    background: yellow;
-     margin-right: 2%;
-    margin-top: 2%; 
+    border: 1px solid yellow;
+    margin-right: 1%;
+    margin-top: 1%;
     float: right;
+    display: flex;
+    align-items: center;
 }
 
-
-.OpponentDeck{
+.OpponentDeck {
     width: 100%;
     height: 40%;
-    background: purple;
+    border: 1px solid purple;
 }
 
-.EndTurnButton{
+.EndTurnButton-Container {
     width: 100%;
     height: 20%;
-    background: red;
+    border: 1px solid red;
 }
 
+.EndTurnButton {
+    font-size: 60px;
+}
 
-.PlayerDeck{
+.PlayerDeck {
     width: 100%;
     height: 40%;
-    background: purple;
+    border: 1px solid purple;
 }
 
-.OpponentField{
+.OpponentField {
     width: 85%;
     height: 35%;
-    background: green;
+    border: 1px solid green;
     display: block;
 }
 
-.PlayerField{
+.PlayerField {
     width: 85%;
     height: 35%;
-    background: blue;
+    border: 1px solid blue;
     display: block;
 }
 
-.PlayerHand{
+.PlayerHand {
     width: 100%;
     height: 15%;
-    background: black;
+    border: 1px solid black;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.Mana {
+    width: 8%;
+    height: 66%;
+    border-radius: 100%;
+    background: blue;
+    display: inline-block;
+    vertical-align: center;
+    margin: 0 1% 0 1%;
+}
+
+.Health-Container {
+    width: 100px;
+    height: 100px;
+    margin: 2%;
+    border-radius: 0 50% 50% 50%;
+    border: 3px solid black;
+    transform: rotate(45deg);
+    /* overflow: hidden; */
     display: inline-block;
 }
 
-.Mana{
-    width: 8%;
-    height: 66%;
-    /* border-radius: 4% 33% 33% 4%; */
+.Health-Fill {
+    width: 100%;
+    height: 100%;
+    background: red;
+    transform: rotate(-45deg);
+    position: absolute;
+}
+
+.wrapper {
+    margin: 10%;
+    height: 300px;
+    border: 1px solid black;
+    transform: rotate(5deg);
+}
+
+.insider {
+    height: 100px;
+    width: 50px;
+    background: lightblue;
+}
+
+.OpponentHandCards {
+    height: 585px;
+    top: -450px;
+    left: 720px;
+    position: absolute;
+    border: 1px solid red;
+}
+
+.PlayerHandCards {
+    height: 585px;
+    top: 890px;
+    left: 759px;
+    position: absolute;
+    border: 1px solid red;
+}
+
+.PlayCard {
+    height: 195px;
+    width: 145px;
     background: green;
-    display: inline-block;
+}
+
+.FillInDiv {
+    height: 390px;
+    width: 145px;
 }
