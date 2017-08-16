@@ -5,6 +5,7 @@ router.addRoute("/", Dashboard);
 router.addRoute("/add-card-type", AddCardType);
 router.addRoute("/card-types", CardTypes);
 router.addRoute("/open-packs", OpenPacks);
+router.addRoute("/view-cards", ViewCards);
 router.go("/");
 
 const navbarContainer = document.querySelector(".navbar-container");

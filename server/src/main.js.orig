@@ -25,10 +25,13 @@ const AddNewCardRoute = require("./routes/addnewcard/AddNewCardRoute");
 const addNewCardRoute = new AddNewCardRoute(app);
 addNewCardRoute.initialize();
 
+<<<<<<< HEAD
 const ViewCardsRoute = require("./routes/view-cards/ViewCardsRoute");
 const viewCardsRoute = new ViewCardsRoute(app);
 viewCardsRoute.initialize();
 
+=======
+>>>>>>> 9de8cd0c7f7cae202f059b519a4f87171bd80d81
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
 
