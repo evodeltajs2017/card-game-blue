@@ -1,5 +1,6 @@
 .StartDiv {
-    height: 95%;
+    height: 1000px;
+    width: 1800px;
     margin: 1% 2% 2% 2%;
     vertical-align: middle;
     background-Image: url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);
@@ -100,6 +101,8 @@
     height: 35%;
     border: 1px solid blue;
     display: block;
+    text-align: center;
+    padding-top: 3%;
 }
 
 .PlayerHand {
@@ -128,29 +131,19 @@
     border-radius: 0 50% 50% 50%;
     border: 3px solid black;
     transform: rotate(45deg);
-    /* overflow: hidden; */
+    overflow: hidden;
     display: inline-block;
 }
 
 .Health-Fill {
-    width: 100%;
-    height: 100%;
+    width: 100px;
+    height: 200px;
+    top: -40px;
+    left: 10px;
     background: red;
     transform: rotate(-45deg);
-    position: absolute;
-}
-
-.wrapper {
-    margin: 10%;
-    height: 300px;
-    border: 1px solid black;
-    transform: rotate(5deg);
-}
-
-.insider {
-    height: 100px;
-    width: 50px;
-    background: lightblue;
+    position: relative;
+    z-index: 90;
 }
 
 .OpponentHandCards {
@@ -158,24 +151,63 @@
     top: -450px;
     left: 720px;
     position: absolute;
-    border: 1px solid red;
 }
 
 .PlayerHandCards {
     height: 585px;
-    top: 890px;
+    top: 18px;
     left: 759px;
     position: absolute;
-    border: 1px solid red;
 }
 
-.PlayCard {
+.OpponentPlayCard {
     height: 195px;
     width: 145px;
-    background: green;
+    background: url('https://s-media-cache-ak0.pinimg.com/236x/be/c4/ba/bec4ba0cfe504c4eddae9ab58269b7bb--warcraft-art-game-icon.jpg');
+    background-size: cover;
+    border-radius: 5px;
+}
+
+.PlayerPlayCard {
+    height: 195px;
+    width: 145px;
+    background: transparent;
+    z-index: 2;
+    display: block;
+}
+
+.PlayCard:hover {
+    z-index: 33;
+    background: #2A16B5;
+}
+
+.PlayCard::after {
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: scale(1.5, 1.5);
+    background: rgb(9, 132, 176);
+    z-index: 2;
+}
+
+.TableCard {
+    height: 195px;
+    width: 145px;
+    display: inline-block;
+    margin: 0 2% 0 2%;
+    text-align: center;
 }
 
 .FillInDiv {
     height: 390px;
     width: 145px;
+}
+
+.DisplayCard {
+    position: fixed;
+    height: 195px;
+    width: 145px;
+    left: 100px;
+    top: 100px;
+    display: none;
+    background: blue;
+    z-index: 9999;
 }

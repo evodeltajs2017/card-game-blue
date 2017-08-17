@@ -3,6 +3,12 @@ class Dashboard {
         this.container = container;
         this.playerTurn = false;
         this.turnNum = 0;
+        this.playerCards = 0;
+        this.aiCards = 0;
+        this.playerDeck = [];
+        this.playerHand = [];
+        this.aiHand = [];
+        this.aiDeck = [];
     }
 
     initialize() {
@@ -40,38 +46,44 @@ class Dashboard {
 
     playGame(repo, gameDiv) {
         repo.getCardTypeList().then((receivedObj) => {
-            let playerDeck = [];
-            let playerHand = [];
-            let aiHand = [];
-            let aiDeck = [];
+
+            let top = -30;
+            let left = 20;
+            let cardAngle = -40;
+
 
 
             this.cardType = receivedObj.items;
-            this.makeRandomDeck(playerDeck, this.cardType);
-            this.makeRandomDeck(aiDeck, this.cardType);
+            this.makeRandomDeck(this.playerDeck, this.cardType);
+            this.makeRandomDeck(this.aiDeck, this.cardType);
+
+            this.giveCards(this.playerHand, this.playerDeck);
+            this.giveCards(this.aiHand, this.aiDeck);
+
 
 
 
             let template = `
+            <div class="DisplayCard"></div>
             <div class="OpponentHand">
                 <div class="Health-Container">
                     <div class = "Health-Fill">
                     </div>
                 </div>
-                
-                <div class="OpponentHandCards">
-                    <div class = "FillInDiv">
-                    </div>
-                    <div class="PlayCard">
-                    </div>
-                </div>
+               `
 
-                <div class="OpponentHandCards" style="transform: rotate(5deg)">
-                    <div class = "FillInDiv">
-                    </div>
-                    <div class="PlayCard" style="background=red">
-                    </div>
+            for (let i = 0; i < 10; i++) {
+                template += `<div class="OpponentHandCards" style="transform: rotate(${cardAngle}deg)">
+                <div class = "FillInDiv">
                 </div>
+                <div class="OpponentPlayCard" >
+                </div>
+                </div>`;
+                cardAngle += 10;
+            }
+
+            template += `
+               
                 <div class="OpponentMana"></div>
             </div>
 
@@ -85,12 +97,23 @@ class Dashboard {
             
             <div class="OpponentField"></div>
         
-            <div class="PlayerField"></div>
-            <div class="PlayerHand">
-                <div class="PlayerHandCards">
-                    <div class="PlayCard">
-                    </div>
+            <div class="PlayerField">
+            
+            </div>
+            <div class="PlayerHand">`;
+
+            cardAngle = -40;
+            for (let i = 0; i < 10; i++) {
+                template += `<div class="PlayerHandCards" style="transform: rotate(${cardAngle}deg)">
+                <div class="PlayerPlayCard" style=" background: #${Math.floor(Math.random() * 90 + 10)}${Math.floor(Math.random() * 90 + 10)}${Math.floor(Math.random() * 90 + 10)}">
                 </div>
+                </div>`;
+                cardAngle += 10;
+            }
+
+
+            template += `
+                
 
                 <div class="PlayerMana"></div>
             </div>
@@ -99,12 +122,96 @@ class Dashboard {
 
             gameDiv.innerHTML = template;
 
+            this.drawPlayerHand();
 
             gameDiv.querySelector(".EndTurnButton").addEventListener("click", () => {
                 this.switchTurn();
+                top += 10;
+                left += 10;
+                gameDiv.querySelector(".Health-Fill").style.top = top + "px";
+                gameDiv.querySelector(".Health-Fill").style.left = left + "px";
             })
 
+            let divs = document.querySelectorAll(".PlayerPlayCard");
+
+            for (let i = 0; i < divs.length; i++) {
+
+                divs[i].addEventListener("mouseenter", () => {
+                    let cardContainer = gameDiv.querySelector(".DisplayCard");
+                    cardContainer.innerHTML = "";
+                    cardContainer.style.display = "block";
+                    let card = new Card(cardContainer, cardContainer.width, cardContainer.height, this.playerHand[i].name, this.playerHand[i].cost, this.playerHand[i].damage, this.playerHand[i].health, "fa-trophy"); //this.playerHand[i].img);
+
+                    card.initialize();
+                    this.element.querySelector(".DisplayCard")
+                })
+
+                divs[i].addEventListener("click", (e) => {
+                    if (this.playerCards < 7) {
+                        this.playCard(e);
+                        divs[i].remove();
+                        gameDiv.querySelector(".DisplayCard").style.display = "none";
+                    }
+                })
+
+                divs[i].addEventListener("mouseleave", () => {
+                    gameDiv.querySelector(".DisplayCard").style.display = "none";
+
+                })
+            }
+
+
+
         })
+    }
+
+    playCard(elem) {
+        console.log(elem);
+        let field = this.element.querySelector(".PlayerField");
+        let fieldCard = document.createElement("div");
+        fieldCard.className = "TableCard";
+        let card = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, "OP Card", 2, 4, 5, "fa-trophy");
+        card.initialize();
+        field.appendChild(fieldCard);
+        this.playerCards += 1;
+
+    }
+
+    giveCards(hand, deck) {
+        for (let i = 0; i < 3; i++)
+            hand.push(deck.pop());
+    }
+
+    drawPlayerHand() {
+
+        let card;
+        let cardContainer;
+        let container;
+        let angle = this.playerHand.length;
+        if (angle % 2 != 0) {
+            angle -= 1;
+        }
+        angle = (angle * 5) * (-1);
+        console.log(angle);
+
+        let handArea = this.element.querySelector(".PlayerHand");
+        handArea.innerHTML = "";
+        for (let i = 0; i < this.playerHand.length; i++) {
+
+            container = document.createElement("div");
+            container.className = "PlayerHandCards";
+            container.style.transform = `rotate(${angle}deg)`;
+
+            cardContainer = document.createElement("div");
+            cardContainer.className = "PlayerPlayCard";
+
+            card = new Card(cardContainer, cardContainer.width, cardContainer.height, this.playerHand[i].name, this.playerHand[i].cost, this.playerHand[i].damage, this.playerHand[i].health, "fa-trophy"); //this.playerHand[i].img);
+            card.initialize();
+
+            container.appendChild(cardContainer);
+            handArea.appendChild(container);
+            angle += 10;
+        }
     }
 
     makeRandomDeck(deck, cardType) {
@@ -129,6 +236,10 @@ class Dashboard {
         }
 
         this.refreshMana(target);
+    }
+
+    arangeHand() {
+
     }
 
     refreshMana(target) {

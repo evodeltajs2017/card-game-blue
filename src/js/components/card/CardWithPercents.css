@@ -1,0 +1,69 @@
+.CardComponent {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-image: url(http://i.imgur.com/U1dkXzQ.png);
+    background-size: cover;
+    z-index: -1;
+    text-align: center;
+    position: relative;
+}
+
+.wordWrap {
+    width: 78%;
+    font-size: 20px;
+    word-wrap: break-word;
+    /* word-break: break-all; */
+    line-break: strict;
+    hyphens: none;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+}
+
+.play-name {
+    top: -20px;
+    left: 18px;
+    /* margin-left: 12%;
+    margin-top: 85%; */
+    text-align: center;
+    position: absolute;
+}
+
+.play-cost {
+    top: -14%;
+    left: 10%;
+    /* margin-left: -22%;
+    margin-top: -130%; */
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+}
+
+.play-damage {
+    top: -40px;
+    left: -33px;
+    /* margin-left: -23%;
+    margin-top: 60%; */
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+}
+
+.play-health {
+    top: -104px;
+    left: 70px;
+    /* margin-left: 50%;
+    margin-top: -46%; */
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+}
+
+.play-img {
+    top: -60px;
+    left: 3px;
+    line-height: 25px;
+    font-size: 30px !important;
+    color: white;
+    position: absolute;
+}
