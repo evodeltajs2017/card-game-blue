@@ -17,8 +17,10 @@ class Dashboard {
         let cardType = [];
 
 
-        const div = document.createElement("div");
 
+        const div = document.createElement("div");
+        const wrapper = document.createElement("div");
+        wrapper.className = "play-wrapper";
         div.className = "StartDiv";
 
         const startButton = document.createElement("button");
@@ -29,13 +31,15 @@ class Dashboard {
 
 
         startButton.textContent = "Start New Game";
+        wrapper.appendChild(startButton);
+        wrapper.appendChild(div);
 
-        this.container.appendChild(startButton);
-        this.container.appendChild(div);
+        this.container.appendChild(wrapper);
     }
 
     startGame(repo) {
 
+        document.querySelector(".play-wrapper").className += " giveBG";
         const gameDiv = document.querySelector(".StartDiv");
         gameDiv.className = "GameDiv";
         document.querySelector(".startButton").remove();
@@ -57,146 +61,156 @@ class Dashboard {
             this.makeRandomDeck(this.playerDeck, this.cardType);
             this.makeRandomDeck(this.aiDeck, this.cardType);
 
-            this.giveCards(this.playerHand, this.playerDeck);
-            this.giveCards(this.aiHand, this.aiDeck);
-
+            const model = new GameModel(this.playerDeck, this.aiDeck);
 
 
 
             let template = `
             <div class="DisplayCard"></div>
-            <div class="OpponentHand">
-                <div class="Health-Container">
-                    <div class = "Health-Fill">
-                    </div>
-                </div>
+            
+            <div class="OpponentHandArea">
+            <div class="Health-Container">
+            <div class = "Health-Fill">
+            </div>
+        </div>
+            <div class="OpponentHand"></div>
+               
                `
 
-            for (let i = 0; i < 10; i++) {
-                template += `<div class="OpponentHandCards" style="transform: rotate(${cardAngle}deg)">
-                <div class = "FillInDiv">
-                </div>
-                <div class="OpponentPlayCard" >
-                </div>
-                </div>`;
-                cardAngle += 10;
-            }
 
             template += `
                
                 <div class="OpponentMana"></div>
             </div>
-
-            <div class ="Info">
-                
-                <div class="OpponentDeck"></div>
-                <div class="EndTurnButton-Container"><button class="EndTurnButton">End Turn</button></div>
-                <div class="PlayerDeck"></div>
-                
-            </div>
-            
+            <div class="OpponentDeck"></div>
             <div class="OpponentField"></div>
-        
-            <div class="PlayerField">
-            
-            </div>
-            <div class="PlayerHand">`;
-
-            cardAngle = -40;
-            for (let i = 0; i < 10; i++) {
-                template += `<div class="PlayerHandCards" style="transform: rotate(${cardAngle}deg)">
-                <div class="PlayerPlayCard" style=" background: #${Math.floor(Math.random() * 90 + 10)}${Math.floor(Math.random() * 90 + 10)}${Math.floor(Math.random() * 90 + 10)}">
+            <div class="EndTurnButton-Container"><button class="EndTurnButton">End Turn</button></div>
+            <div class="PlayerField"></div>
+            <div class="PlayerDeck"></div>
+            <div class="PlayerHandArea">
+                <div class = "PlayerHand"></div>
+                <div class="PlayerMana">
+                    <div class = "PlayerManaNumber"><p class="PlayerManaNumberText"></p></div>
+                    <div class = "PlayerManaImages"></div>
                 </div>
-                </div>`;
-                cardAngle += 10;
-            }
-
-
-            template += `
-                
-
-                <div class="PlayerMana"></div>
             </div>
     
         `;
 
             gameDiv.innerHTML = template;
 
-            this.drawPlayerHand();
 
-            gameDiv.querySelector(".EndTurnButton").addEventListener("click", () => {
-                this.switchTurn();
-                top += 10;
-                left += 10;
-                gameDiv.querySelector(".Health-Fill").style.top = top + "px";
-                gameDiv.querySelector(".Health-Fill").style.left = left + "px";
-            })
+            model.showHand = () => {
+                this.drawPlayerHand(model.playerHand, model);
+            };
 
-            let divs = document.querySelectorAll(".PlayerPlayCard");
-
-            for (let i = 0; i < divs.length; i++) {
-
-                divs[i].addEventListener("mouseenter", () => {
-                    let cardContainer = gameDiv.querySelector(".DisplayCard");
-                    cardContainer.innerHTML = "";
-                    cardContainer.style.display = "block";
-                    let card = new Card(cardContainer, cardContainer.width, cardContainer.height, this.playerHand[i].name, this.playerHand[i].cost, this.playerHand[i].damage, this.playerHand[i].health, "fa-trophy"); //this.playerHand[i].img);
-
-                    card.initialize();
-                    this.element.querySelector(".DisplayCard")
-                })
-
-                divs[i].addEventListener("click", (e) => {
-                    if (this.playerCards < 7) {
-                        this.playCard(e);
-                        divs[i].remove();
-                        gameDiv.querySelector(".DisplayCard").style.display = "none";
-                    }
-                })
-
-                divs[i].addEventListener("mouseleave", () => {
-                    gameDiv.querySelector(".DisplayCard").style.display = "none";
-
-                })
+            model.showAiHand = () => {
+                this.drawAiHand(model.aiHand);
             }
 
+            model.playerDrawMana = () => {
+                this.drawPlayerMana(model.playerMana, model.turnNumber);
+            }
 
+            model.onPlayCard = (card, e) => {
+                this.drawPlayerBoard(card);
+                e.target.remove();
+            };
+
+            model.onAiPlayCard = (card, e) => {
+                this.drawAiBoard(card);
+                // e.target.remove();
+            };
+
+            model.onPlayerManaReset = () => {
+                this.refreshPlayerMana(model.playerMana);
+            };
+            model.initialize();
+
+            gameDiv.querySelector(".EndTurnButton").addEventListener("click", () => {
+                model.endTurn();
+                // top += 10;
+                // left += 10;
+                // gameDiv.querySelector(".Health-Fill").style.top = top + "px";
+                // gameDiv.querySelector(".Health-Fill").style.left = left + "px";
+            })
 
         })
     }
 
-    playCard(elem) {
-        console.log(elem);
-        let field = this.element.querySelector(".PlayerField");
+
+
+    drawPlayerBoard(card) {
+        let board = this.element.querySelector(".PlayerField");
         let fieldCard = document.createElement("div");
         fieldCard.className = "TableCard";
-        let card = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, "OP Card", 2, 4, 5, "fa-trophy");
-        card.initialize();
-        field.appendChild(fieldCard);
-        this.playerCards += 1;
-
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
+        carte.initialize();
+        board.appendChild(fieldCard);
     }
 
-    giveCards(hand, deck) {
-        for (let i = 0; i < 3; i++)
-            hand.push(deck.pop());
+    drawAiBoard(card) {
+        let board = this.element.querySelector(".OpponentField");
+        let fieldCard = document.createElement("div");
+        fieldCard.className = "AITableCard";
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
+        carte.initialize();
+        board.appendChild(fieldCard);
     }
 
-    drawPlayerHand() {
+
+    drawAiHand(playerHand) {
+
+        let angle = playerHand.length;
+        let cardContainer;
+        let container;
+        let fillIn;
+
+
+        if (angle % 2 != 0) {
+            angle -= 1;
+
+        }
+
+        angle = (angle * 5 - 8) * (-1);
+
+        let handArea = this.element.querySelector(".OpponentHand");
+        handArea.innerHTML = "";
+        for (let i = 0; i < playerHand.length; i++) {
+
+            container = document.createElement("div");
+            container.className = "OpponentHandCards";
+            container.style.transform = `rotate(${angle}deg)`;
+
+            fillIn = document.createElement("div");
+            fillIn.className = "FillInDiv";
+
+            cardContainer = document.createElement("div");
+            cardContainer.className = "OpponentPlayCard";
+
+            container.appendChild(fillIn);
+            container.appendChild(cardContainer);
+
+            handArea.appendChild(container);
+            angle += 10;
+        }
+    }
+
+    drawPlayerHand(playerHand, model) {
 
         let card;
         let cardContainer;
         let container;
-        let angle = this.playerHand.length;
+        let angle = playerHand.length;
+        console.log("Player: " + angle);
         if (angle % 2 != 0) {
             angle -= 1;
         }
-        angle = (angle * 5) * (-1);
-        console.log(angle);
+        angle = (angle * 5 - 8) * (-1);
 
         let handArea = this.element.querySelector(".PlayerHand");
         handArea.innerHTML = "";
-        for (let i = 0; i < this.playerHand.length; i++) {
+        for (let i = 0; i < playerHand.length; i++) {
 
             container = document.createElement("div");
             container.className = "PlayerHandCards";
@@ -205,13 +219,48 @@ class Dashboard {
             cardContainer = document.createElement("div");
             cardContainer.className = "PlayerPlayCard";
 
-            card = new Card(cardContainer, cardContainer.width, cardContainer.height, this.playerHand[i].name, this.playerHand[i].cost, this.playerHand[i].damage, this.playerHand[i].health, "fa-trophy"); //this.playerHand[i].img);
+            cardContainer.addEventListener("mouseenter", () => {
+                let cardContainerEvent = this.element.querySelector(".DisplayCard");
+                cardContainerEvent.innerHTML = "";
+                cardContainerEvent.style.display = "block";
+                let card = new Card(cardContainerEvent, cardContainerEvent.width, cardContainerEvent.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, "fa-trophy"); //playerHand[i].img);
+
+                card.initialize();
+                this.element.querySelector(".DisplayCard")
+            })
+
+            cardContainer.addEventListener("mouseleave", () => {
+                this.element.querySelector(".DisplayCard").style.display = "none";
+
+            })
+
+            cardContainer.addEventListener("click", (e) => {
+                model.playCard(i, e);
+                // e.target.remove();
+                this.element.querySelector(".DisplayCard").style.display = "none";
+
+            })
+
+            card = new Card(cardContainer, cardContainer.width, cardContainer.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, "fa-trophy"); //playerHand[i].img);
             card.initialize();
 
             container.appendChild(cardContainer);
             handArea.appendChild(container);
             angle += 10;
         }
+
+        // let divs = document.querySelectorAll(".PlayerPlayCard");
+
+        // for (let j = 0; j < divs.length; j++) {
+        //     divs[j].addEventListener("click", () => {
+        //         model.playCard(divs[j]);
+        //         divs[j].remove();
+        //         this.element.querySelector(".DisplayCard").style.display = "none";
+
+        //     })
+        // }
+
+
     }
 
     makeRandomDeck(deck, cardType) {
@@ -220,41 +269,31 @@ class Dashboard {
         }
     }
 
-    switchTurn() {
+    drawPlayerMana(mana, totalMana) {
+        let manaBar = this.element.querySelector(".PlayerManaImages");
+        let manaText = this.element.querySelector(".PlayerManaNumberText");
+        manaBar.innerHTML = "";
+        for (let i = 0; i < mana; i++) {
+            manaBar.innerHTML += `<div class="Mana"></div>`;
 
-        this.playerTurn = !this.playerTurn;
-        let buton = this.element.querySelector(".EndTurnButton");
-
-        let target = "";
-        if (this.playerTurn == true) {
-            target += "Player";
-            this.turnNum += 1;
-            buton.removeAttribute("disabled");
-        } else {
-            target += "Opponent";
-            // buton.setAttribute("disabled", "true");
         }
+        for (let i = mana; i < totalMana; i++) {
+            manaBar.innerHTML += `<div class="DepletedMana"></div>`;
+        }
+        manaText.innerHTML = `${mana}/${totalMana}`;
+    }
 
-        this.refreshMana(target);
+    refreshPlayerMana(mana) {
+        let manaBar = this.element.querySelector(".PlayerMana");
+        manaBar.innerHTML = "";
+        for (let i = 0; i < mana; i++) {
+            manaBar.innerHTML += `<div class="Mana"></div>`;
+        }
     }
 
     arangeHand() {
 
     }
 
-    refreshMana(target) {
-        let manaBar = this.element.querySelector(`.${target + "Mana"}`);
-        manaBar.innerHTML = "";
-        if (this.turnNum < 10) {
-            for (let i = 0; i < this.turnNum; i++) {
-                manaBar.innerHTML += `<div class="Mana"></div>`;
-            }
-        } else {
-            for (let i = 0; i < 10; i++) {
-                manaBar.innerHTML += `<div class="Mana"></div>`;
-            }
-        }
-
-    }
     destroy() {}
 }
