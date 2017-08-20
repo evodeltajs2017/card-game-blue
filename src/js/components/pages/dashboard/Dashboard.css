@@ -64,8 +64,8 @@
 }
 
 .OpponentMana {
-    top: 45px;
-    left: 785px;
+        top: 47px;
+    left: 794px;
     height: 34px;
     width: 79px;
     border: 1px solid yellow;
@@ -87,17 +87,26 @@
 }
 
 .PlayerManaNumber {
+    left: 10px;
     width: 80px;
     height: 40px;
     border: 1px solid yellow;
     position: absolute;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
-.PlayerManaNumber {
+.PlayerManaNumberText {
     color: white;
-    font-size: 15px;
+    font-size: 26px;
+    text-align: center;
+}
+
+.OpponentManaText {
+    left:0px;
+    color: white;
+    font-size: 26px;
     text-align: center;
 }
 
@@ -123,7 +132,9 @@
 }
 
 .EndTurnButton-Container {
-    top: 9px;
+    /* top: 9px;
+    left: 0px; */
+        top: -151px;
     left: 0px;
     width: 1240px;
     height: 54px;
@@ -140,7 +151,9 @@
 }
 
 .PlayerDeck {
-    top: -220px;
+    /* top: -220px;
+    left: -18px; */
+    top: -380px;
     left: -18px;
     width: 45px;
     height: 167px;
@@ -151,7 +164,9 @@
 }
 
 .OpponentField {
-    top: 36px;
+    /* top: 36px;
+    left: 0px; */
+        top: -124px;
     left: 0px;
     width: 1155px;
     height: 276px;
@@ -161,7 +176,9 @@
 }
 
 .PlayerField {
-    top: 70px;
+    /* top: 70px;
+    left: 0px; */
+     top: -95px;
     left: 0px;
     width: 1155px;
     height: 320px;
@@ -172,7 +189,9 @@
 }
 
 .PlayerHandArea {
-    top: -43px;
+    /* top: -43px;
+    left: 0px; */
+    top: -203px;
     left: 0px;
     width: 1240px;
     height: 152px;
@@ -208,6 +227,17 @@
     height: 30px;
     border-radius: 100%;
     background: url(../open-packs/imgs/usedmana.png);
+    background-size: cover;
+    display: inline-block;
+    vertical-align: center;
+}
+
+.GlowMana {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: url(../open-packs/imgs/mana.png);
+    filter: brightness(3);
     background-size: cover;
     display: inline-block;
     vertical-align: center;
@@ -261,6 +291,7 @@
     background: url('https://s-media-cache-ak0.pinimg.com/236x/be/c4/ba/bec4ba0cfe504c4eddae9ab58269b7bb--warcraft-art-game-icon.jpg');
     background-size: cover;
     border-radius: 5px;
+    transform: scale(0.6);
 }
 
 .PlayerPlayCard {
@@ -317,4 +348,24 @@
     display: none;
     z-index: 9999;
     transform: scale(2);
+}
+
+.AiChar{
+    top: -48px;
+    left: 506px;
+    height: 160px;
+    width: 141px;
+background:url(../open-packs/imgs/rexxar.png);
+background-size: cover;
+position: relative;
+}
+
+.PlayerChar{
+           top: -206px;
+    left: 505px;
+    height: 160px;
+    width: 141px;
+background: url(http://media-hearth.cursecdn.com/avatars/291/447/635976153333715026.png);
+background-size: cover;
+position: relative;
 }

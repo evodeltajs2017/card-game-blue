@@ -18,9 +18,11 @@ class GameModel {
 
         this.turnNumber = 10;
 
-        this.playerTurn = false;
+        // this.playerTurn = false;
 
         this.showHand = () => {};
+
+        this.drawAiMana = () => {};
 
         this.showAiHand = () => {};
 
@@ -39,13 +41,16 @@ class GameModel {
         this.showHand();
         this.showAiHand();
         this.playerDrawCard();
+        this.drawAiMana();
         //start game - player turn
         // this.switchTurn();
         this.playerResetMana();
 
     }
 
-
+    requestManaDraw(cost){
+        this.requestManaDraw(cost);
+    }
 
     playerResetMana() {
         this.playerMana = this.turnNumber;
@@ -53,12 +58,17 @@ class GameModel {
     }
 
     playerResetMana() {
-        this.playerMana = this.turnNumber;
-        this.playerDrawMana(this.playerMana, this.turnNumber);
+        if(this.playerMana < 10){
+            this.playerMana = this.turnNumber;
+        }else{
+            this.playerMana = 10;
+        }
+        this.playerDrawMana();
     }
 
     aiResetMana() {
         this.aiMana = this.turnNumber;
+        this.drawAiMana();
     }
 
     playerDrawCard() {
@@ -78,10 +88,19 @@ class GameModel {
     endTurn() {
         this.aiResetMana();
         this.aiDrawCard();
-        console.log(this.aiHand);
+        this.aiAttackPlayer();
         this.aiPlayCard();
-        // this.aiAttackPlayer();
+        this.switchTurn();
 
+    }
+
+    switchTurn(){
+        this.playerResetMana();
+        this.playerDrawCard();
+        this.playerBoard.forEach(e => {
+            // e.isSleeping = false;
+            console.log("Minion sleeps: " + e.isSleeping);
+        });
     }
 
     // aiAttack() {
@@ -93,6 +112,7 @@ class GameModel {
     playCard(cardIndex, e) {
 
         if (this.playerBoard.length < 7 && this.playerHand[cardIndex].cost <= this.playerMana) {
+            this.playerHand[cardIndex].isSleeping = true;
             this.playerBoard.push(this.playerHand[cardIndex]);
             this.playerMana -= this.playerHand[cardIndex].cost;
             this.playerDrawMana();
@@ -102,10 +122,27 @@ class GameModel {
         }
     }
 
+    aiAttackPlayer(){
+        let minions = this.aiBoard.length;
+        for(let i=0;i<minions;i++){
+            this.playerHp -= this.aiBoard[i].damage;
+            if(this.playerHp < 1){
+                this.endGameAi();
+                break;
+            }
+        }
+        console.log(this.playerHp);
+    }
+
+    endGameAi(){
+        alert("Ai wins!");
+    }
+
     aiPlayCard() {
         let aiAbleToPlay = true;
+        let played = false;
         let i;
-        while (aiAbleToPlay) {
+     
             for (i = 0; i < this.aiHand.length; i++) {
                 if (this.aiBoard.length < 7 && this.aiHand[i].cost <= this.aiMana) {
                     this.aiBoard.push(this.aiHand[i]);
@@ -113,11 +150,11 @@ class GameModel {
                     this.onAiPlayCard(this.aiHand[i]);
                     this.aiHand.splice(i, 1);
                     this.showAiHand();
-                } else {
-                    aiAbleToPlay = false;
-                }
+                    this.drawAiMana();
+                    played = true;
+                } 
             }
-        }
+        
     }
 
     aiAbleToPlay() {

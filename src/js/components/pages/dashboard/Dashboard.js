@@ -74,19 +74,16 @@ class Dashboard {
             </div>
         </div>
             <div class="OpponentHand"></div>
-               
-               `
-
-
-            template += `
-               
-                <div class="OpponentMana"></div>
+         
+                <div class="OpponentMana"><p class="OpponentManaText"></p></div>
             </div>
             <div class="OpponentDeck"></div>
+            <div class = "AiChar"></div>
             <div class="OpponentField"></div>
             <div class="EndTurnButton-Container"><button class="EndTurnButton">End Turn</button></div>
             <div class="PlayerField"></div>
             <div class="PlayerDeck"></div>
+            <div class= "PlayerChar"></div>
             <div class="PlayerHandArea">
                 <div class = "PlayerHand"></div>
                 <div class="PlayerMana">
@@ -99,6 +96,13 @@ class Dashboard {
 
             gameDiv.innerHTML = template;
 
+            model.requestManaDraw = (cost) =>{
+                if(model.playerMana < 10){
+                    this.requestManaDraw(model.playerMana,model.turnNumber,cost);
+                }else{
+                    this.requestManaDraw(model.playerMana,10,cost);
+                }
+            }
 
             model.showHand = () => {
                 this.drawPlayerHand(model.playerHand, model);
@@ -108,8 +112,21 @@ class Dashboard {
                 this.drawAiHand(model.aiHand);
             }
 
+            model.drawAiMana = () =>{
+                 if(model.playerMana < 10){
+                this.drawAiMana(model.aiMana,model.turnNumber);}
+                else{
+                    this.drawAiMana(model.aiMana,10);
+                }
+            }
+
             model.playerDrawMana = () => {
-                this.drawPlayerMana(model.playerMana, model.turnNumber);
+                if(model.playerMana < 10){
+                    this.drawPlayerMana(model.playerMana, model.turnNumber);
+                }else{
+                    this.drawPlayerMana(model.playerMana, 10);
+                }
+               
             }
 
             model.onPlayCard = (card, e) => {
@@ -226,12 +243,12 @@ class Dashboard {
                 let card = new Card(cardContainerEvent, cardContainerEvent.width, cardContainerEvent.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, "fa-trophy"); //playerHand[i].img);
 
                 card.initialize();
-                this.element.querySelector(".DisplayCard")
+                model.requestManaDraw(playerHand[i].cost);
             })
 
             cardContainer.addEventListener("mouseleave", () => {
                 this.element.querySelector(".DisplayCard").style.display = "none";
-
+                model.requestManaDraw(0);
             })
 
             cardContainer.addEventListener("click", (e) => {
@@ -269,6 +286,12 @@ class Dashboard {
         }
     }
 
+    drawAiMana(mana, totalMana) {
+        let manaText = this.element.querySelector(".OpponentManaText");
+        manaText.innerHTML = `${mana}/${totalMana}`;
+    }
+
+
     drawPlayerMana(mana, totalMana) {
         let manaBar = this.element.querySelector(".PlayerManaImages");
         let manaText = this.element.querySelector(".PlayerManaNumberText");
@@ -281,6 +304,25 @@ class Dashboard {
             manaBar.innerHTML += `<div class="DepletedMana"></div>`;
         }
         manaText.innerHTML = `${mana}/${totalMana}`;
+    }
+
+    requestManaDraw(mana, totalMana,cost) {
+        if(cost<=mana){
+            let manaBar = this.element.querySelector(".PlayerManaImages");
+            let manaText = this.element.querySelector(".PlayerManaNumberText");
+            manaBar.innerHTML = "";
+            for (let i = 0; i < mana-cost; i++) {
+                manaBar.innerHTML += `<div class="Mana"></div>`;
+
+            }
+            for (let i = mana-cost; i < mana; i++) {
+                manaBar.innerHTML += `<div class = "GlowMana"></div>`;
+            }
+            for (let i = mana; i < totalMana; i++) {
+                manaBar.innerHTML += `<div class="DepletedMana"></div>`;
+            }
+            manaText.innerHTML = `${mana}/${totalMana}`;
+        }
     }
 
     refreshPlayerMana(mana) {
