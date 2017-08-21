@@ -9,6 +9,8 @@ class Dashboard {
         this.playerHand = [];
         this.aiHand = [];
         this.aiDeck = [];
+        this.aileft = 20;
+        this.aitop = -124;
     }
 
     initialize() {
@@ -69,8 +71,8 @@ class Dashboard {
             <div class="DisplayCard"></div>
             
             <div class="OpponentHandArea">
-            <div class="Health-Container">
-            <div class = "Health-Fill">
+            <div class="Ai-Health-Container"><p class ="AiHpText">30</p>
+            <div class = "Ai-Health-Fill">
             </div>
         </div>
             <div class="OpponentHand"></div>
@@ -85,6 +87,8 @@ class Dashboard {
             <div class="PlayerDeck"></div>
             <div class= "PlayerChar"></div>
             <div class="PlayerHandArea">
+            <div class="Player-Health-Container"><p class ="PlayerHpText">30</p>
+            <div class = "Player-Health-Fill"></div></div>
                 <div class = "PlayerHand"></div>
                 <div class="PlayerMana">
                     <div class = "PlayerManaNumber"><p class="PlayerManaNumberText"></p></div>
@@ -96,12 +100,33 @@ class Dashboard {
 
             gameDiv.innerHTML = template;
 
-            model.requestManaDraw = (cost) =>{
-                if(model.playerMana < 10){
-                    this.requestManaDraw(model.playerMana,model.turnNumber,cost);
-                }else{
-                    this.requestManaDraw(model.playerMana,10,cost);
+            this.element.querySelector(".AiChar").addEventListener("click", () => {
+                model.minionAttackHero();
+            });
+
+            model.requestManaDraw = (cost) => {
+                if (model.playerMana < 10) {
+                    this.requestManaDraw(model.playerMana, model.turnNumber, cost);
+                } else {
+                    this.requestManaDraw(model.playerMana, 10, cost);
                 }
+            }
+
+            model.drawAiHp = (damage, hp_vechi) => {
+                this.drawAiHp(model.aiHp, damage);
+            }
+
+            model.drawField = () => {
+                this.drawField(model.playerBoard, model.aiBoard, model);
+
+            }
+
+            model.endTheGame = (winner) => {
+                this.endTheGame(winner);
+            }
+
+            model.drawPlayerHp = () => {
+                this.drawPlayerHp(model.playerHp);
             }
 
             model.showHand = () => {
@@ -112,31 +137,34 @@ class Dashboard {
                 this.drawAiHand(model.aiHand);
             }
 
-            model.drawAiMana = () =>{
-                 if(model.playerMana < 10){
-                this.drawAiMana(model.aiMana,model.turnNumber);}
-                else{
-                    this.drawAiMana(model.aiMana,10);
+            model.drawAiMana = () => {
+                if (model.playerMana < 10) {
+                    this.drawAiMana(model.aiMana, model.turnNumber);
+                } else {
+                    this.drawAiMana(model.aiMana, 10);
                 }
             }
 
             model.playerDrawMana = () => {
-                if(model.playerMana < 10){
+                if (model.playerMana < 10) {
                     this.drawPlayerMana(model.playerMana, model.turnNumber);
-                }else{
+                } else {
                     this.drawPlayerMana(model.playerMana, 10);
                 }
-               
+
             }
 
-            model.onPlayCard = (card, e) => {
-                this.drawPlayerBoard(card);
+            model.cantPlay = () => {
+                this.cantPlay();
+            }
+
+            model.onPlayCard = (card, e, index) => {
+                this.drawPlayerBoard(card, model, index);
                 e.target.remove();
             };
 
-            model.onAiPlayCard = (card, e) => {
-                this.drawAiBoard(card);
-                // e.target.remove();
+            model.onAiPlayCard = (card, index) => {
+                this.drawAiBoard(card, model, index);
             };
 
             model.onPlayerManaReset = () => {
@@ -144,7 +172,9 @@ class Dashboard {
             };
             model.initialize();
 
-            gameDiv.querySelector(".EndTurnButton").addEventListener("click", () => {
+            gameDiv.querySelector(".EndTurnButton").addEventListener("click", (e) => {
+
+                e.target.style.background = "white";
                 model.endTurn();
                 // top += 10;
                 // left += 10;
@@ -155,25 +185,63 @@ class Dashboard {
         })
     }
 
+    drawField(player, ai, model) {
+        let playerBoard = this.element.querySelector(".PlayerField");
+        let aiBoard = this.element.querySelector(".OpponentField");
+        playerBoard.innerHTML = "";
+        for (let i = 0; i < player.length; i++) {
+            if (player.length > 0)
+                this.drawPlayerBoard(player[i], model, i);
+        }
+        aiBoard.innerHTML = "";
+        for (let i = 0; i < ai.length; i++) {
+            console.log("Ai: " + ai[i]);
+            if (ai.length > 0)
+                this.drawAiBoard(ai[i], model, i);
+        }
+    }
 
-
-    drawPlayerBoard(card) {
+    drawPlayerBoard(card, model, index) {
         let board = this.element.querySelector(".PlayerField");
         let fieldCard = document.createElement("div");
         fieldCard.className = "TableCard";
         let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
         carte.initialize();
         board.appendChild(fieldCard);
+        fieldCard.addEventListener("click", () => {
+            model.selectMonster(index);
+        });
     }
 
-    drawAiBoard(card) {
+    drawAiHp(hp, damage, hp_vechi) {
+        this.element.querySelector(".AiHpText").innerHTML = hp;
+        let bara = this.element.querySelector(".Ai-Health-Fill");
+        console.log(bara);
+        this.aitop += 10;
+        console.log(this.aitop);
+        bara.style.top = this.aitop + " px";
+        this.aileft += 10;
+        console.log(this.aileft);
+        bara.style.left = this.aileft + " px";
+    }
+
+    drawPlayerHp(hp) {
+        this.element.querySelector(".PlayerHpText").innerHTML = hp;
+        // let bara = this.element.querySelector(".Player-Health-Fill");
+    }
+
+    drawAiBoard(card, model, index) {
         let board = this.element.querySelector(".OpponentField");
         let fieldCard = document.createElement("div");
         fieldCard.className = "AITableCard";
         let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
         carte.initialize();
         board.appendChild(fieldCard);
+        fieldCard.addEventListener("click", () => {
+            model.minionAttack(index);
+        });
     }
+
 
 
     drawAiHand(playerHand) {
@@ -219,7 +287,6 @@ class Dashboard {
         let cardContainer;
         let container;
         let angle = playerHand.length;
-        console.log("Player: " + angle);
         if (angle % 2 != 0) {
             angle -= 1;
         }
@@ -253,7 +320,6 @@ class Dashboard {
 
             cardContainer.addEventListener("click", (e) => {
                 model.playCard(i, e);
-                // e.target.remove();
                 this.element.querySelector(".DisplayCard").style.display = "none";
 
             })
@@ -266,23 +332,13 @@ class Dashboard {
             angle += 10;
         }
 
-        // let divs = document.querySelectorAll(".PlayerPlayCard");
-
-        // for (let j = 0; j < divs.length; j++) {
-        //     divs[j].addEventListener("click", () => {
-        //         model.playCard(divs[j]);
-        //         divs[j].remove();
-        //         this.element.querySelector(".DisplayCard").style.display = "none";
-
-        //     })
-        // }
-
-
     }
 
     makeRandomDeck(deck, cardType) {
         for (let i = 0; i < 30; i++) {
-            deck.push(cardType[Math.floor(Math.random() * cardType.length)]);
+            const a = cardType[Math.floor(Math.random() * cardType.length)];
+            const b = Object.assign({}, a);
+            deck.push(b);
         }
     }
 
@@ -296,7 +352,7 @@ class Dashboard {
         let manaBar = this.element.querySelector(".PlayerManaImages");
         let manaText = this.element.querySelector(".PlayerManaNumberText");
         manaBar.innerHTML = "";
-        for (let i = 0; i < mana; i++) {
+        for (let i = 1; i <= mana; i++) {
             manaBar.innerHTML += `<div class="Mana"></div>`;
 
         }
@@ -306,16 +362,16 @@ class Dashboard {
         manaText.innerHTML = `${mana}/${totalMana}`;
     }
 
-    requestManaDraw(mana, totalMana,cost) {
-        if(cost<=mana){
+    requestManaDraw(mana, totalMana, cost) {
+        if (cost <= mana) {
             let manaBar = this.element.querySelector(".PlayerManaImages");
             let manaText = this.element.querySelector(".PlayerManaNumberText");
             manaBar.innerHTML = "";
-            for (let i = 0; i < mana-cost; i++) {
+            for (let i = 0; i < mana - cost; i++) {
                 manaBar.innerHTML += `<div class="Mana"></div>`;
 
             }
-            for (let i = mana-cost; i < mana; i++) {
+            for (let i = mana - cost; i < mana; i++) {
                 manaBar.innerHTML += `<div class = "GlowMana"></div>`;
             }
             for (let i = mana; i < totalMana; i++) {
@@ -333,8 +389,19 @@ class Dashboard {
         }
     }
 
-    arangeHand() {
+    cantPlay() {
+        this.element.querySelector(".EndTurnButton").style.background = "green";
+    }
 
+    endTheGame(winner) {
+        const wrap = document.querySelector(".play-wrapper");
+        const gameDiv = document.querySelector(".GameDiv");
+        gameDiv.innerHTML = "";
+        gameDiv.className = "StartDiv";
+        const text = document.createElement("p");
+        text.className = "EndGameText";
+        text.innerHTML = `${winner} wins!`;
+        wrap.appendChild(text);
     }
 
     destroy() {}

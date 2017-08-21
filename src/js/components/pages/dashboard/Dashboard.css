@@ -1,7 +1,7 @@
 .StartDiv {
     width: 100%;
     height: 100%;
-    margin: 1% 2% 2% 2%;
+    /* margin: 1% 2% 2% 2%; */
     vertical-align: middle;
     background-Image: url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);
     background-Size: cover;
@@ -46,7 +46,6 @@
 .OpponentHandArea {
     width: 1240px;
     height: 152px;
-    border: 1px solid black;
     display: inline-block;
     overflow: hidden;
     position: relative;
@@ -57,18 +56,16 @@
     left: -60px;
     width: 500px;
     height: 152px;
-    border: 1px solid white;
     display: inline-block;
     overflow: hidden;
     position: relative;
 }
 
 .OpponentMana {
-        top: 47px;
+    top: 47px;
     left: 794px;
     height: 34px;
     width: 79px;
-    border: 1px solid yellow;
     float: right;
     display: flex;
     align-items: center;
@@ -76,11 +73,10 @@
 }
 
 .PlayerMana {
-    top: -100px;
-    left: 819px;
+    top: -96px;
+    left: 823px;
     width: 410px;
     height: 40px;
-    border: 1px solid yellow;
     position: relative;
     display: flex;
     align-items: center;
@@ -90,7 +86,6 @@
     left: 10px;
     width: 80px;
     height: 40px;
-    border: 1px solid yellow;
     position: absolute;
     display: flex;
     align-items: center;
@@ -104,7 +99,7 @@
 }
 
 .OpponentManaText {
-    left:0px;
+    left: 0px;
     color: white;
     font-size: 26px;
     text-align: center;
@@ -114,7 +109,6 @@
     left: 88px;
     width: 310px;
     height: 40px;
-    border: 1px solid yellow;
     position: absolute;
     display: flex;
     align-items: center;
@@ -125,7 +119,6 @@
     left: -24px;
     width: 45px;
     height: 167px;
-    border: 1px solid purple;
     display: block;
     float: right;
     position: relative;
@@ -134,19 +127,19 @@
 .EndTurnButton-Container {
     /* top: 9px;
     left: 0px; */
-        top: -151px;
+    top: -151px;
     left: 0px;
     width: 1240px;
     height: 54px;
-    border: 1px solid red;
     float: right;
     display: block;
     position: relative;
 }
 
 .EndTurnButton {
+    top: 10px;
     left: 1052px;
-    font-size: 40px;
+    font-size: 30px;
     position: absolute;
 }
 
@@ -157,7 +150,6 @@
     left: -18px;
     width: 45px;
     height: 167px;
-    border: 1px solid purple;
     display: block;
     float: right;
     position: relative;
@@ -166,11 +158,10 @@
 .OpponentField {
     /* top: 36px;
     left: 0px; */
-        top: -124px;
+    top: -124px;
     left: 0px;
     width: 1155px;
     height: 276px;
-    border: 1px solid green;
     display: block;
     position: relative;
 }
@@ -178,11 +169,10 @@
 .PlayerField {
     /* top: 70px;
     left: 0px; */
-     top: -95px;
+    top: -95px;
     left: 0px;
     width: 1155px;
     height: 320px;
-    border: 1px solid blue;
     display: block;
     text-align: center;
     position: relative;
@@ -195,18 +185,16 @@
     left: 0px;
     width: 1240px;
     height: 152px;
-    border: 1px solid black;
     display: inline-block;
     overflow: hidden;
     position: relative;
 }
 
 .PlayerHand {
-    top: 0px;
-    left: -43px;
+    top: -2px;
+    left: -100px;
     width: 500px;
     height: 152px;
-    border: 1px solid white;
     display: inline-block;
     overflow: hidden;
     position: relative;
@@ -243,9 +231,9 @@
     vertical-align: center;
 }
 
-.Health-Container {
-    top: 0px;
-    left: 0px;
+.Ai-Health-Container {
+    top: -21px;
+    left: -230px;
     width: 100px;
     height: 100px;
     border-radius: 0 50% 50% 50%;
@@ -253,18 +241,59 @@
     transform: rotate(45deg);
     overflow: hidden;
     display: inline-block;
-    position: absolute;
+    position: relative;
+    background: white;
 }
 
-.Health-Fill {
+.Ai-Health-Fill {
     width: 100px;
     height: 200px;
-    top: -40px;
-    left: 10px;
+    top: -124px;
+    left: 20px;
     background: red;
     transform: rotate(-45deg);
     position: relative;
-    z-index: 90;
+    z-index: -1;
+}
+
+.AiHpText {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+.Player-Health-Container {
+    top: -20px;
+    left: -230px;
+    width: 100px;
+    height: 100px;
+    border-radius: 0 50% 50% 50%;
+    border: 3px solid black;
+    transform: rotate(45deg);
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.Player-Health-Fill {
+    width: 100px;
+    height: 200px;
+    top: -124px;
+    left: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    position: relative;
+    z-index: -1;
+}
+
+.PlayerHpText {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    transform: rotate(-45deg);
+    z-index: 1;
 }
 
 .OpponentHandCards {
@@ -350,22 +379,33 @@
     transform: scale(2);
 }
 
-.AiChar{
+.AiChar {
+    z-index: 1;
     top: -48px;
     left: 506px;
     height: 160px;
     width: 141px;
-background:url(../open-packs/imgs/rexxar.png);
-background-size: cover;
-position: relative;
+    background: url(../open-packs/imgs/rexxar.png);
+    background-size: cover;
+    position: relative;
 }
 
-.PlayerChar{
-           top: -206px;
+.PlayerChar {
+    top: -206px;
     left: 505px;
     height: 160px;
     width: 141px;
-background: url(http://media-hearth.cursecdn.com/avatars/291/447/635976153333715026.png);
-background-size: cover;
-position: relative;
+    background: url(http://media-hearth.cursecdn.com/avatars/291/447/635976153333715026.png);
+    background-size: cover;
+    position: relative;
+}
+
+.EndGameText {
+    top: 230px;
+    left: 775px;
+    text-align: center;
+    font-size: 100px;
+    color: white;
+    text-shadow: 2px 2px black;
+    position: fixed;
 }

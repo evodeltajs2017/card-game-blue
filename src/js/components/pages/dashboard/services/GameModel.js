@@ -4,6 +4,7 @@ class GameModel {
         this.playerDeck = playerDeck;
         this.aiDeck = aiDeck;
 
+
         this.playerHand = [];
         this.aiHand = [];
 
@@ -16,9 +17,16 @@ class GameModel {
         this.playerHp = 30;
         this.aiHp = 30;
 
-        this.turnNumber = 10;
-
+        this.turnNumber = 1;
+        this.minion = {};
         // this.playerTurn = false;
+        this.cantPlay = () => {};
+
+        this.endTheGame = () => {};
+
+        this.drawField = () => {};
+
+        this.drawPlayerHp = () => {};
 
         this.showHand = () => {};
 
@@ -31,6 +39,8 @@ class GameModel {
         this.onPlayerManaReset = () => {};
 
         this.playerDrawMana = () => {};
+
+        this.drawAiHp = () => {};
     }
 
     initialize() {
@@ -38,6 +48,11 @@ class GameModel {
         this.giveCards(this.playerHand, this.playerDeck);
         this.giveCards(this.aiHand, this.aiDeck);
 
+        this.startGame();
+
+    }
+
+    startGame() {
         this.showHand();
         this.showAiHand();
         this.playerDrawCard();
@@ -45,10 +60,20 @@ class GameModel {
         //start game - player turn
         // this.switchTurn();
         this.playerResetMana();
-
+        this.verifyIfAbleToPlay();
     }
 
-    requestManaDraw(cost){
+    verifyIfAbleToPlay() {
+        let play = false;
+        this.playerHand.forEach(e => {
+            if (e.cost <= this.playerMana)
+                play = true;
+        });
+        if (play == false)
+            this.cantPlay();
+    }
+
+    requestManaDraw(cost) {
         this.requestManaDraw(cost);
     }
 
@@ -58,17 +83,22 @@ class GameModel {
     }
 
     playerResetMana() {
-        if(this.playerMana < 10){
+        if (this.playerMana < 10) {
             this.playerMana = this.turnNumber;
-        }else{
+        } else {
             this.playerMana = 10;
         }
         this.playerDrawMana();
     }
 
     aiResetMana() {
-        this.aiMana = this.turnNumber;
+        if (this.turnNumber < 10) {
+            this.aiMana = this.turnNumber;
+        } else {
+            this.aiMana = 10;
+        }
         this.drawAiMana();
+        this.turnNumber++;
     }
 
     playerDrawCard() {
@@ -91,23 +121,16 @@ class GameModel {
         this.aiAttackPlayer();
         this.aiPlayCard();
         this.switchTurn();
-
     }
 
-    switchTurn(){
+    switchTurn() {
         this.playerResetMana();
         this.playerDrawCard();
         this.playerBoard.forEach(e => {
-            // e.isSleeping = false;
-            console.log("Minion sleeps: " + e.isSleeping);
+            e.isSleeping = false;
         });
+        this.verifyIfAbleToPlay();
     }
-
-    // aiAttack() {
-    //     this.aiBoard.forEach(e => {
-
-    //     });
-    // }
 
     playCard(cardIndex, e) {
 
@@ -116,63 +139,89 @@ class GameModel {
             this.playerBoard.push(this.playerHand[cardIndex]);
             this.playerMana -= this.playerHand[cardIndex].cost;
             this.playerDrawMana();
-            this.onPlayCard(this.playerHand[cardIndex], e);
+            this.onPlayCard(this.playerHand[cardIndex], e, this.playerBoard.length - 1);
             this.playerHand.splice(cardIndex, 1);
             this.showHand();
+            this.verifyIfAbleToPlay();
         }
     }
 
-    aiAttackPlayer(){
+    aiAttackPlayer() {
         let minions = this.aiBoard.length;
-        for(let i=0;i<minions;i++){
+        for (let i = 0; i < minions; i++) {
             this.playerHp -= this.aiBoard[i].damage;
-            if(this.playerHp < 1){
-                this.endGameAi();
+            this.drawPlayerHp();
+            if (this.playerHp < 1) {
+                this.endGame("AI");
                 break;
             }
         }
         console.log(this.playerHp);
     }
 
-    endGameAi(){
-        alert("Ai wins!");
+    endGame(winner) {
+        this.endTheGame(winner);
     }
 
     aiPlayCard() {
         let aiAbleToPlay = true;
         let played = false;
         let i;
-     
-            for (i = 0; i < this.aiHand.length; i++) {
-                if (this.aiBoard.length < 7 && this.aiHand[i].cost <= this.aiMana) {
-                    this.aiBoard.push(this.aiHand[i]);
-                    this.aiMana -= this.aiHand[i].cost;
-                    this.onAiPlayCard(this.aiHand[i]);
-                    this.aiHand.splice(i, 1);
-                    this.showAiHand();
-                    this.drawAiMana();
-                    played = true;
-                } 
+
+        for (i = 0; i < this.aiHand.length; i++) {
+            if (this.aiBoard.length < 7 && this.aiHand[i].cost <= this.aiMana) {
+                this.aiBoard.push(this.aiHand[i]);
+                this.aiMana -= this.aiHand[i].cost;
+                this.onAiPlayCard(this.aiHand[i], this.aiBoard.length - 1);
+                this.aiHand.splice(i, 1);
+                this.showAiHand();
+                this.drawAiMana();
+                played = true;
             }
-        
-    }
-
-    aiAbleToPlay() {
-        for (let i = 0; i < this.aiHand.length; i++) {
-
         }
+
     }
 
-    monsterAttack() {}
+    minionAttack(index) {
+        if (this.playerBoard[this.minion].isSleeping == false) {
+            this.playerBoard[this.minion].health -= this.aiBoard[index].damage;
+            this.aiBoard[index].health -= this.playerBoard[this.minion].damage;
 
-    // switchTurn() {
-    //     this.playerTurn = !this.playerTurn;
-    //     this.turnNumber += 1;
-    // }
+            if (this.aiBoard[index].health < 1) {
+                this.aiBoard.splice(index, 1);
+            }
+            if (this.playerBoard[this.minion].health < 1) {
+                this.playerBoard.splice(this.minion, 1);
+            }
+
+            this.drawField();
+            this.minion = {};
+        } else
+            alert("Shhhh... That minion is Sleeping!");
+    }
+
+    minionAttackHero() {
+        if (this.playerBoard[this.minion].isSleeping == false) {
+            let vechi = this.aiHp;
+            this.aiHp -= this.playerBoard[this.minion].damage;
+            this.drawAiHp(this.playerBoard[this.minion].damage, vechi);
+            if (this.aiHp < 1) {
+                this.endGame("Player");
+            }
+        } else
+            alert("Shhhh... That minion is Sleeping!");
+    }
+
+
+    selectMonster(index) {
+        this.minion = index;
+    }
+
 
     giveCards(hand, deck) {
-        for (let i = 0; i < 3; i++)
+        for (let i = 0; i < 3; i++) {
             hand.push(deck.pop());
+        }
     }
 
 
