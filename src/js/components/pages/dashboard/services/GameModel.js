@@ -18,8 +18,15 @@ class GameModel {
         this.aiHp = 30;
 
         this.turnNumber = 1;
+
         this.minion = {};
-        // this.playerTurn = false;
+
+        this.aiBurn = 1;
+
+        this.playerBurn = 1;
+
+        this.isPlaying = true;
+
         this.cantPlay = () => {};
 
         this.endTheGame = () => {};
@@ -36,8 +43,6 @@ class GameModel {
 
         this.onPlayCard = () => {};
 
-        this.onPlayerManaReset = () => {};
-
         this.playerDrawMana = () => {};
 
         this.drawAiHp = () => {};
@@ -47,9 +52,30 @@ class GameModel {
 
         this.giveCards(this.playerHand, this.playerDeck);
         this.giveCards(this.aiHand, this.aiDeck);
-
         this.startGame();
+    }
 
+    endTurn() {
+
+        this.aiResetMana();
+        this.aiDrawCard();
+        this.aiAttackPlayer();
+        if (this.isPlaying == true) {
+            this.aiPlayCard();
+            this.switchTurn();
+        }
+    }
+
+    switchTurn() {
+
+        this.playerResetMana();
+        this.playerDrawCard();
+        if (this.isPlaying == true) {
+            this.playerBoard.forEach(e => {
+                e.isSleeping = false;
+            });
+            this.verifyIfAbleToPlay();
+        }
     }
 
     startGame() {
@@ -57,8 +83,6 @@ class GameModel {
         this.showAiHand();
         this.playerDrawCard();
         this.drawAiMana();
-        //start game - player turn
-        // this.switchTurn();
         this.playerResetMana();
         this.verifyIfAbleToPlay();
     }
@@ -69,6 +93,11 @@ class GameModel {
             if (e.cost <= this.playerMana)
                 play = true;
         });
+        this.playerBoard.forEach(e => {
+            if (e.isSleeping == false && this.playerBoard.length < 7)
+                play = true;
+        });
+
         if (play == false)
             this.cantPlay();
     }
@@ -78,12 +107,7 @@ class GameModel {
     }
 
     playerResetMana() {
-        this.playerMana = this.turnNumber;
-        this.onPlayerManaReset();
-    }
-
-    playerResetMana() {
-        if (this.playerMana < 10) {
+        if (this.turnNumber < 10) {
             this.playerMana = this.turnNumber;
         } else {
             this.playerMana = 10;
@@ -105,6 +129,17 @@ class GameModel {
         if (this.playerHand.length < 10 && this.playerDeck.length > 0) {
             this.playerHand.push(this.playerDeck.pop());
             this.showHand();
+        } else {
+            if (this.playerHand.length >= 10) {
+                let burnedCard = this.playerDeck.pop();
+                if (this.playerDeck.length > 0) console.log("Player burned: " + burnedCard.name);
+            }
+            if (this.playerDeck.length <= 0) {
+                this.playerHp -= this.playerBurn++;
+                this.drawPlayerHp(this.playerBurn - 1);
+                if (this.playerHp <= 0)
+                    this.endGame("AI");
+            }
         }
     }
 
@@ -112,24 +147,19 @@ class GameModel {
         if (this.aiHand.length < 10 && this.aiDeck.length > 0) {
             this.aiHand.push(this.aiDeck.pop());
             this.showAiHand();
+        } else {
+            if (this.aiHand.length >= 10) {
+                let burnedCard = this.aiDeck.pop();
+                if (this.aiDeck.length > 0) console.log("AI burned: " + burnedCard.name);
+            }
+            if (this.aiDeck.length <= 0) {
+                let vechi = this.aiHp;
+                this.aiHp -= this.aiBurn++;
+                this.drawAiHp(this.aiBurn - 1);
+                if (this.aiHp <= 0)
+                    this.endGame("Player");
+            }
         }
-    }
-
-    endTurn() {
-        this.aiResetMana();
-        this.aiDrawCard();
-        this.aiAttackPlayer();
-        this.aiPlayCard();
-        this.switchTurn();
-    }
-
-    switchTurn() {
-        this.playerResetMana();
-        this.playerDrawCard();
-        this.playerBoard.forEach(e => {
-            e.isSleeping = false;
-        });
-        this.verifyIfAbleToPlay();
     }
 
     playCard(cardIndex, e) {
@@ -150,17 +180,17 @@ class GameModel {
         let minions = this.aiBoard.length;
         for (let i = 0; i < minions; i++) {
             this.playerHp -= this.aiBoard[i].damage;
-            this.drawPlayerHp();
+            this.drawPlayerHp(this.aiBoard[i].damage);
             if (this.playerHp < 1) {
                 this.endGame("AI");
                 break;
             }
         }
-        console.log(this.playerHp);
     }
 
     endGame(winner) {
         this.endTheGame(winner);
+        this.isPlaying = false;
     }
 
     aiPlayCard() {
@@ -186,7 +216,7 @@ class GameModel {
         if (this.playerBoard[this.minion].isSleeping == false) {
             this.playerBoard[this.minion].health -= this.aiBoard[index].damage;
             this.aiBoard[index].health -= this.playerBoard[this.minion].damage;
-
+            this.playerBoard[this.minion].isSleeping = true;
             if (this.aiBoard[index].health < 1) {
                 this.aiBoard.splice(index, 1);
             }
@@ -196,6 +226,7 @@ class GameModel {
 
             this.drawField();
             this.minion = {};
+            this.verifyIfAbleToPlay();
         } else
             alert("Shhhh... That minion is Sleeping!");
     }
@@ -204,7 +235,10 @@ class GameModel {
         if (this.playerBoard[this.minion].isSleeping == false) {
             let vechi = this.aiHp;
             this.aiHp -= this.playerBoard[this.minion].damage;
-            this.drawAiHp(this.playerBoard[this.minion].damage, vechi);
+            this.drawAiHp(this.playerBoard[this.minion].damage);
+            this.playerBoard[this.minion].isSleeping = true;
+            this.minion = {};
+            this.verifyIfAbleToPlay();
             if (this.aiHp < 1) {
                 this.endGame("Player");
             }
@@ -223,7 +257,6 @@ class GameModel {
             hand.push(deck.pop());
         }
     }
-
 
     destroy() {}
 }

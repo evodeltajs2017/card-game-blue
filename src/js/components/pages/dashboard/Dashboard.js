@@ -11,6 +11,8 @@ class Dashboard {
         this.aiDeck = [];
         this.aileft = 20;
         this.aitop = -124;
+        this.playertop = -124;
+        this.playerleft = 20;
     }
 
     initialize() {
@@ -112,7 +114,7 @@ class Dashboard {
                 }
             }
 
-            model.drawAiHp = (damage, hp_vechi) => {
+            model.drawAiHp = (damage) => {
                 this.drawAiHp(model.aiHp, damage);
             }
 
@@ -125,8 +127,8 @@ class Dashboard {
                 this.endTheGame(winner);
             }
 
-            model.drawPlayerHp = () => {
-                this.drawPlayerHp(model.playerHp);
+            model.drawPlayerHp = (damage) => {
+                this.drawPlayerHp(model.playerHp, damage);
             }
 
             model.showHand = () => {
@@ -138,7 +140,7 @@ class Dashboard {
             }
 
             model.drawAiMana = () => {
-                if (model.playerMana < 10) {
+                if (model.turnNumber < 10) {
                     this.drawAiMana(model.aiMana, model.turnNumber);
                 } else {
                     this.drawAiMana(model.aiMana, 10);
@@ -146,7 +148,7 @@ class Dashboard {
             }
 
             model.playerDrawMana = () => {
-                if (model.playerMana < 10) {
+                if (model.turnNumber < 10) {
                     this.drawPlayerMana(model.playerMana, model.turnNumber);
                 } else {
                     this.drawPlayerMana(model.playerMana, 10);
@@ -167,19 +169,11 @@ class Dashboard {
                 this.drawAiBoard(card, model, index);
             };
 
-            model.onPlayerManaReset = () => {
-                this.refreshPlayerMana(model.playerMana);
-            };
             model.initialize();
 
             gameDiv.querySelector(".EndTurnButton").addEventListener("click", (e) => {
-
                 e.target.style.background = "white";
                 model.endTurn();
-                // top += 10;
-                // left += 10;
-                // gameDiv.querySelector(".Health-Fill").style.top = top + "px";
-                // gameDiv.querySelector(".Health-Fill").style.left = left + "px";
             })
 
         })
@@ -195,7 +189,6 @@ class Dashboard {
         }
         aiBoard.innerHTML = "";
         for (let i = 0; i < ai.length; i++) {
-            console.log("Ai: " + ai[i]);
             if (ai.length > 0)
                 this.drawAiBoard(ai[i], model, i);
         }
@@ -205,7 +198,7 @@ class Dashboard {
         let board = this.element.querySelector(".PlayerField");
         let fieldCard = document.createElement("div");
         fieldCard.className = "TableCard";
-        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
         carte.initialize();
         board.appendChild(fieldCard);
         fieldCard.addEventListener("click", () => {
@@ -213,36 +206,35 @@ class Dashboard {
         });
     }
 
-    drawAiHp(hp, damage, hp_vechi) {
+    drawAiHp(hp, damage) {
         this.element.querySelector(".AiHpText").innerHTML = hp;
         let bara = this.element.querySelector(".Ai-Health-Fill");
-        console.log(bara);
-        this.aitop += 10;
-        console.log(this.aitop);
-        bara.style.top = this.aitop + " px";
-        this.aileft += 10;
-        console.log(this.aileft);
-        bara.style.left = this.aileft + " px";
+        this.aitop += (damage * 30 / 100) * 10;
+        this.aileft += (damage * 30 / 100) * 10;
+        bara.style.top = this.aitop + "px";
+        bara.style.left = this.aileft + "px";
     }
 
-    drawPlayerHp(hp) {
+    drawPlayerHp(hp, damage) {
         this.element.querySelector(".PlayerHpText").innerHTML = hp;
-        // let bara = this.element.querySelector(".Player-Health-Fill");
+        let bara = this.element.querySelector(".Player-Health-Fill");
+        this.playertop += (damage * 30 / 100) * 10;
+        this.playerleft += (damage * 30 / 100) * 10;
+        bara.style.top = this.playertop + "px";
+        bara.style.left = this.playerleft + "px";
     }
 
     drawAiBoard(card, model, index) {
         let board = this.element.querySelector(".OpponentField");
         let fieldCard = document.createElement("div");
         fieldCard.className = "AITableCard";
-        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, "fa-trophy" /* card.img*/ );
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
         carte.initialize();
         board.appendChild(fieldCard);
         fieldCard.addEventListener("click", () => {
             model.minionAttack(index);
         });
     }
-
-
 
     drawAiHand(playerHand) {
 
@@ -307,7 +299,7 @@ class Dashboard {
                 let cardContainerEvent = this.element.querySelector(".DisplayCard");
                 cardContainerEvent.innerHTML = "";
                 cardContainerEvent.style.display = "block";
-                let card = new Card(cardContainerEvent, cardContainerEvent.width, cardContainerEvent.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, "fa-trophy"); //playerHand[i].img);
+                let card = new Card(cardContainerEvent, cardContainerEvent.width, cardContainerEvent.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, playerHand[i].imageid);
 
                 card.initialize();
                 model.requestManaDraw(playerHand[i].cost);
@@ -324,7 +316,7 @@ class Dashboard {
 
             })
 
-            card = new Card(cardContainer, cardContainer.width, cardContainer.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, "fa-trophy"); //playerHand[i].img);
+            card = new Card(cardContainer, cardContainer.width, cardContainer.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, playerHand[i].imageid);
             card.initialize();
 
             container.appendChild(cardContainer);
@@ -378,14 +370,6 @@ class Dashboard {
                 manaBar.innerHTML += `<div class="DepletedMana"></div>`;
             }
             manaText.innerHTML = `${mana}/${totalMana}`;
-        }
-    }
-
-    refreshPlayerMana(mana) {
-        let manaBar = this.element.querySelector(".PlayerMana");
-        manaBar.innerHTML = "";
-        for (let i = 0; i < mana; i++) {
-            manaBar.innerHTML += `<div class="Mana"></div>`;
         }
     }
 
