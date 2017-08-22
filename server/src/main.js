@@ -28,6 +28,10 @@ addNewCardRoute.initialize();
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
 
+const ViewCards = require("./routes/view-cards/ViewCardsRoute");
+const viewCards = new ViewCards(app);
+viewCards.initialize();
+
 app.listen(3000, function() {
 	dbconnection.initialize();
     console.log("Example app listening on port 3000!");
