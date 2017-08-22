@@ -34,8 +34,9 @@ class ViewCards {
     search() {
         const input = document.getElementsByTagName("input")[1].value;
         this.searchname = input;
+        console.log(this.searchname);
         this.number = 1;
-        const parent = document.getElementsByClassName("content-container")[0];
+        const parent = document.getElementsByClassName("content-container-temp")[0];
         let cards = document.getElementsByClassName("parentOfCard");
         let cardsDiv = document.getElementsByClassName("cards")[0];
         cardsDiv.innerHTML = '';
@@ -60,6 +61,9 @@ class ViewCards {
     }
 
     buildThePage() {
+        const container = document.createElement("div");
+        container.className = "content-container-temp";
+
         const div = document.createElement("div");
         div.innerHTML = "<h1>View Cards</h1>";
         div.className = "upperSide";
@@ -74,9 +78,10 @@ class ViewCards {
         field.setAttribute("placeholder", "Card name...");
         div.appendChild(field);
         button.addEventListener("click", (e) => { this.search(); }, false);
+        field.addEventListener("keydown", (e) => { this.search(); }, false);
 
         div.style.textAlign = "center";
-        this.container.appendChild(div);
+        container.appendChild(div);
 
         const cardsDiv = document.createElement("div");
         cardsDiv.className = "cards";
@@ -87,9 +92,10 @@ class ViewCards {
 
         const backImg = document.createElement("div");
         backImg.className = "backImg";
-        this.container.appendChild(backImg);
+        container.appendChild(backImg);
 
-        this.container.appendChild(cardsDiv);
+        container.appendChild(cardsDiv);
+        this.container.appendChild(container);
     }
 
     initialize() {

@@ -194,6 +194,9 @@ class OpenPacks {
     }
 
     buildThePage() {
+        const container = document.createElement("div");
+        container.className = "content-container-temp";
+
         const div = document.createElement("div");
         div.innerHTML = "<h1>Open card packs</h1>";
         div.className = "upperSide";
@@ -204,11 +207,11 @@ class OpenPacks {
 
         div.appendChild(button);
         div.style.textAlign = "center";
-        this.container.appendChild(div);
+        container.appendChild(div);
 
         const backImg = document.createElement("div");
         backImg.className = "backImg";
-        this.container.appendChild(backImg);
+        container.appendChild(backImg);
 
         const deckDiv = document.createElement("div");
         deckDiv.className = "decks";
@@ -225,8 +228,9 @@ class OpenPacks {
         circleDiv.appendChild(staticDeck);
         openDiv.appendChild(circleDiv);
 
-        this.container.appendChild(deckDiv);
-        this.container.appendChild(openDiv);
+        container.appendChild(deckDiv);
+        container.appendChild(openDiv);
+        this.container.appendChild(container);
 
         this.generatePacks(button, deckDiv);
     }

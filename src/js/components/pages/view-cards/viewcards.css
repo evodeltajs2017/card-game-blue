@@ -22,7 +22,7 @@ body {
     height: 100%;
 }
 
-.content-container {
+.content-container-temp {
     top: 0;
     left: 0;
     bottom: 0;
@@ -38,7 +38,7 @@ body {
     background-attachment: fixed;
 }
 
-.content-container > div {
+.content-container-temp > div {
     display: inline-block;
 }
 

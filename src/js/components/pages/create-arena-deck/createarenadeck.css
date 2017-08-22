@@ -1,0 +1,23 @@
+.rightSide {
+	width: 20%;
+	height: 900px;
+	left: 0;
+	float: right;
+	border-style: solid;
+	border-width: 2px;
+	border-color: white;
+	box-shadow: 0 0 10px 10px white;
+}
+
+.mainContent {
+	width: 70%;
+	height: 100%;
+	float: left;
+}
+
+h1 {
+    color: White;
+    float: left;
+    padding-left: 2%;
+    bottom: 0;
+}
