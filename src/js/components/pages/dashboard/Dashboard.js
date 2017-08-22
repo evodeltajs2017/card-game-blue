@@ -106,8 +106,8 @@ class Dashboard {
                 model.minionAttackHero();
             });
 
-            model.requestManaDraw = (cost) => {
-                if (model.playerMana < 10) {
+            model.requestManaDrawNew = (cost) => {
+                if (model.turnNumber < 10) {
                     this.requestManaDraw(model.playerMana, model.turnNumber, cost);
                 } else {
                     this.requestManaDraw(model.playerMana, 10, cost);
@@ -174,12 +174,18 @@ class Dashboard {
 
             model.colorEndTurnButton = () => {
                 gameDiv.querySelector(".EndTurnButton").className = "EndTurnButton yellowButton";
+                gameDiv.querySelector(".EndTurnButton").removeAttribute("disabled");
                 this.element.querySelector(".OpponentField").style.zIndex = "0";
             }
 
             model.onPlayCard = (card, e, index) => {
-                this.drawPlayerBoard(card, model, index);
-                e.target.remove();
+                // e.currentTarget.style.transform = "scale(0.1)";
+                e.currentTarget.style.opacity = "0";
+                e.currentTarget.children[0].style.top = "-100px";
+                setTimeout(() => {
+                    e.target.remove();
+                    this.drawPlayerBoardAnimated(card, model, index);
+                }, 500);
             };
 
             model.onAiPlayCard = (card, index) => {
@@ -190,6 +196,7 @@ class Dashboard {
 
             gameDiv.querySelector(".EndTurnButton").addEventListener("click", (e) => {
                 e.target.className = "EndTurnButton greyButton";
+                e.target.setAttribute("disabled", "true");
                 this.element.querySelector(".OpponentField").style.zIndex = "1000";
                 model.endTurn();
             })
@@ -205,9 +212,6 @@ class Dashboard {
         source.style.left = calc + "px";
         source.style.transform = "scale(1.5)";
         source.style.zIndex = "20";
-
-
-
 
         setTimeout(() => {
             target.style.top = differance.top * 0.2 + "px";
@@ -318,6 +322,28 @@ class Dashboard {
         });
     }
 
+    drawPlayerBoardAnimated(card, model, index) {
+        let board = this.element.querySelector(".PlayerField");
+        let fieldCard = document.createElement("div");
+        fieldCard.className = "TableCard";
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
+        carte.initialize();
+        fieldCard.style.transform = "scale(0.1)";
+        fieldCard.style.opacity = "0";
+        // fieldCard.children[0].style.transform = "scale(0.1)";
+        // fieldCard.children[0].style.opacity = "0";
+        board.appendChild(fieldCard);
+        setTimeout(() => {
+            fieldCard.style.opacity = "1";
+            fieldCard.style.transform = "scale(0.8)";
+            fieldCard.addEventListener("click", (e) => {
+                model.selectMonster(index, e.currentTarget.querySelector(".CardComponent"));
+            });
+        }, 100)
+
+    }
+
+
     drawAiHp(hp, damage) {
         this.element.querySelector(".AiHpText").innerHTML = hp;
         let bara = this.element.querySelector(".Ai-Health-Fill");
@@ -423,6 +449,7 @@ class Dashboard {
             })
 
             cardContainer.addEventListener("click", (e) => {
+                e.currentTarget.style.pointerEvents = "none"; //OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG 
                 model.playCard(i, e);
                 this.element.querySelector(".DisplayCard").style.display = "none";
 

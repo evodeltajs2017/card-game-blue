@@ -1,7 +1,6 @@
 .StartDiv {
     width: 100%;
     height: 100%;
-    /* margin: 1% 2% 2% 2%; */
     vertical-align: middle;
     background-Image: url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);
     background-Size: cover;
@@ -73,7 +72,11 @@
 }
 
 .PlayerMana {
-    top: -96px;
+    /* top: -96px;
+    left: 823px;
+    width: 410px;
+    height: 40px; */
+    top: 63px;
     left: 823px;
     width: 410px;
     height: 40px;
@@ -130,8 +133,6 @@
 }
 
 .EndTurnButton-Container {
-    /* top: 9px;
-    left: 0px; */
     top: -151px;
     left: 0px;
     width: 1240px;
@@ -198,25 +199,34 @@
     display: block;
     text-align: center;
     position: relative;
+    transition: transform 1s ease, opacity 1s ease;
 }
 
 .PlayerHandArea {
-    top: -203px;
+    /* top: -203px;
     left: 0px;
     width: 1240px;
-    height: 152px;
+    height: 152px; */
+    top: -363px;
+    left: 0px;
+    width: 1240px;
+    height: 310px;
     display: inline-block;
     overflow: hidden;
     position: relative;
 }
 
 .PlayerHand {
-    top: -2px;
+    /* top: -2px;
+    left: -100px;
+    width: 500px;
+    height: 152px; */
+    top: 158px;
     left: -100px;
     width: 500px;
     height: 152px;
     display: inline-block;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
 }
 
@@ -252,7 +262,7 @@
 }
 
 .Ai-Health-Container {
-    top: -21px;
+    top: -10px;
     left: -230px;
     width: 100px;
     height: 100px;
@@ -285,7 +295,11 @@
 }
 
 .Player-Health-Container {
-    top: -20px;
+    /* top: -20px;
+    left: -230px;
+    width: 100px;
+    height: 100px; */
+    top: 120px;
     left: -230px;
     width: 100px;
     height: 100px;
@@ -350,6 +364,7 @@
     background: transparent;
     z-index: 2;
     display: block;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 .PlayCard:hover {
@@ -375,7 +390,7 @@
     text-align: center;
     z-index: 20;
     position: relative;
-    transition: top 2s ease-in-out, left 4s cubic-bezier(0.76, -0.07, 0, 1.16);
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
 }
 
 .AITableCard {

@@ -17,7 +17,7 @@ class GameModel {
         this.playerHp = 30;
         this.aiHp = 30;
 
-        this.turnNumber = 8; //1;
+        this.turnNumber = 9;
 
         this.minion = {};
         this.target = {};
@@ -27,6 +27,8 @@ class GameModel {
         this.playerBurn = 1;
 
         this.isPlaying = true;
+
+        this.requestManaDrawNew = () => {};
 
         this.animateAiAttack = () => {};
 
@@ -120,7 +122,7 @@ class GameModel {
     }
 
     requestManaDraw(cost) {
-        this.requestManaDraw(cost);
+        this.requestManaDrawNew(cost);
     }
 
     playerResetMana() {
@@ -187,9 +189,12 @@ class GameModel {
             this.playerMana -= this.playerHand[cardIndex].cost;
             this.playerDrawMana();
             this.onPlayCard(this.playerHand[cardIndex], e, this.playerBoard.length - 1);
-            this.playerHand.splice(cardIndex, 1);
-            this.showHand();
-            this.verifyIfAbleToPlay();
+            setTimeout(() => {
+                this.playerHand.splice(cardIndex, 1);
+                this.showHand();
+                this.verifyIfAbleToPlay();
+            }, 800);
+
         }
     }
 
@@ -198,15 +203,13 @@ class GameModel {
         for (let i = 0; i < minions; i++) {
             setTimeout(() => {
                 this.animateAiAttack(i);
-                console.log("Iteratia: ", i)
                 this.playerHp -= this.aiBoard[i].damage;
                 this.drawPlayerHp(this.aiBoard[i].damage);
                 if (this.playerHp < 1) {
-                    this.endGame("AI");
+                    this.endGame("Opponent");
                     // break;
                 }
             }, (i) * 800)
-            console.log("Gata");
         }
     }
 
