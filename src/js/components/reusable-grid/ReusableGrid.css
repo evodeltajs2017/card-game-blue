@@ -15,12 +15,12 @@
 .view-type-headder * {
     display: inline-block;
 }
-
+/*
 .view-type-search {
     float: right;
     margin-top: 28px;
 }
-
+*/
 .view-type-content-container {
     margin-top: 2px;
 }
@@ -38,20 +38,106 @@ td {
     border-collapse: collapse;
     text-align: center;
     margin-top: 2%;
+    font-family: Acme;
 }
+
+.view-type-under-text{
+
+    font-family: Acme;
+}
+
 
 /* Action buttons */
 
 .edit{
-
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 1px 1px rgba(0,0,0,0.075);
     background-color:#f1c40f;
     border:1px solid #f39c12;
 }
 
 .delete{
-
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 1px 1px rgba(0,0,0,0.075);
-    background-color:#fc8d83;
+    background-color: #e74c3c;
     border:1px solid #d83526;
+}
+
+
+/*Search section */
+
+.view-type-search {
+    margin: 21px 5px;
+    width: 350px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+}
+
+.view-type-search input {
+    width: 220px;
+    height: 30px;
+    padding: 10px 5px;
+    float: left;
+    border: 0;
+    background: #eee;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+    }
+
+.view-type-search input:focus {
+    outline: 0;
+    background: #fff;
+    -moz-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+    box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+}
+
+.view-type-search button {
+    overflow: visible;
+    position: relative;
+    font-family: Montserrat; 
+    /*float: right;*/
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 30px;
+    width: 115px;
+    color: #fff;
+    text-transform: uppercase;
+    background: #D88F3C;
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+    text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+}
+
+.view-type-search button:hover{
+    background: #FA8807;
+}
+
+.view-type-search button:active,
+.view-type-search button:focus{
+    background: #c42f2f;
+}
+
+.view-type-search button:before {
+    content: '';
+    position: absolute;
+    border-width: 8px 8px 8px 0;
+    border-style: solid solid solid none;
+    border-color: transparent #D88F3C transparent;
+    top: 12px;
+    left: -6px;
+}
+
+.view-type-search button:hover:before{
+border-right-color: #FA8807;
+}
+.view-type-search button:focus:before{
+border-right-color: #c42f2f;
+}
+.view-type-search button::-moz-focus-inner {
+border: 0;
+padding: 0;
 }

@@ -25,6 +25,14 @@ const AddNewCardRoute = require("./routes/addnewcard/AddNewCardRoute");
 const addNewCardRoute = new AddNewCardRoute(app);
 addNewCardRoute.initialize();
 
+const ViewDecks = require("./routes/view-decks/ViewDecks");
+const viewDecks = new ViewDecks(app);
+viewDecks.initialize();
+
+const AddNewDeckRoute = require("./routes/addnewdeck/AddNewDeckRoute.js");
+const addNewDeckRoute = new AddNewDeckRoute(app);
+addNewDeckRoute.initialize();
+
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
 

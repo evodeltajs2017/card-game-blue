@@ -26,6 +26,8 @@ class ReusableGrid {
     addAll(receivedObj) {
         this.buildTable(receivedObj);
         this.createIndexButtons(receivedObj);
+        this.addEventToEditButtons();
+        this.addEventToDeleteButtons();
       //  this.addEventToEditButtons();
       //  this.addEventToDeleteButtons(repo);
     }
@@ -54,13 +56,56 @@ class ReusableGrid {
         });
     }
 
+    deleteCard(id) {
+        return new Promise((resolve, reject) => {
+            var deleteRequest = new XMLHttpRequest();
+
+            var body = { cardTypeId: id };
+            var URL = `http://localhost:3000/${this.url}`;
+
+            deleteRequest.open('POST', URL, true);
+            deleteRequest.setRequestHeader("Content-Type", "application/json");
+            deleteRequest.onreadystatechange = function() {
+
+                if (deleteRequest.readyState === 4) {
+
+                    let receivedObj = JSON.parse(deleteRequest.response);
+                    resolve(receivedObj);
+                }
+            }
+
+            deleteRequest.send(JSON.stringify(body));
+        });
+    }
+
+    addEventToDeleteButtons() {
+        let elementList = this.domElement.querySelectorAll(".delete");
+        for (let i = 0; i < elementList.length; i++) {
+            elementList[i].addEventListener("click", () => {
+                console.log("attribute here ", elementList[i]);
+                if (confirm(`Are you sure you want to delete Item no. ${elementList[i].getAttribute("value")}?`)) {
+                    this.deleteCard(elementList[i].value).then((receivedObj) => {
+                        alert(receivedObj);
+                        this.getData("").then(receivedObj => {
+                            this.addAll(receivedObj);
+                            this.addEventToIndexButtons("");
+                           // this.disableButton();
+                        });
+                    });
+                }
+            });
+        };
+    }
+
+
+
     buildViewContainer(){
         let template = `
             <div class="view-type-headder">
                 <h1>${this.pageTitle}</h1>
                 <div class="view-type-search">
-                    <input type="search" class="view-type-search-text">
-                    <input class="view-type-search-button" value="Search" type="submit">
+                    <input type="search" class="view-type-search-text" placeholder="Search here by Name ...">
+                    <button class="view-type-search-button" value="Search" type="submit">Search</button>
                 </div>
             </div>
 
@@ -77,9 +122,6 @@ class ReusableGrid {
         div.innerHTML = template;
         this.domElement = div;
         this.container.appendChild(div);
-
-
-
 
     }
 
@@ -104,8 +146,8 @@ class ReusableGrid {
 
   			}
   			tableBody += `<td>
-                            <button class="action-button edit" value="Edit">Edit</button>
-                            <button class="action-button delete" value="Delete" >Delete</button></td>`;
+                            <button class="action-button edit" value="${receivedObj.items[j].cod}">Edit</button>
+                            <button class="action-button delete" value="${receivedObj.items[j].cod}" >Delete</button></td>`;
   			tableBody += `</tr>`;
     	}
 
@@ -142,11 +184,10 @@ class ReusableGrid {
                 console.log(elementList[i].value);
                 this.getData(searchText, elementList[i].value).then(receivedObj => {
                     this.buildTable(receivedObj);
-               //     this.addEventToEditButtons();
-               //     this.addEventToDeleteButtons(repo);
+                    this.addEventToDeleteButtons();
+                    this.addEventToEditButtons();
                     this.createShowingText(receivedObj);
                 });
-           //     this.disableButton(event.target);
             });
         };
     }
@@ -159,8 +200,20 @@ class ReusableGrid {
             if (searchText !== "")
                 this.createIndexButtons(receivedObj);
             this.addEventToIndexButtons(searchText);
-        //    this.disableButton();
         });
+    }
+
+    addEventToEditButtons() {
+        let elementList = this.domElement.querySelectorAll(".edit");
+        for (let i = 0; i < elementList.length; i++) {
+            elementList[i].addEventListener("click", () => {
+
+                let id = elementList[i].value;
+                alert(`The Edit functionality for item no. ${elementList[i].getAttribute("value")} it's not available for the moment.
+                                    Please try again later!`);
+
+            });
+        };
     }
 
 

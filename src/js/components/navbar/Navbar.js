@@ -5,11 +5,12 @@ class Navbar {
 
 		this.buttons = [
 			{ name: "Dashboard", url: "/" },
-			{ name: "Add card type", url: "/add-card-type" },
-			{ name: "View card types", url: "/card-types" },
-			{ name: "View Card Types (with Reusable Grid)", url: "/grid-card-types" },
+			{ name: "Add card type", url: "/add-card-type" },			
 			{ name: "Open card packs", url: "/open-packs" },
-			{ name: "View cards", url: "/view-cards" }
+			{ name: "View cards", url: "/view-cards" },
+			{ name: "View Card Types", url: "/grid-card-types" },
+			{ name: "View Decks", url: "/view-decks" },
+			{ name: "Create Deck", url: "/create-deck" }
 		];
 	}
 

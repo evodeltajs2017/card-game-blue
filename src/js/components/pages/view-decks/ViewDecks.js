@@ -1,4 +1,4 @@
-class GridCardTypes {
+class ViewDecks {
 	constructor(container) {
         this.container = container;
     }
@@ -7,7 +7,7 @@ class GridCardTypes {
 
     	const fields = [{
 	    					fieldName : "cod",
-	    					displayName: "Id",
+	    					displayName: "cod",
 	    					width: 100,
 	    					render: rowData => `<div>${rowData}</div>`
 	    				},
@@ -15,10 +15,10 @@ class GridCardTypes {
 	    					fieldName : "name",
 	    					displayName: "Nume",
 	    					width: 100,
-	    					render: rowData => `<div>${rowData}</div>`
+	    					render: rowData => `<div">${rowData}</div>`
     					}];
     	
-    	const theGrid = new ReusableGrid(this.container,"View Card Types (with Grid)", "view-card-type", fields, 1);
+    	const theGrid = new ReusableGrid(this.container,"View Decks", "view-decks", fields, 1);
     	theGrid.initialize();
 
     }
