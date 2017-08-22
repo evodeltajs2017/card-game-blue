@@ -9,6 +9,7 @@ router.addRoute("/grid-card-types", GridCardTypes);
 router.addRoute("/view-decks", ViewDecks);
 router.addRoute("/create-deck", CreateDeck);
 router.addRoute("/view-cards", ViewCards);
+router.addRoute("/create-arena-deck", CreateArenaDeck);
 
 router.initialize();
 

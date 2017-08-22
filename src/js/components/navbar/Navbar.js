@@ -10,7 +10,8 @@ class Navbar {
 			{ name: "View cards", url: "/view-cards" },
 			{ name: "View Card Types", url: "/grid-card-types" },
 			{ name: "View Decks", url: "/view-decks" },
-			{ name: "Create Deck", url: "/create-deck" }
+			{ name: "Create Deck", url: "/create-deck" },
+			{ name: "Create arena deck", url: "/create-arena-deck"}
 		];
 	}
 
