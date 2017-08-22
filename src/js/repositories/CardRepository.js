@@ -21,7 +21,7 @@ class CardRepository {
 		}
 
 		xhr.send(data);	
-		});
+		}); 
 	}
 
 }

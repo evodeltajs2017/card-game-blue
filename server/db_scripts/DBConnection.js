@@ -2,11 +2,11 @@ class DBConnection {
 	constructor() {
 		this.sql = require("mssql");
 		this.config = {
-			user: "a",
-			password: "a",
+			user: "test",
+			password: "test",
 			server: "localhost",
 			database: "CardGame",
-			port: 1848
+			port: 60654
 		};
 	}
 
