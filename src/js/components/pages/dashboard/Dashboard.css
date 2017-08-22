@@ -96,6 +96,8 @@
     color: white;
     font-size: 26px;
     text-align: center;
+    width: 60px;
+    margin: 0px;
 }
 
 .OpponentManaText {
@@ -103,6 +105,7 @@
     color: white;
     font-size: 26px;
     text-align: center;
+    width: 60px;
 }
 
 .PlayerManaImages {
@@ -115,13 +118,15 @@
 }
 
 .OpponentDeck {
-    top: 95px;
-    left: -24px;
-    width: 45px;
+    top: 89px;
+    left: 6px;
+    width: 72px;
     height: 167px;
     display: block;
     float: right;
     position: relative;
+    background: url(../open-packs/imgs/aiPack.png);
+    background-size: cover;
 }
 
 .EndTurnButton-Container {
@@ -137,27 +142,46 @@
 }
 
 .EndTurnButton {
-    top: 10px;
-    left: 1052px;
+    top: -12px;
+    left: 1070px;
+    height: 80px;
+    width: 146px;
     font-size: 30px;
     position: absolute;
+    outline: none;
+}
+
+.yellowButton {
+    background: url(../open-packs/imgs/yellowB.png);
+    border: none;
+    background-size: cover;
+}
+
+.greenButton {
+    background: url(../open-packs/imgs/greenB.png);
+    border: none;
+    background-size: cover;
+}
+
+.greyButton {
+    background: url(../open-packs/imgs/greyB.png);
+    border: none;
+    background-size: cover;
 }
 
 .PlayerDeck {
-    /* top: -220px;
-    left: -18px; */
     top: -380px;
-    left: -18px;
-    width: 45px;
+    left: 14px;
+    width: 74px;
     height: 167px;
     display: block;
     float: right;
     position: relative;
+    background: url(../open-packs/imgs/playerPack.png);
+    background-size: cover;
 }
 
 .OpponentField {
-    /* top: 36px;
-    left: 0px; */
     top: -124px;
     left: 0px;
     width: 1155px;
@@ -167,8 +191,6 @@
 }
 
 .PlayerField {
-    /* top: 70px;
-    left: 0px; */
     top: -95px;
     left: 0px;
     width: 1155px;
@@ -179,8 +201,6 @@
 }
 
 .PlayerHandArea {
-    /* top: -43px;
-    left: 0px; */
     top: -203px;
     left: 0px;
     width: 1240px;
@@ -345,6 +365,8 @@
 }
 
 .TableCard {
+    top: 0px;
+    left: 0px;
     margin-top: -75px;
     height: 195px;
     width: 145px;
@@ -352,6 +374,8 @@
     transform: scale(0.8);
     text-align: center;
     z-index: 20;
+    position: relative;
+    transition: top 2s ease-in-out, left 4s cubic-bezier(0.76, -0.07, 0, 1.16);
 }
 
 .AITableCard {
@@ -362,6 +386,8 @@
     transform: scale(0.8);
     text-align: center;
     z-index: 20;
+    position: relative;
+    transition: top 1s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 1s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.5s ease;
 }
 
 .FillInDiv {
@@ -389,6 +415,7 @@
     background: url(../open-packs/imgs/rexxar.png);
     background-size: cover;
     position: relative;
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
 }
 
 .PlayerChar {
@@ -399,6 +426,7 @@
     background: url(http://media-hearth.cursecdn.com/avatars/291/447/635976153333715026.png);
     background-size: cover;
     position: relative;
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
 }
 
 .EndGameText {

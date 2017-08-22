@@ -84,7 +84,7 @@ class Dashboard {
             <div class="OpponentDeck"></div>
             <div class = "AiChar"></div>
             <div class="OpponentField"></div>
-            <div class="EndTurnButton-Container"><button class="EndTurnButton">End Turn</button></div>
+            <div class="EndTurnButton-Container"><button class="EndTurnButton yellowButton"></button></div>
             <div class="PlayerField"></div>
             <div class="PlayerDeck"></div>
             <div class= "PlayerChar"></div>
@@ -118,9 +118,17 @@ class Dashboard {
                 this.drawAiHp(model.aiHp, damage);
             }
 
+            model.animateAttackHero = (target) => {
+                this.animateAttackHero(target);
+            };
+
             model.drawField = () => {
                 this.drawField(model.playerBoard, model.aiBoard, model);
 
+            }
+
+            model.animateAiAttack = (index) => {
+                this.animateAiAttack(index);
             }
 
             model.endTheGame = (winner) => {
@@ -160,6 +168,15 @@ class Dashboard {
                 this.cantPlay();
             }
 
+            model.animateAttack = (source, target, playerDead, aiDead) => {
+                this.animateAttack(source, target, playerDead, aiDead);
+            }
+
+            model.colorEndTurnButton = () => {
+                gameDiv.querySelector(".EndTurnButton").className = "EndTurnButton yellowButton";
+                this.element.querySelector(".OpponentField").style.zIndex = "0";
+            }
+
             model.onPlayCard = (card, e, index) => {
                 this.drawPlayerBoard(card, model, index);
                 e.target.remove();
@@ -172,11 +189,106 @@ class Dashboard {
             model.initialize();
 
             gameDiv.querySelector(".EndTurnButton").addEventListener("click", (e) => {
-                e.target.style.background = "white";
+                e.target.className = "EndTurnButton greyButton";
+                this.element.querySelector(".OpponentField").style.zIndex = "1000";
                 model.endTurn();
             })
 
         })
+    }
+
+    animateAttack(source, target, playerDead, aiDead) {
+        let calc = -source.parentElement.offsetLeft + target.offsetLeft;
+        let differance = { top: (source.parentElement.offsetTop - target.offsetTop), left: (target.offsetLeft - source.parentElement.offsetLeft) };
+
+        source.style.top = -80 + "px";
+        source.style.left = calc + "px";
+        source.style.transform = "scale(1.5)";
+        source.style.zIndex = "20";
+
+
+
+
+        setTimeout(() => {
+            target.style.top = differance.top * 0.2 + "px";
+            target.style.left = differance.left * 0.2 + "px";
+        }, 150)
+
+        setTimeout(() => {
+            target.style.top = 0 + "px";
+            target.style.left = 0 + "px";
+            if (aiDead)
+                target.style.opacity = "0";
+        }, 400)
+
+
+        setTimeout(() => {
+            source.style.top = 0 + "px";
+            source.style.left = 0 + "px";
+
+            source.style.transform = "scale(1)";
+            if (playerDead)
+                source.style.opacity = "0";
+
+        }, 400)
+        setTimeout(() => { source.style.zIndex = "10"; }, 500)
+    }
+
+    animateAiAttack(index) {
+        let board = this.element.querySelector(".OpponentField");
+        let source = board.children[index].children[0];
+        let calc = -source.parentElement.offsetLeft + 500;
+        let target = this.element.querySelector(".PlayerChar");
+        source.style.top = 320 + "px";
+        source.style.left = calc + "px";
+        source.style.transform = "scale(1.5)";
+        source.style.zIndex = "20";
+
+
+        setTimeout(() => {
+            source.style.top = 0 + "px";
+            source.style.left = 0 + "px";
+            target.style.top = -206 + "px";
+            source.style.transform = "scale(1)";
+        }, 400)
+
+        setTimeout(() => {
+            target.style.top = -186 + "px";
+        }, 150)
+
+
+        setTimeout(() => { source.style.zIndex = "10"; }, 500)
+    }
+
+    animateAttackHero(source) {
+        let target = this.element.querySelector(".AiChar");
+        let saved = { top: target.offsetTop, left: target.offsetLeft };
+        let differance = { top: (source.parentElement.offsetTop - target.offsetTop), left: (target.offsetLeft - source.parentElement.offsetLeft) };
+        let calc = -source.parentElement.offsetLeft + 500;
+        console.log("asd ;", target.offsetTop);
+
+        source.style.top = -240 + "px";
+        source.style.left = calc + "px";
+        source.style.transform = "scale(1.5)";
+
+        setTimeout(() => {
+            target.style.top = -70 + "px";
+        }, 150)
+
+        setTimeout(() => {
+            target.style.top = -50 + "px";
+        }, 400)
+
+
+        setTimeout(() => {
+            source.style.top = 0 + "px";
+            source.style.left = 0 + "px";
+        }, 400)
+
+        setTimeout(() => {
+            source.style.transform = "scale(1)";
+        }, 400)
+
     }
 
     drawField(player, ai, model) {
@@ -201,8 +313,8 @@ class Dashboard {
         let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
         carte.initialize();
         board.appendChild(fieldCard);
-        fieldCard.addEventListener("click", () => {
-            model.selectMonster(index);
+        fieldCard.addEventListener("click", (e) => {
+            model.selectMonster(index, e.currentTarget.querySelector(".CardComponent"));
         });
     }
 
@@ -231,8 +343,8 @@ class Dashboard {
         let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
         carte.initialize();
         board.appendChild(fieldCard);
-        fieldCard.addEventListener("click", () => {
-            model.minionAttack(index);
+        fieldCard.addEventListener("click", (e) => {
+            model.minionAttack(index, e.currentTarget);
         });
     }
 
@@ -374,7 +486,7 @@ class Dashboard {
     }
 
     cantPlay() {
-        this.element.querySelector(".EndTurnButton").style.background = "green";
+        this.element.querySelector(".EndTurnButton").className = "EndTurnButton greenButton";
     }
 
     endTheGame(winner) {

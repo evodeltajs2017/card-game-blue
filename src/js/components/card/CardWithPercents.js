@@ -11,8 +11,6 @@ class Card {
     }
 
     initialize() {
-        //method that draws the card
-        //sizes: approx. 400x300
         const divCarte = document.createElement("div");
         divCarte.className = "CardComponent";
         const nameP = document.createElement("p");
