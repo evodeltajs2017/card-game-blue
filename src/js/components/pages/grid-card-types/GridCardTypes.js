@@ -36,7 +36,7 @@ class GridCardTypes {
                             render: rowData => `<div>${rowData}</div>`
                         }];
     	
-    	const theGrid = new ReusableGrid(this.container,"View Card Types (with Grid)", "view-card-type", fields, 1);
+    	const theGrid = new ReusableGrid(this.container,"View Card Types", "view-card-type", fields, 1);
     	theGrid.initialize();
 
     }

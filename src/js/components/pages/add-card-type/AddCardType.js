@@ -39,7 +39,7 @@ class AddCardType {
 		htmlTemplate.innerHTML =`
 		<div class="wrapper-container">
 			<div class="wrapper-header">
-				<h1>add card type</h1>
+				<h1>Add card type</h1>
 				<div class="buttons-container">
 				   <button class="save action-button">Save</button>
 				   <button class="cancel action-button">Cancel</button>
