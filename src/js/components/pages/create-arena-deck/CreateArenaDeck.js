@@ -16,7 +16,7 @@ class CreateArenaDeck {
                     div.className = "parentOfCard";
                     div.style.height = "400px";
                     div.style.width = "300px";
-                    let card = new Card(div, 250, 350, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health);
+                    let card = new CardForAlexandra(div, 250, 350, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health);
                     card.initialize();
                     cardsDiv.appendChild(div);
                 }

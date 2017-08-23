@@ -170,12 +170,12 @@ div .upperSide > h1 {
     display: inline-block;
 }
 
-.card-name {
+.card-name-temp {
     font-size: 100%;
     color: black;
 }
 
-.alt-text {
+.alt-text-temp {
     text-shadow: 2px 0 black;
     font-size: 200%;
     color: white;
@@ -253,7 +253,7 @@ div .upperSide > h1 {
     opacity: 1;
 }
 
-#wordWrap {
+#wordWrapTemp {
     width: 150px;
     word-wrap: break-word;
     word-break: break-all;

@@ -10,7 +10,7 @@
     background-size: cover;
 }
 
-.backImg {
+.content-container-temp > .backImg {
     position: absolute;
     top: 0px;
     bottom: 0px;
