@@ -17,7 +17,7 @@ class GameModel {
         this.playerHp = 30;
         this.aiHp = 30;
 
-        this.turnNumber = 8;
+        this.turnNumber = 1;
 
         this.minion = {};
         this.target = {};

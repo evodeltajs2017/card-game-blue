@@ -411,7 +411,6 @@ class Dashboard {
 
     drawAiHand(playerHand) {
 
-        console.log("DrawAiHand: ", playerHand);
         let angle = playerHand.length;
         let cardContainer;
         let container;
@@ -448,9 +447,6 @@ class Dashboard {
     }
 
     drawAiHandAnimated(playerHand) {
-
-        console.log("drawAiHandAnimated :", JSON.stringify(playerHand));
-
 
         let angle = playerHand.length;
         let cardContainer;
