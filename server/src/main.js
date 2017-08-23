@@ -33,6 +33,10 @@ const AddNewDeckRoute = require("./routes/addnewdeck/AddNewDeckRoute.js");
 const addNewDeckRoute = new AddNewDeckRoute(app);
 addNewDeckRoute.initialize();
 
+const CreateArenaDeckRoute = require("./routes/create-arena-deck/CreateArenaDeckRoute.js");
+const newDeckRoute = new CreateArenaDeckRoute(app);
+newDeckRoute.initialize();
+
 const DBConnection = require("../db_scripts/DBConnection.js");
 const dbconnection = new DBConnection();
 

@@ -13,8 +13,6 @@ class OpenPacks {
     }
 
     createDivForCard(modal, name, cost, damage, health, left, top) {
-
-
         const divCarte = document.createElement("div");
         divCarte.className = "openedCard modal-content";
         const nameP = document.createElement("p");

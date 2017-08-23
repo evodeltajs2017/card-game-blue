@@ -5,25 +5,28 @@ class CreateArenaDeckRoute {
         this.app = expressApp;
     }
 
-    getPageOfCards(req, res) {
+    getAllCards(req, res) {
         let request = new sql.Request();
-        request.query(`SELECT TOP 24 * FROM 
-                        (SELECT ROW_NUMBER() 
-                        OVER (ORDER BY [Id]) AS ROWNUM, * 
-                        FROM 
-                            (select [dbo].[Card].[Id], [dbo].[CardType].[Name], [dbo].[CardType].[Cost], [dbo].[CardType].[Damage], [dbo].[CardType].[Health]
-                            from [dbo].[Card]
-                            inner join [dbo].[CardType]
-                            ON [dbo].[Card].[CardTypeId] = [dbo].[CardType].[Id]) AS [CardsJoined]
-                        ) NumberedCardsJoined
-                        WHERE ROWNUM >= ${req.query.number} AND [Name] LIKE '%`+ req.query.searchname +`%'`, (err, result) => {
-            res.json(result.recordset);
+        request.query(`SELECT * FROM [dbo].[Card] INNER JOIN [dbo].[CardType] ON [dbo].[Card].[CardTypeId] = [dbo].[CardType].[Id]`, (err, result) => {
+            this.randomizeTheCardsAndSendThree(res, result.recordset);
         });
+    }
+
+    randomizeTheCardsAndSendThree(res, result) {
+        let array = [];
+        for (let i = 0; i < 3; i++) {
+            let item = result[Math.floor(Math.random() * result.length)];
+            while (array.includes(item)){
+                let item = result[Math.floor(Math.random() * result.length)];
+            }
+            array.push(item);
+        }
+        res.json(array);
     }
 
     initialize() {
         this.app.get("/create-arena-deck/", (req, res) => {
-            const array = this.getPageOfCards(req, res);
+            this.getAllCards(req, res);
         });
 
         sql.on("error", err => {

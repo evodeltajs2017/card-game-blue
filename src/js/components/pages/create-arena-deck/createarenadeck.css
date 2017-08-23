@@ -1,7 +1,31 @@
+.content-container-temp {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 1080px;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.backImg {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: url(../open-packs/imgs/maxresdefault.jpg) no-repeat;
+    filter: brightness(35%);
+    width: 100%;
+    background-size: cover;
+    z-index: -1;
+}
+
 .rightSide {
 	width: 20%;
 	height: 900px;
-	left: 0;
 	float: right;
 	border-style: solid;
 	border-width: 2px;
@@ -15,7 +39,7 @@
 	float: left;
 }
 
-h1 {
+.content-container-tmp > h1 {
     color: White;
     float: left;
     padding-left: 2%;

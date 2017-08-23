@@ -27,7 +27,6 @@ class Router {
 	}
 
 	go(url, options) {
-		console.log("go", url);
 		const route = this.routes.find(x => x.url === url);
 		if (route !== undefined) {
 			if (this.currentComponent !== undefined) {
@@ -39,7 +38,6 @@ class Router {
 			this.currentComponent = new route.component(this.container, this);
 			this.currentComponent.initialize();
 		}
-		console.log(options);
 		if (!options) {
 			history.pushState(url, "", url);
 		}
