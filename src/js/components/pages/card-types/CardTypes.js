@@ -150,7 +150,7 @@ class CardTypes {
 					<th style="width:100px">Cost</th>
 					<th style="width:100px">Damage</th>
 					<th style="width:100px">Health</th>
-					<th style="width:130px">Actions</th>
+					<th style="width:150px">Actions</th>
                 </tr>`;
 
         const renderFuncs = {

@@ -1,0 +1,473 @@
+.StartDiv {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    background-Image: url(http://im.tiscali.cz/games/2015/11/08/563782-hearthstone-the-league-of-explorers-1920x1080.jpg);
+    background-Size: cover;
+    filter: brightness(20%);
+    box-shadow: 2px 2px 6px grey;
+    z-index: -1;
+}
+
+.isActive {
+    box-shadow: 0px 0px 10px 10px rgba(18, 135, 64, 0.60);
+}
+
+.GameDiv {
+    width: 1400px;
+    height: 1026px;
+    margin: auto;
+    background: transparent;
+    background: url(../open-packs/imgs/play_bg.png);
+    background-size: cover;
+    padding-left: 160px;
+}
+
+.play-wrapper {
+    margin: 1% 2% 2% 2%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.giveBG {
+    background: url(https://i.ytimg.com/vi/DGPsaTgSzYQ/maxresdefault.jpg);
+    background-size: cover;
+}
+
+.startButton {
+    border-radius: 20px;
+    position: absolute;
+    margin: 20% 40%;
+    width: 20%;
+    background: #6BB9F0;
+    display: block;
+    font-size: 200%;
+    padding: 15px 32px;
+    z-index: 1;
+}
+
+.OpponentHandArea {
+    width: 1240px;
+    height: 152px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.OpponentHand {
+    /* top: 0px;
+    left: -60px;
+    width: 500px;
+    height: 152px; */
+    top: 0px;
+    left: 325px;
+    width: 500px;
+    height: 285px;
+    display: inline-block;
+    position: absolute;
+    /*relative*/
+}
+
+.OpponentMana {
+    top: 47px;
+    left: 794px;
+    height: 34px;
+    width: 79px;
+    float: right;
+    display: flex;
+    align-items: center;
+    position: absolute;
+}
+
+.PlayerMana {
+    /* top: -96px;
+    left: 823px;
+    width: 410px;
+    height: 40px; */
+    top: 63px;
+    left: 823px;
+    width: 410px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.PlayerManaNumber {
+    left: 10px;
+    width: 80px;
+    height: 40px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.PlayerManaNumberText {
+    color: white;
+    font-size: 26px;
+    text-align: center;
+    width: 60px;
+    margin: 0px;
+}
+
+.OpponentManaText {
+    left: 0px;
+    color: white;
+    font-size: 26px;
+    text-align: center;
+    width: 60px;
+}
+
+.PlayerManaImages {
+    left: 88px;
+    width: 310px;
+    height: 40px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.OpponentDeck {
+    top: 89px;
+    left: 6px;
+    width: 72px;
+    height: 167px;
+    display: block;
+    float: right;
+    position: relative;
+    background: url(../open-packs/imgs/aiPack.png);
+    background-size: cover;
+}
+
+.EndTurnButton-Container {
+    top: -151px;
+    left: 0px;
+    width: 1240px;
+    height: 54px;
+    float: right;
+    display: block;
+    position: relative;
+}
+
+.EndTurnButton {
+    top: -12px;
+    left: 1070px;
+    height: 80px;
+    width: 146px;
+    font-size: 30px;
+    position: absolute;
+    outline: none;
+}
+
+.yellowButton {
+    background: url(../open-packs/imgs/yellowB.png);
+    border: none;
+    background-size: cover;
+}
+
+.greenButton {
+    background: url(../open-packs/imgs/greenB.png);
+    border: none;
+    background-size: cover;
+}
+
+.greyButton {
+    background: url(../open-packs/imgs/greyB.png);
+    border: none;
+    background-size: cover;
+}
+
+.PlayerDeck {
+    top: -380px;
+    left: 14px;
+    width: 74px;
+    height: 167px;
+    display: block;
+    float: right;
+    position: relative;
+    background: url(../open-packs/imgs/playerPack.png);
+    background-size: cover;
+}
+
+.OpponentField {
+    top: -124px;
+    left: 0px;
+    width: 1155px;
+    height: 276px;
+    display: block;
+    position: relative;
+}
+
+.PlayerField {
+    top: -95px;
+    left: 0px;
+    width: 1155px;
+    height: 320px;
+    display: block;
+    text-align: center;
+    position: relative;
+    transition: transform 1s ease, opacity 1s ease;
+}
+
+.PlayerHandArea {
+    /* top: -203px;
+    left: 0px;
+    width: 1240px;
+    height: 152px; */
+    top: -363px;
+    left: 0px;
+    width: 1240px;
+    height: 310px;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.PlayerHand {
+    /* top: -2px;
+    left: -100px;
+    width: 500px;
+    height: 152px; */
+    top: 158px;
+    left: -100px;
+    width: 500px;
+    height: 152px;
+    display: inline-block;
+    position: relative;
+}
+
+.Mana {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: url(../open-packs/imgs/mana.png);
+    background-size: cover;
+    display: inline-block;
+    vertical-align: center;
+}
+
+.DepletedMana {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: url(../open-packs/imgs/usedmana.png);
+    background-size: cover;
+    display: inline-block;
+    vertical-align: center;
+}
+
+.GlowMana {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: url(../open-packs/imgs/mana.png);
+    filter: brightness(3);
+    background-size: cover;
+    display: inline-block;
+    vertical-align: center;
+}
+
+.Ai-Health-Container {
+    /* top: -10px;
+    left: -230px;
+    width: 100px;
+    height: 100px; */
+    top: 40px;
+    left: -482px;
+    width: 100px;
+    height: 100px;
+    border-radius: 0 50% 50% 50%;
+    border: 3px solid black;
+    transform: rotate(45deg);
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    background: white;
+}
+
+.Ai-Health-Fill {
+    width: 100px;
+    height: 200px;
+    top: -124px;
+    left: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    position: relative;
+    z-index: -1;
+}
+
+.AiHpText {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+.Player-Health-Container {
+    /* top: -20px;
+    left: -230px;
+    width: 100px;
+    height: 100px; */
+    top: 120px;
+    left: -230px;
+    width: 100px;
+    height: 100px;
+    border-radius: 0 50% 50% 50%;
+    border: 3px solid black;
+    background: white;
+    transform: rotate(45deg);
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.Player-Health-Fill {
+    width: 100px;
+    height: 200px;
+    top: -124px;
+    left: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    position: relative;
+    z-index: -1;
+}
+
+.PlayerHpText {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+.OpponentHandCards {
+    height: 585px;
+    top: -450px;
+    left: 175px;
+    position: absolute;
+}
+
+.PlayerHandCards {
+    height: 585px;
+    top: 10px;
+    left: 190px;
+    position: absolute;
+}
+
+.PlayerHandCards:hover {
+    z-index: 20;
+}
+
+.OpponentPlayCard {
+    top: 0px;
+    left: 0px;
+    position: relative;
+    height: 195px;
+    width: 145px;
+    background: url('https://s-media-cache-ak0.pinimg.com/236x/be/c4/ba/bec4ba0cfe504c4eddae9ab58269b7bb--warcraft-art-game-icon.jpg');
+    background-size: cover;
+    border-radius: 5px;
+    transform: scale(0.6);
+    transition: top 0.5s ease, left 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
+}
+
+.PlayerPlayCard {
+    top: 0px;
+    left: 0px;
+    position: relative;
+    height: 195px;
+    width: 145px;
+    background: transparent;
+    z-index: 2;
+    display: block;
+    transition: top 0.5s ease, left 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
+}
+
+.PlayCard:hover {
+    z-index: 33;
+    background: #2A16B5;
+}
+
+.PlayCard::after {
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: scale(1.5, 1.5);
+    background: rgb(9, 132, 176);
+    z-index: 2;
+}
+
+.TableCard {
+    top: 0px;
+    left: 0px;
+    margin-top: -75px;
+    height: 195px;
+    width: 145px;
+    display: inline-block;
+    transform: scale(0.8);
+    text-align: center;
+    z-index: 20;
+    position: relative;
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
+}
+
+.AITableCard {
+    margin-top: 90px;
+    height: 195px;
+    width: 145px;
+    display: inline-block;
+    transform: scale(0.8);
+    text-align: center;
+    z-index: 20;
+    position: relative;
+    transition: top 1s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 1s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.5s ease;
+}
+
+.FillInDiv {
+    height: 390px;
+    width: 145px;
+}
+
+.DisplayCard {
+    position: fixed;
+    height: 195px;
+    width: 145px;
+    left: 300px;
+    top: 300px;
+    display: none;
+    z-index: 9999;
+    transform: scale(2);
+}
+
+.AiChar {
+    z-index: 1;
+    top: -48px;
+    left: 506px;
+    height: 160px;
+    width: 141px;
+    background: url(../open-packs/imgs/rexxar.png);
+    background-size: cover;
+    position: relative;
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
+}
+
+.PlayerChar {
+    top: -206px;
+    left: 505px;
+    height: 160px;
+    width: 141px;
+    background: url(http://media-hearth.cursecdn.com/avatars/291/447/635976153333715026.png);
+    background-size: cover;
+    position: relative;
+    transition: top 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.2s ease, opacity 0.5s ease;
+}
+
+.EndGameText {
+    top: 230px;
+    left: 775px;
+    text-align: center;
+    font-size: 100px;
+    color: white;
+    text-shadow: 2px 2px black;
+    position: fixed;
+}

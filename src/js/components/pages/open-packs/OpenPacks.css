@@ -114,7 +114,7 @@ div .upperSide>button {
 
 .alt-text {
     text-shadow: 2px 0 black;
-    font-size: 200%;
+    font-size: 175%;
     color: white;
 }
 
@@ -129,7 +129,7 @@ div .upperSide>button {
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
     -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    background-image: url(http://www.hearthcards.net/card_js_templates/card_minion_neutral.png);
+    background-image: url(http://i.imgur.com/U1dkXzQ.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -177,8 +177,8 @@ div .upperSide>button {
 }
 
 .underDiv {
-    width: 128.02px;
-    height: 196.39px;
+    width: 120.02px;
+    height: 185.39px;
     position: absolute;
     margin-top: -45%;
     z-index: -1;

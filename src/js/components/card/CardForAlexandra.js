@@ -1,5 +1,5 @@
 class CardForAlexandra {
-        constructor(container, width, height, name, cost, damage, health) {
+        constructor(container, width, height, name, cost, damage, health, image) {
                 this.container = container;
                 this.width = width;
                 this.height = height;
@@ -7,17 +7,16 @@ class CardForAlexandra {
                 this.cost = cost; 
                 this.damage = damage;
                 this.health = health;
+                this.image = image;
         }
 
         initialize() {
-                //method that draws the card
-                //sizes: approx. 400x300
                 const divCarte = document.createElement("div");
                 divCarte.className = "openedCard2 modal-content-temp";
                 const nameP = document.createElement("p");
                 nameP.setAttribute("id", "wordWrapTemp");
                 nameP.innerHTML = this.name;
-                nameP.style.marginLeft = 20 + "%";
+                nameP.style.marginLeft = 17 + "%";
                 nameP.style.marginTop = 100 + "%";
                 nameP.style.textAlign = "center";
                 nameP.className = "card-name-temp";
@@ -25,7 +24,7 @@ class CardForAlexandra {
                 const costP = document.createElement("p");
                 costP.setAttribute("id", "wordWrapTemp");
                 costP.innerHTML = this.cost;
-                costP.style.marginLeft = -18 + "%";
+                costP.style.marginLeft = -21 + "%";
                 costP.style.marginTop = -109.5 + "%";
                 costP.style.textAlign = "center";
                 costP.className = "alt-text-temp";
@@ -44,13 +43,29 @@ class CardForAlexandra {
                 healthP.style.marginLeft = 87 + "%";
                 healthP.style.marginTop = -28 + "%";
 
+                const imageP = document.createElement("div");
+                imageP.style.marginLeft = 37.5 + "%";
+                imageP.style.marginTop = -120 + "%";
+                imageP.style.fontSize = "70px";
+                const asdf = document.createElement("i");
+                asdf.className = "fa " + this.image;
+                imageP.appendChild(asdf);
+                imageP.style.color = "rgb(165, 151, 131)";
+
                 divCarte.appendChild(nameP);
                 divCarte.appendChild(costP);
                 divCarte.appendChild(damageP);
                 divCarte.appendChild(healthP);
+                divCarte.appendChild(imageP);
                 divCarte.style.width = this.width + "px";
                 divCarte.style.height = this.height + "px";
                 this.container.appendChild(divCarte);
+
+                const underDiv = document.createElement("div");
+                underDiv.className = "underDivBigCard";
+                underDiv.style.marginLeft = 30 + "px";
+                underDiv.style.marginTop = 30 + "px";
+                this.container.appendChild(underDiv);
         }
 
         destroy() {
