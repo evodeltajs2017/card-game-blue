@@ -15,7 +15,6 @@ class ViewCards {
             if (status !== 200) {
 
             } else {
-                console.log(data);
                 context.totalcards = data.length;
                 context.number += data.length;
                 for (var i = data.length - 1; i >= 0; i--) {
