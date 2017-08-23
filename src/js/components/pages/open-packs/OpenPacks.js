@@ -12,14 +12,14 @@ class OpenPacks {
         }, false);
     }
 
-    createDivForCard(modal, name, cost, damage, health, left, top) {
+    createDivForCard(modal, name, cost, damage, health, image, left, top) {
         const divCarte = document.createElement("div");
         divCarte.className = "openedCard modal-content";
         const nameP = document.createElement("p");
         nameP.setAttribute("id", "wordWrap");
         nameP.innerHTML = name;
-        nameP.style.marginLeft = 3 + "px";
-        nameP.style.marginTop = 150 + "px";
+        nameP.style.marginLeft = 0 + "px";
+        nameP.style.marginTop = 137 + "px";
         nameP.style.textAlign = "center";
         nameP.className = "card-name";
 
@@ -27,8 +27,8 @@ class OpenPacks {
         const costP = document.createElement("p");
         costP.setAttribute("id", "wordWrap");
         costP.innerHTML = cost;
-        costP.style.marginLeft = -53 + "px";
-        costP.style.marginTop = -188 + "px";
+        costP.style.marginLeft = -54 + "px";
+        costP.style.marginTop = -172 + "px";
         costP.style.textAlign = "center";
         costP.className = "alt-text";
 
@@ -36,21 +36,31 @@ class OpenPacks {
         damageP.setAttribute("id", "wordWrap");
         damageP.innerHTML = damage;
         damageP.className = "alt-text";
-        damageP.style.marginLeft = 16 + "px";
-        damageP.style.marginTop = 138 + "px";
+        damageP.style.marginLeft = 13 + "px";
+        damageP.style.marginTop = 132 + "px";
 
         const healthP = document.createElement("p");
         healthP.setAttribute("id", "wordWrap");
         healthP.innerHTML = health;
         healthP.className = "alt-text";
-        healthP.style.marginLeft = 130 + "px";
-        healthP.style.marginTop = -66 + "px";
+        healthP.style.marginLeft = 122 + "px";
+        healthP.style.marginTop = -60 + "px";
 
+
+        const imageP = document.createElement("div");
+        imageP.style.marginLeft = 33 + "%";
+        imageP.style.marginTop = -137 + "%";
+        imageP.style.fontSize = "50px";
+        const asdf = document.createElement("i");
+        asdf.className = "fa " + image;
+        imageP.appendChild(asdf);
+        imageP.style.color = "rgb(165, 151, 131)";
 
         divCarte.appendChild(nameP);
         divCarte.appendChild(costP);
         divCarte.appendChild(damageP);
         divCarte.appendChild(healthP);
+        divCarte.appendChild(imageP);
         divCarte.style.marginLeft = left + "px";
         divCarte.style.marginTop = top + "px";
         modal.appendChild(divCarte);
@@ -75,7 +85,7 @@ class OpenPacks {
         let top = 90;
         let i = 0;
         for (i = 0; i < data.length; i++) {
-            this.createDivForCard(modal, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health, left, top);
+            this.createDivForCard(modal, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health, data[i].ImageIdentifier, left, top);
             this.createDivForShadow(modal, left + 20, top + 14);
             if (i === 0) {
                 left = 1300;

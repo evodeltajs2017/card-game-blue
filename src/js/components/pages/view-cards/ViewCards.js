@@ -23,7 +23,7 @@ class ViewCards {
                     div.className = "parentOfCard";
                     div.style.height = "400px";
                     div.style.width = "300px";
-                    let card = new CardForAlexandra(div, 250, 350, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health);
+                    let card = new CardForAlexandra(div, 250, 350, data[i].Name, data[i].Cost, data[i].Damage, data[i].Health, data[i].ImageIdentifier);
                     card.initialize();
                     cardsDiv.appendChild(div);
                 }
@@ -34,9 +34,8 @@ class ViewCards {
     search() {
         const input = document.getElementsByTagName("input")[1].value;
         this.searchname = input;
-        console.log(this.searchname);
         this.number = 1;
-        const parent = document.getElementsByClassName("content-container-temp")[0];
+        const parent = document.getElementsByClassName("content-container-viewcards")[0];
         let cards = document.getElementsByClassName("parentOfCard");
         let cardsDiv = document.getElementsByClassName("cards")[0];
         cardsDiv.innerHTML = '';
@@ -62,7 +61,7 @@ class ViewCards {
 
     buildThePage() {
         const container = document.createElement("div");
-        container.className = "content-container-temp";
+        container.className = "content-container-viewcards";
 
         const div = document.createElement("div");
         div.innerHTML = "<h1>View Cards</h1>";
@@ -78,7 +77,7 @@ class ViewCards {
         field.setAttribute("placeholder", "Card name...");
         div.appendChild(field);
         button.addEventListener("click", (e) => { this.search(); }, false);
-        field.addEventListener("keydown", (e) => { this.search(); }, false);
+        field.addEventListener("input", (e) => { this.search(); }, false);
 
         div.style.textAlign = "center";
         container.appendChild(div);
