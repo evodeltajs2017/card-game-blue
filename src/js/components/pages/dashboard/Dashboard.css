@@ -26,7 +26,7 @@
 }
 
 .giveBG {
-    background: url(https://bnetcmsus-a.akamaihd.net/cms/gallery/FG8EQNNJG1D71444413575722.jpg);
+    background: url(https://i.ytimg.com/vi/DGPsaTgSzYQ/maxresdefault.jpg);
     background-size: cover;
 }
 
@@ -46,18 +46,22 @@
     width: 1240px;
     height: 152px;
     display: inline-block;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
 }
 
 .OpponentHand {
-    top: 0px;
+    /* top: 0px;
     left: -60px;
     width: 500px;
-    height: 152px;
+    height: 152px; */
+    top: 0px;
+    left: 325px;
+    width: 500px;
+    height: 285px;
     display: inline-block;
-    overflow: hidden;
-    position: relative;
+    position: absolute;
+    /*relative*/
 }
 
 .OpponentMana {
@@ -226,7 +230,6 @@
     width: 500px;
     height: 152px;
     display: inline-block;
-    /* overflow: hidden; */
     position: relative;
 }
 
@@ -262,8 +265,12 @@
 }
 
 .Ai-Health-Container {
-    top: -10px;
+    /* top: -10px;
     left: -230px;
+    width: 100px;
+    height: 100px; */
+    top: 40px;
+    left: -482px;
     width: 100px;
     height: 100px;
     border-radius: 0 50% 50% 50%;
@@ -350,21 +357,28 @@
 }
 
 .OpponentPlayCard {
+    top: 0px;
+    left: 0px;
+    position: relative;
     height: 195px;
     width: 145px;
     background: url('https://s-media-cache-ak0.pinimg.com/236x/be/c4/ba/bec4ba0cfe504c4eddae9ab58269b7bb--warcraft-art-game-icon.jpg');
     background-size: cover;
     border-radius: 5px;
     transform: scale(0.6);
+    transition: top 0.5s ease, left 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
 }
 
 .PlayerPlayCard {
+    top: 0px;
+    left: 0px;
+    position: relative;
     height: 195px;
     width: 145px;
     background: transparent;
     z-index: 2;
     display: block;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition: top 0.5s ease, left 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
 }
 
 .PlayCard:hover {

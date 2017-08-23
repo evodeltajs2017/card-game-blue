@@ -67,8 +67,6 @@ class Dashboard {
 
             const model = new GameModel(this.playerDeck, this.aiDeck);
 
-
-
             let template = `
             <div class="DisplayCard"></div>
             
@@ -139,6 +137,14 @@ class Dashboard {
                 this.drawPlayerHp(model.playerHp, damage);
             }
 
+            model.showHandAnimated = () => {
+                this.drawPlayerHandAnimated(model.playerHand, model);
+            };
+
+            model.showAiHandAnimated = () => {
+                this.drawAiHandAnimated(model.aiHand);
+            }
+
             model.showHand = () => {
                 this.drawPlayerHand(model.playerHand, model);
             };
@@ -179,17 +185,18 @@ class Dashboard {
             }
 
             model.onPlayCard = (card, e, index) => {
-                // e.currentTarget.style.transform = "scale(0.1)";
                 e.currentTarget.style.opacity = "0";
                 e.currentTarget.children[0].style.top = "-100px";
                 setTimeout(() => {
                     e.target.remove();
-                    this.drawPlayerBoardAnimated(card, model, index);
+                    this.drawPlayerBoard(card, model, index);
                 }, 500);
             };
 
             model.onAiPlayCard = (card, index) => {
-                this.drawAiBoard(card, model, index);
+
+                this.animateAiPlayCard();
+                this.drawAiBoardAnimated(card, model, index);
             };
 
             model.initialize();
@@ -200,8 +207,17 @@ class Dashboard {
                 this.element.querySelector(".OpponentField").style.zIndex = "1000";
                 model.endTurn();
             })
-
         })
+    }
+
+    animateAiPlayCard() {
+        let field = this.element.querySelector(".OpponentHand");
+        let index = Math.floor(Math.random() * field.children.length);
+        let card = field.children[index].children[1];
+        card.style.opacity = "0";
+        card.style.top = "100px";
+        card.style.transform = "scale(1)";
+        card.style.zIndex = "1000";
     }
 
     animateAttack(source, target, playerDead, aiDead) {
@@ -269,7 +285,6 @@ class Dashboard {
         let saved = { top: target.offsetTop, left: target.offsetLeft };
         let differance = { top: (source.parentElement.offsetTop - target.offsetTop), left: (target.offsetLeft - source.parentElement.offsetLeft) };
         let calc = -source.parentElement.offsetLeft + 500;
-        console.log("asd ;", target.offsetTop);
 
         source.style.top = -240 + "px";
         source.style.left = calc + "px";
@@ -330,8 +345,6 @@ class Dashboard {
         carte.initialize();
         fieldCard.style.transform = "scale(0.1)";
         fieldCard.style.opacity = "0";
-        // fieldCard.children[0].style.transform = "scale(0.1)";
-        // fieldCard.children[0].style.opacity = "0";
         board.appendChild(fieldCard);
         setTimeout(() => {
             fieldCard.style.opacity = "1";
@@ -374,8 +387,31 @@ class Dashboard {
         });
     }
 
+    drawAiBoardAnimated(card, model, index) {
+        let board = this.element.querySelector(".OpponentField");
+        let fieldCard = document.createElement("div");
+        fieldCard.className = "AITableCard";
+        let carte = new Card(fieldCard, fieldCard.style.width, fieldCard.style.height, card.name, card.cost, card.damage, card.health, card.imageid);
+        carte.initialize();
+        fieldCard.style.transform = "scale(0.1)";
+        fieldCard.style.opacity = "0";
+        setTimeout(() => {
+            board.appendChild(fieldCard);
+            setTimeout(() => {
+                fieldCard.style.opacity = "1";
+                fieldCard.style.transform = "scale(0.8)";
+                fieldCard.addEventListener("click", (e) => {
+                    model.minionAttack(index, e.currentTarget);
+                });
+            }, index * 100)
+        }, index * 400)
+
+
+    }
+
     drawAiHand(playerHand) {
 
+        console.log("DrawAiHand: ", playerHand);
         let angle = playerHand.length;
         let cardContainer;
         let container;
@@ -409,6 +445,130 @@ class Dashboard {
             handArea.appendChild(container);
             angle += 10;
         }
+    }
+
+    drawAiHandAnimated(playerHand) {
+
+        console.log("drawAiHandAnimated :", JSON.stringify(playerHand));
+
+
+        let angle = playerHand.length;
+        let cardContainer;
+        let container;
+        let fillIn;
+
+
+        if (angle % 2 != 0) {
+            angle -= 1;
+
+        }
+
+        angle = (angle * 5 - 8) * (-1);
+
+        let handArea = this.element.querySelector(".OpponentHand");
+        handArea.innerHTML = "";
+        for (let i = 0; i < playerHand.length; i++) {
+
+            container = document.createElement("div");
+            container.className = "OpponentHandCards";
+            container.style.transform = `rotate(${angle}deg)`;
+
+            fillIn = document.createElement("div");
+            fillIn.className = "FillInDiv";
+
+            cardContainer = document.createElement("div");
+            cardContainer.className = "OpponentPlayCard";
+
+            container.appendChild(fillIn);
+            container.appendChild(cardContainer);
+
+            handArea.appendChild(container);
+            angle += 10;
+            if (i == playerHand.length - 1) {
+                cardContainer.style.top = "120px";
+                cardContainer.style.left = "570px";
+                cardContainer.style.opacity = "0";
+                cardContainer.style.transform = "scale(0.1)";
+
+                setTimeout(() => {
+                    cardContainer.style.top = "0px";
+                    cardContainer.style.left = "0px";
+                    cardContainer.style.opacity = "1";
+                    cardContainer.style.transform = "scale(0.6)";
+                }, 100)
+
+            }
+        }
+    }
+
+    drawPlayerHandAnimated(playerHand, model) {
+
+        let card;
+        let cardContainer;
+        let container;
+        let angle = playerHand.length;
+        if (angle % 2 != 0) {
+            angle -= 1;
+        }
+        angle = (angle * 5 - 8) * (-1);
+
+        let handArea = this.element.querySelector(".PlayerHand");
+        handArea.innerHTML = "";
+        for (let i = 0; i < playerHand.length; i++) {
+
+            container = document.createElement("div");
+            container.className = "PlayerHandCards";
+            container.style.transform = `rotate(${angle}deg)`;
+
+            cardContainer = document.createElement("div");
+            cardContainer.className = "PlayerPlayCard";
+
+            cardContainer.addEventListener("mouseenter", () => {
+                let cardContainerEvent = this.element.querySelector(".DisplayCard");
+                cardContainerEvent.innerHTML = "";
+                cardContainerEvent.style.display = "block";
+                let card = new Card(cardContainerEvent, cardContainerEvent.width, cardContainerEvent.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, playerHand[i].imageid);
+
+                card.initialize();
+                model.requestManaDraw(playerHand[i].cost);
+            })
+
+            cardContainer.addEventListener("mouseleave", () => {
+                this.element.querySelector(".DisplayCard").style.display = "none";
+                model.requestManaDraw(0);
+            })
+
+            cardContainer.addEventListener("click", (e) => {
+                e.currentTarget.style.pointerEvents = "none";
+                model.playCard(i, e);
+                this.element.querySelector(".DisplayCard").style.display = "none";
+
+            })
+
+            card = new Card(cardContainer, cardContainer.width, cardContainer.height, playerHand[i].name, playerHand[i].cost, playerHand[i].damage, playerHand[i].health, playerHand[i].imageid);
+            card.initialize();
+
+            container.appendChild(cardContainer);
+            handArea.appendChild(container);
+            angle += 10;
+
+            if (i == playerHand.length - 1) {
+                cardContainer.style.top = "-400px";
+                cardContainer.style.left = "360px";
+                cardContainer.style.opacity = "0";
+                cardContainer.style.transform = "scale(0.1)";
+
+                setTimeout(() => {
+                    cardContainer.style.top = "0px";
+                    cardContainer.style.left = "0px";
+                    cardContainer.style.opacity = "1";
+                    cardContainer.style.transform = "scale(1)";
+                }, 1000)
+
+            }
+
+        }
+
     }
 
     drawPlayerHand(playerHand, model) {
@@ -449,7 +609,7 @@ class Dashboard {
             })
 
             cardContainer.addEventListener("click", (e) => {
-                e.currentTarget.style.pointerEvents = "none"; //OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG OMG 
+                e.currentTarget.style.pointerEvents = "none";
                 model.playCard(i, e);
                 this.element.querySelector(".DisplayCard").style.display = "none";
 

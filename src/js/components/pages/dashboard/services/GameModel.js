@@ -17,7 +17,7 @@ class GameModel {
         this.playerHp = 30;
         this.aiHp = 30;
 
-        this.turnNumber = 9;
+        this.turnNumber = 8;
 
         this.minion = {};
         this.target = {};
@@ -27,6 +27,10 @@ class GameModel {
         this.playerBurn = 1;
 
         this.isPlaying = true;
+
+        this.numCardPlayed = 0;
+
+        this.showHandAnimated = () => {};
 
         this.requestManaDrawNew = () => {};
 
@@ -52,6 +56,8 @@ class GameModel {
 
         this.showAiHand = () => {};
 
+        this.showAiHandAnimated = () => {};
+
         this.onPlayCard = () => {};
 
         this.playerDrawMana = () => {};
@@ -70,14 +76,21 @@ class GameModel {
 
         this.aiResetMana();
         this.aiDrawCard();
-        this.aiAttackPlayer();
+
         setTimeout(() => {
-            if (this.isPlaying == true) {
-                this.aiPlayCard();
-                this.switchTurn();
-                this.colorEndTurnButton();
-            }
-        }, this.aiBoard.length * 1000)
+            this.aiAttackPlayer();
+            setTimeout(() => {
+                if (this.isPlaying == true) {
+                    this.aiPlayCard();
+                    setTimeout(() => {
+                        this.switchTurn();
+                    }, this.numCardPlayed * 500)
+
+                }
+            }, this.aiBoard.length * 200 + 300)
+        }, this.aiBoard.length * 500);
+
+
 
     }
 
@@ -86,14 +99,14 @@ class GameModel {
         this.colorEndTurnButton();
         this.playerResetMana();
         this.playerDrawCard();
-
-        if (this.isPlaying == true) {
-            this.playerBoard.forEach(e => {
-                e.isSleeping = false;
-            });
-            this.verifyIfAbleToPlay();
-        }
-
+        setTimeout(() => {
+            if (this.isPlaying == true) {
+                this.playerBoard.forEach(e => {
+                    e.isSleeping = false;
+                });
+                this.verifyIfAbleToPlay();
+            }
+        }, this.numCardPlayed * 800)
 
     }
 
@@ -147,7 +160,7 @@ class GameModel {
     playerDrawCard() {
         if (this.playerHand.length < 10 && this.playerDeck.length > 0) {
             this.playerHand.push(this.playerDeck.pop());
-            this.showHand();
+            this.showHandAnimated();
         } else {
             if (this.playerHand.length >= 10) {
                 let burnedCard = this.playerDeck.pop();
@@ -165,7 +178,7 @@ class GameModel {
     aiDrawCard() {
         if (this.aiHand.length < 10 && this.aiDeck.length > 0) {
             this.aiHand.push(this.aiDeck.pop());
-            this.showAiHand();
+            this.showAiHandAnimated();
         } else {
             if (this.aiHand.length >= 10) {
                 let burnedCard = this.aiDeck.pop();
@@ -202,12 +215,14 @@ class GameModel {
         let minions = this.aiBoard.length;
         for (let i = 0; i < minions; i++) {
             setTimeout(() => {
-                this.animateAiAttack(i);
-                this.playerHp -= this.aiBoard[i].damage;
-                this.drawPlayerHp(this.aiBoard[i].damage);
-                if (this.playerHp < 1) {
-                    this.endGame("Opponent");
-                    // break;
+                if (this.isPlaying == true) {
+                    this.animateAiAttack(i);
+                    this.playerHp -= this.aiBoard[i].damage;
+                    this.drawPlayerHp(this.aiBoard[i].damage);
+                    if (this.playerHp < 1) {
+                        this.endGame("Opponent");
+                        // break;
+                    }
                 }
             }, (i) * 800)
         }
@@ -220,19 +235,26 @@ class GameModel {
 
     aiPlayCard() {
         let aiAbleToPlay = true;
-        let played = false;
-        let i;
-
-        for (i = 0; i < this.aiHand.length; i++) {
+        let i = 0;
+        this.numCardPlayed = 0;
+        while (i < this.aiHand.length) {
+            // for (i = 0; i < this.aiHand.length; i++) {
             if (this.aiBoard.length < 7 && this.aiHand[i].cost <= this.aiMana) {
                 this.aiBoard.push(this.aiHand[i]);
+                this.numCardPlayed++;
                 this.aiMana -= this.aiHand[i].cost;
+
                 this.onAiPlayCard(this.aiHand[i], this.aiBoard.length - 1);
                 this.aiHand.splice(i, 1);
-                this.showAiHand();
-                this.drawAiMana();
-                played = true;
-            }
+                setTimeout(() => {
+                    this.showAiHand();
+                    this.drawAiMana();
+                }, 500);
+
+
+
+
+            } else { i++ };
         }
 
     }
@@ -252,7 +274,7 @@ class GameModel {
                 this.playerBoard.splice(this.minion, 1);
                 playerDestroyed = true;
             }
-            console.log("Back: ", playerDestroyed, aiDestroyed)
+
             this.animateAttack(this.target, target, playerDestroyed, aiDestroyed);
             setTimeout(() => {
                 this.drawField();
