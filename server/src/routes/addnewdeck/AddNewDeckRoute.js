@@ -16,6 +16,7 @@ class AddNewDeckRoute {
     							ORDER BY p.Id`;
 
 	        new sql.Request().query(myQuery, (err, result) => {
+                console.log("err", err);
                	cardResult = result.recordset.map((x) => {
            	    	return {
 	                    id: x.Id,

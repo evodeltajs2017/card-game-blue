@@ -27,7 +27,8 @@ class CreateDeck {
 				this.theDom.querySelector(".cards-list-section").appendChild(cardModel);
 			}
 
-			this.addDragDropEvents();	
+			this.addDragDropEvents();
+			this.addHoverEffects();	
 		});
 
 	}
@@ -42,7 +43,9 @@ class CreateDeck {
 
 		let template = `<div class="card-model">
 							<div class="tmp-card-cost">${obj.cost}</div>
-			  				<div class="tmp-card-name">${obj.name}</div>
+			  				<div class="tmp-card-name">
+			  					<p class="align-name-center">${obj.name}</p>
+			  				</div>
 			  				
 				  		</div>`;
 		div.innerHTML = template;
@@ -53,6 +56,7 @@ class CreateDeck {
 	    const deckRepo = new ConstructDeckRepository();
 	    deckRepo.postNewDeck(deckObject).then((message, status) => {
 	       //this.reroute("/card-types");
+	       this.reroute("/view-decks");
 	       console.log("something");
 	    }, (message) => {
 	    	console.log("something else");
@@ -81,10 +85,14 @@ class CreateDeck {
 					<div class="deck-name-container">
 						<input class="deck-name-input" name="deck-name" type="text" placeholder="Enter a name for the deck" maxlength="30" required>
 					</div>
+					<div class="deck-cards-container">
+						<div class="deck-cards-container-text bad-counter">${this.cardsInDeckCounter} / 30   CARDS</div>
+					</div>
 					<div class="deck-list-pool deck-section-drop-target" >
 				    	
 				   	</div>
-				</div>			   
+				</div>
+				<div class="clear-view"></div>			   
 			</div>   
 		</div>
 			`;
@@ -104,7 +112,8 @@ class CreateDeck {
 					this.deckObjectValues.ids.push(cardsArr[i].getAttribute("tag"));
 
             this.deckObject = JSON.stringify(this.deckObjectValues);
-            this.sendToRepo(this.deckObject);			
+            this.sendToRepo(this.deckObject);
+
 		});
 	}
 
@@ -117,29 +126,39 @@ class CreateDeck {
 
 	addDragDropEvents(){
 		this.theDom.querySelector(".cards-section-drop-target").addEventListener("dragenter", (e) =>{
-			e.target.style.backgroundColor = "#1abc9c";
+			e.currentTarget.style.backgroundColor = "#1abc9c";
 		});
 
 		this.theDom.querySelector(".deck-section-drop-target").addEventListener("dragenter", (e) =>{
-			e.target.style.borderColor = "green";
-			e.target.style.backgroundColor = 'rgba(46,204,113,0.3)'.replace(/[^,]+(?=\))/, '0.5');
+			e.currentTarget.style.borderColor = "green";
+			e.currentTarget.style.backgroundColor = 'rgba(46,204,113,0.3)'.replace(/[^,]+(?=\))/, '0.5');
 		});
 		
 		this.theDom.querySelector(".cards-section-drop-target").addEventListener("dragover", (e) =>{
 			e.preventDefault();
+
+
+			e.currentTarget.style.backgroundColor = "#1abc9c";
 		});
+
+
+		
 
 		this.theDom.querySelector(".deck-section-drop-target").addEventListener("dragover", (e) =>{
 			e.preventDefault();
+
+
+			e.currentTarget.style.borderColor = "green";
+			e.currentTarget.style.backgroundColor = 'rgba(46,204,113,0.3)'.replace(/[^,]+(?=\))/, '0.5');
 		});
 
 		this.theDom.querySelector(".cards-section-drop-target").addEventListener("dragleave", (e) =>{
-			e.target.style.backgroundColor = "";
+			e.currentTarget.style.backgroundColor = "";
 		});
 
 		this.theDom.querySelector(".deck-section-drop-target").addEventListener("dragleave", (e) =>{
-			e.target.style.borderColor = "";
-			e.target.style.backgroundColor = "";
+			e.currentTarget.style.borderColor = "";
+			e.currentTarget.style.backgroundColor = "";
 		});
 
 		let theMovingDivs = this.theDom.querySelectorAll(".tmp-card-model");
@@ -150,8 +169,12 @@ class CreateDeck {
 			});
 
 			theMovingDivs[i].addEventListener("dragover", (e) =>{
+				//this.theDom.querySelector(".cards-section-drop-target").style.backgroundColor="";
 				e.dataTransfer.dropEffect = "none";
+
 			});
+
+			
 		}
 
 		this.theDom.querySelector(".deck-section-drop-target").addEventListener("drop", (e) =>{
@@ -166,8 +189,9 @@ class CreateDeck {
 			}
 
 			e.target.appendChild(element);
-			e.target.style.borderColor = "";
-			e.target.style.backgroundColor = "";
+			e.currentTarget.style.borderColor = "";
+			e.currentTarget.style.backgroundColor = "";
+			//e.dataTransfer.dropEffect = "move";
 		});
 
 		this.theDom.querySelector(".cards-section-drop-target").addEventListener("drop", (e) =>{
@@ -181,24 +205,51 @@ class CreateDeck {
 				this.checkDeckValidity();
 			}
 
+			e.currentTarget.style.backgroundColor = "";
+			//e.dataTransfer.dropEffect = "move";
 			e.target.appendChild(element);
-			e.target.style.backgroundColor = "";
+
+
 		});
 	}
 
 	checkDeckValidity(){
+		let tmpCounterText = this.theDom.querySelector(".deck-cards-container-text");
+	    tmpCounterText.innerHTML = `${this.cardsInDeckCounter} / 30   CARDS`;
+
         let buton = this.theDom.querySelector(".save-deck");
-			if ((this.cardsInDeckCounter > 4) && (this.theDom.querySelector(".deck-name-input").value !== "") && (this.theDom.querySelector(".deck-name-input").value !== null)) {
+			if ((this.cardsInDeckCounter == 30) && (this.theDom.querySelector(".deck-name-input").value !== "") && (this.theDom.querySelector(".deck-name-input").value !== null)) {
 				buton.removeAttribute("disabled");
 				buton.classList.remove("save-denied");
 	            buton.classList.add("save-allowed");
+	            tmpCounterText.classList.remove("bad-counter");
+	            tmpCounterText.classList.add("good-counter");
 	           
 	        } else if (buton.classList.contains("save-allowed")){
 	        		buton.classList.remove("save-allowed");
 	        		buton.classList.add("save-denied");
-	        		buton.setAttribute("disabled", "true");      
+	        		buton.setAttribute("disabled", "true");
+		        	tmpCounterText.classList.remove("good-counter");
+		            tmpCounterText.classList.add("bad-counter");      
 	        }
-	}	
+
+	}
+
+	addHoverEffects(){
+		let cardsArr = this.theDom.querySelectorAll(".tmp-card-model");
+		
+		for (let i = 0; i< cardsArr.length; i++){
+			cardsArr[i].addEventListener("mouseover", () => {
+
+				cardsArr[i].classList.add("hover-effect"); 
+			});
+			cardsArr[i].addEventListener("mouseout", () => {
+				cardsArr[i].classList.remove("hover-effect");
+			});
+
+		}
+	}
+
 
 	destroy() {
 	}

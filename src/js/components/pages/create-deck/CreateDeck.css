@@ -1,4 +1,8 @@
-.tmp-wrapper-container{
+.clear-view{
+	clear: both;
+}
+
+.tmp-wrapper-container{ 
 	min-height: 1000px;
 	margin: 2%;
     box-shadow: 2px 2px 6px grey;	
@@ -14,7 +18,7 @@
 	width: 65%;
 	position: relative;
 	float: left;
-	padding: 15px;
+	padding: 10px;
 	display: inline-flex;
     flex-wrap: wrap;
     min-height: 800px;
@@ -39,6 +43,7 @@
 	padding: 15px;
     flex-wrap: wrap;
     display: flex;
+    align-content: flex-start;
 
 }
 
@@ -55,6 +60,18 @@
 	width: 250px;
 	padding: 10px;
 
+}
+.deck-cards-container{
+	margin: auto;
+    width: 200px;
+    padding-bottom: 20px;
+
+}
+.deck-cards-container-text{
+    line-height: 40px;
+    font-size: 20px;
+    font-family: Acme;
+    text-align: center;
 }
 
 .card-model{
@@ -76,6 +93,23 @@
 	margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    cursor: pointer;
+}
+
+/*.tmp-card-model:hover {
+    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
+    box-shadow: 0px 0px 30px 10px rgba(36, 84, 102, 0.85);
+    border: 2px solid #245466;
+
+}*/
+
+.hover-effect {
+    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
+    box-shadow: 0px 0px 30px 10px rgba(36, 84, 102, 0.85);
+    border: 2px solid #245466;
+
 }
 
 .tmp-card-cost{
@@ -91,7 +125,7 @@
     background: linear-gradient(45deg,  rgba(242,215,12,1) 0%,rgba(255,255,255,1) 56%,rgba(252,235,0,1) 96%);
     top: -8px;
     left: -18px;
-    color: #f1c40f;
+    color: #03baff;
     text-align: center;
     background-color: white;
     padding-top: 15px;
@@ -102,8 +136,8 @@
 
 .tmp-card-name{
 	
-	position: relative;
-    /*text-align: center;*/
+	/*position: relative;
+    text-align: center;
     color: white;
     word-wrap: break-word;
     line-height: 20px;
@@ -113,7 +147,31 @@
     margin: 0 auto;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
+    color: #fff;*/
+    position: absolute;
+	display: table;
+    /*text-align: center;*/
+    color: white;
+    word-wrap: break-word;
+    line-height: 20px;
+    width: 220px;
+    height: 50px;
+    /*padding-top: 7px;*/
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
     color: #fff;
+
+}
+
+.align-name-center{
+    line-height: 21px;
+    word-wrap: break-word;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding-left: 50px;
+
 
 }
 
@@ -128,4 +186,13 @@
 	box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 1px rgba(0,0,0,0.1);
 	background-color:#9dce2c;
 	border:1px solid #83c41a;
+}
+
+.good-counter{
+	color: #27ae60;
+}
+
+.bad-counter{
+	color: #c0392b;
+
 }
