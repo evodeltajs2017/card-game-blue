@@ -9,6 +9,10 @@
     z-index: -1;
 }
 
+.isActive {
+    box-shadow: 0px 0px 10px 10px rgba(18, 135, 64, 0.60);
+}
+
 .GameDiv {
     width: 1400px;
     height: 100%;

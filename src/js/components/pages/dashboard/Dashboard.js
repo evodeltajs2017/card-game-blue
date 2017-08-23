@@ -13,6 +13,7 @@ class Dashboard {
         this.aitop = -124;
         this.playertop = -124;
         this.playerleft = 20;
+        this.selectedCard = undefined;
     }
 
     initialize() {
@@ -202,6 +203,10 @@ class Dashboard {
             model.initialize();
 
             gameDiv.querySelector(".EndTurnButton").addEventListener("click", (e) => {
+                if (this.selectedCard) {
+                    this.selectedCard.className = "CardComponent";
+                };
+                this.selectedCard = undefined;
                 e.target.className = "EndTurnButton greyButton";
                 e.target.setAttribute("disabled", "true");
                 this.element.querySelector(".OpponentField").style.zIndex = "1000";
@@ -223,7 +228,7 @@ class Dashboard {
     animateAttack(source, target, playerDead, aiDead) {
         let calc = -source.parentElement.offsetLeft + target.offsetLeft;
         let differance = { top: (source.parentElement.offsetTop - target.offsetTop), left: (target.offsetLeft - source.parentElement.offsetLeft) };
-
+        source.className = "CardComponent";
         source.style.top = -80 + "px";
         source.style.left = calc + "px";
         source.style.transform = "scale(1.5)";
@@ -285,7 +290,7 @@ class Dashboard {
         let saved = { top: target.offsetTop, left: target.offsetLeft };
         let differance = { top: (source.parentElement.offsetTop - target.offsetTop), left: (target.offsetLeft - source.parentElement.offsetLeft) };
         let calc = -source.parentElement.offsetLeft + 500;
-
+        source.className = "CardComponent";
         source.style.top = -240 + "px";
         source.style.left = calc + "px";
         source.style.transform = "scale(1.5)";
@@ -334,6 +339,12 @@ class Dashboard {
         board.appendChild(fieldCard);
         fieldCard.addEventListener("click", (e) => {
             model.selectMonster(index, e.currentTarget.querySelector(".CardComponent"));
+
+            if (this.selectedCard) {
+                this.selectedCard.className = "CardComponent";
+            };
+            this.selectedCard = e.currentTarget.querySelector(".CardComponent")
+            this.selectedCard.className += " isActive";
         });
     }
 
@@ -351,6 +362,11 @@ class Dashboard {
             fieldCard.style.transform = "scale(0.8)";
             fieldCard.addEventListener("click", (e) => {
                 model.selectMonster(index, e.currentTarget.querySelector(".CardComponent"));
+                if (this.selectedCard) {
+                    this.selectedCard.className = "CardComponent";
+                };
+                this.selectedCard = e.currentTarget.querySelector(".CardComponent")
+                this.selectedCard.className += " isActive";
             });
         }, 100)
 
