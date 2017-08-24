@@ -17,7 +17,7 @@ class AddCardType {
 	sendToRepo(cardObject) {
 	    const cardRepo = new CardRepository();
 	    cardRepo.postNewCardType(cardObject).then((errorArray, status) => {
-	       this.reroute("/card-types");
+	       this.reroute("/grid-card-types");
 	    }, (errorArray) => {
 	    	this.displayErr(JSON.parse(errorArray));
 	    });

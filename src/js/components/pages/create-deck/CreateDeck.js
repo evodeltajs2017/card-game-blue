@@ -86,7 +86,7 @@ class CreateDeck {
 						<input class="deck-name-input" name="deck-name" type="text" placeholder="Enter a name for the deck" maxlength="30" required>
 					</div>
 					<div class="deck-cards-container">
-						<div class="deck-cards-container-text bad-counter">${this.cardsInDeckCounter} / 30   CARDS</div>
+						<div class="deck-cards-container-text bad-counter">${this.cardsInDeckCounter} / 10   CARDS</div>
 					</div>
 					<div class="deck-list-pool deck-section-drop-target" >
 				    	
@@ -215,10 +215,10 @@ class CreateDeck {
 
 	checkDeckValidity(){
 		let tmpCounterText = this.theDom.querySelector(".deck-cards-container-text");
-	    tmpCounterText.innerHTML = `${this.cardsInDeckCounter} / 30   CARDS`;
+	    tmpCounterText.innerHTML = `${this.cardsInDeckCounter} / 10   CARDS`;
 
         let buton = this.theDom.querySelector(".save-deck");
-			if ((this.cardsInDeckCounter == 30) && (this.theDom.querySelector(".deck-name-input").value !== "") && (this.theDom.querySelector(".deck-name-input").value !== null)) {
+			if ((this.cardsInDeckCounter == 10) && (this.theDom.querySelector(".deck-name-input").value !== "") && (this.theDom.querySelector(".deck-name-input").value !== null)) {
 				buton.removeAttribute("disabled");
 				buton.classList.remove("save-denied");
 	            buton.classList.add("save-allowed");
